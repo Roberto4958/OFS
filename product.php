@@ -41,9 +41,9 @@
     ?>
 
 	<!-- Title Page -->
-	<section class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url(images/heading-pages-02.jpg);">
+	<section class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url(images/ricePaddie.jpg);">
 		<h2 class="l-text2 t-center">
-			Eat Well
+			Organic Groceries
 		</h2>
 		<p class="m-text13 t-center">
 			Wait no longer than needed
@@ -245,7 +245,7 @@
 							<!-- Block2 -->
 							<div class="block2">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative">
-									<img src="images/item-03.jpg" alt="IMG-PRODUCT">
+									<img src="images/avacado.jpg" alt="IMG-PRODUCT">
 
 									<div class="block2-overlay trans-0-4">
 										<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
@@ -264,7 +264,7 @@
 
 								<div class="block2-txt p-t-20">
 									<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-										Denim jacket blue
+										Avacado
 									</a>
 
 									<span class="block2-price m-text6 p-r-5">
@@ -278,7 +278,7 @@
 							<!-- Block2 -->
 							<div class="block2">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative">
-									<img src="images/item-05.jpg" alt="IMG-PRODUCT">
+									<img src="images/pomegranate.jpg" alt="IMG-PRODUCT">
 
 									<div class="block2-overlay trans-0-4">
 										<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
@@ -297,7 +297,7 @@
 
 								<div class="block2-txt p-t-20">
 									<a href="product-detail.php" class="block2-name dis-block s-text3 p-b-5">
-										Coach slim easton black
+										Pomegranate
 									</a>
 
 									<span class="block2-price m-text6 p-r-5">
@@ -311,7 +311,7 @@
 							<!-- Block2 -->
 							<div class="block2">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">
-									<img src="images/item-07.jpg" alt="IMG-PRODUCT">
+									<img src="images/apple.jpg" alt="IMG-PRODUCT">
 
 									<div class="block2-overlay trans-0-4">
 										<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
@@ -330,7 +330,7 @@
 
 								<div class="block2-txt p-t-20">
 									<a href="product-detail.php" class="block2-name dis-block s-text3 p-b-5">
-										Frayed denim shorts
+										Apple
 									</a>
 
 									<span class="block2-oldprice m-text7 p-r-5">
@@ -348,7 +348,7 @@
 							<!-- Block2 -->
 							<div class="block2">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-									<img src="images/item-01.jpg" alt="IMG-PRODUCT">
+									<img src="images/blueberry.jpg" alt="IMG-PRODUCT">
 
 									<div class="block2-overlay trans-0-4">
 										<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
@@ -367,7 +367,7 @@
 
 								<div class="block2-txt p-t-20">
 									<a href="product-detail.php" class="block2-name dis-block s-text3 p-b-5">
-										Herschel supply co 25l
+										Blueberry
 									</a>
 
 									<span class="block2-price m-text6 p-r-5">
@@ -381,7 +381,7 @@
 							<!-- Block2 -->
 							<div class="block2">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative">
-									<img src="images/item-14.jpg" alt="IMG-PRODUCT">
+									<img src="images/strawberry.jpg" alt="IMG-PRODUCT">
 
 									<div class="block2-overlay trans-0-4">
 										<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
@@ -400,7 +400,7 @@
 
 								<div class="block2-txt p-t-20">
 									<a href="product-detail.php" class="block2-name dis-block s-text3 p-b-5">
-										Denim jacket blue
+										Strawberry
 									</a>
 
 									<span class="block2-price m-text6 p-r-5">
@@ -414,7 +414,7 @@
 							<!-- Block2 -->
 							<div class="block2">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-									<img src="images/item-06.jpg" alt="IMG-PRODUCT">
+									<img src="images/whitegrape.jpg" alt="IMG-PRODUCT">
 
 									<div class="block2-overlay trans-0-4">
 										<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
@@ -433,7 +433,7 @@
 
 								<div class="block2-txt p-t-20">
 									<a href="product-detail.php" class="block2-name dis-block s-text3 p-b-5">
-										Herschel supply co 25l
+										White Grapes
 									</a>
 
 									<span class="block2-price m-text6 p-r-5">
@@ -447,7 +447,7 @@
 							<!-- Block2 -->
 							<div class="block2">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative">
-									<img src="images/item-08.jpg" alt="IMG-PRODUCT">
+									<img src="images/blackberry.jpg" alt="IMG-PRODUCT">
 
 									<div class="block2-overlay trans-0-4">
 										<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
@@ -466,7 +466,7 @@
 
 								<div class="block2-txt p-t-20">
 									<a href="product-detail.php" class="block2-name dis-block s-text3 p-b-5">
-										Denim jacket blue
+										Blackberry
 									</a>
 
 									<span class="block2-price m-text6 p-r-5">
@@ -480,7 +480,7 @@
 							<!-- Block2 -->
 							<div class="block2">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative">
-									<img src="images/item-10.jpg" alt="IMG-PRODUCT">
+									<img src="images/onion.jpg" alt="IMG-PRODUCT">
 
 									<div class="block2-overlay trans-0-4">
 										<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
@@ -499,7 +499,7 @@
 
 								<div class="block2-txt p-t-20">
 									<a href="product-detail.php" class="block2-name dis-block s-text3 p-b-5">
-										Coach slim easton black
+										Red Onion
 									</a>
 
 									<span class="block2-price m-text6 p-r-5">
