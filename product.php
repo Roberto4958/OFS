@@ -212,7 +212,7 @@
 							<!-- Block2 -->
 							<div class="block2">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-									<img src="images/item-02.jpg" alt="IMG-PRODUCT">
+									<img src="images/cucumber.jpg" alt="IMG-PRODUCT">
 
 									<div class="block2-overlay trans-0-4">
 										<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
@@ -231,7 +231,7 @@
 
 								<div class="block2-txt p-t-20">
 									<a href="product-detail.php" class="block2-name dis-block s-text3 p-b-5">
-										Herschel supply co 25l
+										The World's Most Expensive Cucumber
 									</a>
 
 									<span class="block2-price m-text6 p-r-5">
