@@ -1,3 +1,62 @@
+<?php
+//error_reporting(0); // stops displaying warning from user end
+
+    require_once 'Scripts/loginInfo.php';
+
+    $items = '';
+    $total_price = 0;
+    $total_weight = 0; 
+    $conn = new mysqli($hn, $un, $pw, $db);
+
+    if (!$conn->connect_error){
+        $sql = "select i.name, sum(c.amount) as amount, i.weight, i.price from cart c, items i where i.id = c.ItemID and c.userid =1 group by i.name";
+        $result = $conn->query($sql);
+        $rows = $result->num_rows;
+    
+        for($i=0; $i < $rows; $i++){
+        
+            $result->data_seek($i);
+            $obj = $result->fetch_array(MYSQLI_ASSOC);
+            $total_weight += $obj['amount'] * $obj['weight'];
+            $total_price += $obj['amount'] * $obj['price'];
+            $items .= generateDiv($obj['name'], $obj['amount'], $obj['weight'], $obj['price']); 
+        }
+        $result->close();
+        $conn->close();
+    }
+
+    
+
+
+    function generateDiv($name, $amount, $weight, $price){
+        
+        $total_price = $amount * $price;
+        return '<tr class="table-row">
+							<td class="column-1">
+								<div class="cart-img-product b-rad-4 o-f-hidden">
+									<img src="images/item-10.jpg" alt="IMG-PRODUCT">
+								</div>
+							</td>
+							<td class="column-2">'.$name.'</td>
+							<td class="column-3">$'.$price.'</td>
+							<td class="column-4">
+								<div class="flex-w bo5 of-hidden w-size17">
+									<button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
+										<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
+									</button>
+
+									<input class="size8 m-text18 t-center num-product" type="number" name="num-product1" value="'.$amount.'">
+
+									<button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">
+										<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
+									</button>
+								</div>
+							</td>
+				            <td class="column-5">$'.$total_price.'</td>
+						</tr>';
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,70 +118,16 @@
 							<th class="column-4 p-l-70">Quantity</th>
 							<th class="column-5">Total</th>
 						</tr>
-
-						<tr class="table-row">
-							<td class="column-1">
-								<div class="cart-img-product b-rad-4 o-f-hidden">
-									<img src="images/item-10.jpg" alt="IMG-PRODUCT">
-								</div>
-							</td>
-							<td class="column-2">Men Tshirt</td>
-							<td class="column-3">$36.00</td>
-							<td class="column-4">
-								<div class="flex-w bo5 of-hidden w-size17">
-									<button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
-										<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
-									</button>
-
-									<input class="size8 m-text18 t-center num-product" type="number" name="num-product1" value="1">
-
-									<button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">
-										<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
-									</button>
-								</div>
-							</td>
-							<td class="column-5">$36.00</td>
-						</tr>
-
-						<tr class="table-row">
-							<td class="column-1">
-								<div class="cart-img-product b-rad-4 o-f-hidden">
-									<img src="images/item-05.jpg" alt="IMG-PRODUCT">
-								</div>
-							</td>
-							<td class="column-2">Mug Adventure</td>
-							<td class="column-3">$16.00</td>
-							<td class="column-4">
-								<div class="flex-w bo5 of-hidden w-size17">
-									<button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
-										<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
-									</button>
-
-									<input class="size8 m-text18 t-center num-product" type="number" name="num-product2" value="1">
-
-									<button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">
-										<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
-									</button>
-								</div>
-							</td>
-							<td class="column-5">$16.00</td>
-						</tr>
+                        
+<!--                    display cart items-->
+                        <?php echo $items?>
+                        
 					</table>
 				</div>
 			</div>
 
 			<div class="flex-w flex-sb-m p-t-25 p-b-25 bo8 p-l-35 p-r-60 p-lr-15-sm">
 				<div class="flex-w flex-m w-full-sm">
-					<div class="size11 bo4 m-r-10">
-						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="coupon-code" placeholder="Coupon Code">
-					</div>
-
-					<div class="size12 trans-0-4 m-t-10 m-b-10 m-r-10">
-						<!-- Button -->
-						<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-							Apply coupon
-						</button>
-					</div>
 				</div>
 
 				<div class="size10 trans-0-4 m-t-10 m-b-10">
@@ -145,8 +150,15 @@
 						Subtotal:
 					</span>
 
+					<span class="Subtotal m-text21 w-size20 w-full-sm">
+						<?php echo $total_price?>
+					</span>
+                    <span class="s-text18 w-size19 w-full-sm">
+						Total weight:
+					</span>
+
 					<span class="m-text21 w-size20 w-full-sm">
-						$39.00
+						<?php echo $total_weight ?> lb
 					</span>
 				</div>
 
@@ -158,7 +170,7 @@
 
 					<div class="w-size20 w-full-sm">
 						<p class="s-text8 p-b-23">
-							There are no shipping methods available. Please double check your address, or contact us if you need any help.
+							We can drone Items right now! The first 15 punds is on us!
 						</p>
 
 						<span class="s-text19">
@@ -179,6 +191,9 @@
 						</div>
 
 						<div class="size13 bo4 m-b-22">
+							<input class="sizefull s-text7 p-l-15 p-r-15" type="text" name="postcode" placeholder="street address">
+						</div>
+                        <div class="size13 bo4 m-b-22">
 							<input class="sizefull s-text7 p-l-15 p-r-15" type="text" name="postcode" placeholder="Postcode / Zip">
 						</div>
 
@@ -197,8 +212,8 @@
 						Total:
 					</span>
 
-					<span class="m-text21 w-size20 w-full-sm">
-						$39.00
+					<span class="totalPrice m-text21 w-size20 w-full-sm">
+						<?php echo $total_price ?>
 					</span>
 				</div>
 
@@ -243,6 +258,7 @@
 	<script type="text/javascript" src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <!--===============================================================================================-->
 	<script type="text/javascript" src="vendor/select2/select2.min.js"></script>
+    <script type="text/javascript" src="js/cart.js"></script>
 	<script type="text/javascript">
 		$(".selection-1").select2({
 			minimumResultsForSearch: 20,
