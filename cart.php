@@ -3,7 +3,7 @@
 
     require_once 'Scripts/loginInfo.php';
 
-    $items = '';
+    $cart_items = '';
     $total_price = 0;
     $total_weight = 0; 
     $conn = new mysqli($hn, $un, $pw, $db);
@@ -19,7 +19,7 @@
             $obj = $result->fetch_array(MYSQLI_ASSOC);
             $total_weight += $obj['amount'] * $obj['weight'];
             $total_price += $obj['amount'] * $obj['price'];
-            $items .= generateDiv($obj['name'], $obj['amount'], $obj['weight'], $obj['price']); 
+            $cart_items .= generateDiv($obj['name'], $obj['amount'], $obj['weight'], $obj['price']); 
         }
         $result->close();
         $conn->close();
@@ -94,7 +94,7 @@
 
 	<!-- Header -->
 	<?php 
-    include "nav.html";
+    include "nav.php";
     ?>
 
 	<!-- Title Page -->
@@ -120,7 +120,7 @@
 						</tr>
                         
 <!--                    display cart items-->
-                        <?php echo $items?>
+                        <?php echo $cart_items?>
                         
 					</table>
 				</div>

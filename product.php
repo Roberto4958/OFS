@@ -37,7 +37,7 @@
 
 	<!-- Header -->
 	<?php
-    require_once "nav.html"; 
+    require_once "nav.php"; 
     ?>
 
 	<!-- Title Page -->

@@ -38,7 +38,7 @@
 <body class="animsition">
 	<!-- Header -->
 	<?php
-    include "nav.html";
+    require_once "nav.php";
     ?>
 
 	<!-- Slide1 -->
@@ -67,17 +67,17 @@
 				<div class="item-slick1 item2-slick1" style="background-image: url(images/master-slide-06.jpg);">
 					<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
 						<h2 class="caption1-slide1 xl-text2 t-center bo14 p-b-6 animated visible-false m-b-22" data-appear="rollIn">
-							Food On the Fly
+							Leather Bags
 						</h2>
 
 						<span class="caption2-slide1 m-text1 t-center animated visible-false m-b-33" data-appear="lightSpeedIn">
-							Wait no more!
+							New Collection 2018
 						</span>
 
 						<div class="wrap-btn-slide1 w-size1 animated visible-false" data-appear="slideInUp">
 							<!-- Button -->
 							<a href="product.html" class="flex-c-m size2 bo-rad-23 s-text2 bgwhite hov1 trans-0-4">
-								Shop fast!
+								Shop Now
 							</a>
 						</div>
 					</div>
@@ -1157,7 +1157,7 @@
 						<div class="block3-txt p-t-14">
 							<h4 class="p-b-7">
 								<a href="blog-detail.html" class="m-text11">
-									Make Life Simple
+									Enjoy Quality Food
 								</a>
 							</h4>
 
@@ -1326,9 +1326,9 @@
 
 	<!-- Footer -->
 	<?php 
-    require_once "footer.html";
+        require_once "footer.html";
     ?>
-
+    
 
 
 	<!-- Back to top -->
