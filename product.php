@@ -64,31 +64,31 @@
 
 						<ul class="p-b-54">
 							<li class="p-t-4">
-								<a href="#row" class="s-text13 active1">
+								<a id = 'All' href="#row" class="s-text13 active1">
 									All
 								</a>
 							</li>
 
 							<li class="p-t-4">
-								<a id = 'category' href="#row" class="s-text13">
+								<a id = 'Fruits' href="#row" class="s-text13">
 									Fruits
 								</a>
 							</li>
 
 							<li class="p-t-4">
-								<a href="#row" class="s-text13">
-									Veggies
+								<a id = 'Vegetables' href="#row" class="s-text13">
+									Vegetables
 								</a>
 							</li>
 
 							<li class="p-t-4">
-								<a href="#row" class="s-text13">
+								<a id = 'Dairy' href="#row" class="s-text13">
 									Dairy
 								</a>
 							</li>
 
 							<li class="p-t-4">
-								<a href="#row" class="s-text13">
+								<a id = ' Grains' href="#row" class="s-text13">
 									Grains
 								</a>
 							</li>
