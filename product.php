@@ -46,7 +46,7 @@
 			Organic Groceries
 		</h2>
 		<p class="m-text13 t-center">
-			Wait no longer than needed
+			
 		</p>
 	</section>
 
