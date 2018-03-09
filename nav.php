@@ -157,7 +157,7 @@ require_once 'Scripts/loginInfo.php';
 				</div>
 
 				<!-- Logo2 -->
-				<a href="index.html" class="logo2">
+				<a href="index.php" class="logo2">
 					<img src="images/icons/logo.png" alt="IMG-LOGO">
 				</a>
 
@@ -197,7 +197,6 @@ require_once 'Scripts/loginInfo.php';
 						<ul class="main_menu">
 							<li>
 								<a href="index.php">Home</a>
-								
 							</li>
 
 							<li>
@@ -219,7 +218,7 @@ require_once 'Scripts/loginInfo.php';
     <!-- Header Mobile -->
 		<div class="wrap_header_mobile">
 			<!-- Logo moblie -->
-			<a href="index.html" class="logo-mobile">
+			<a href="index.php" class="logo-mobile">
 				<img src="images/icons/logo.png" alt="IMG-LOGO">
 			</a>
 
@@ -356,16 +355,16 @@ require_once 'Scripts/loginInfo.php';
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="index.html">Home</a>
+						<a href="index.php">Home</a>
 						<i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="product.html">Shop</a>
+						<a href="product.php">Shop</a>
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="cart.html">Cart</a>
+						<a href="cart.php">Cart</a>
 					</li>
 
 				</ul>
