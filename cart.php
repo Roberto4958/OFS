@@ -6,35 +6,39 @@
     $cart_items = '';
     $total_price = 0;
     $total_weight = 0; 
-    $conn = new mysqli($hn, $un, $pw, $db);
-
-    if (!$conn->connect_error){
-        $sql = "select i.name, sum(c.amount) as amount, i.weight, i.price from cart c, items i where i.id = c.ItemID and c.userid =1 group by i.name";
+    $conn = new mysqli($hn, $un, $pw, $db); //connects to db
+    
+    if (!$conn->connect_error){ //checks if connected succesfully 
+        $sql = "select i.name, sum(c.amount) as amount, i.weight, i.price, i.CategoryName from cart c, items i where i.id = c.ItemID and c.userid =1 group by i.name";
         $result = $conn->query($sql);
         $rows = $result->num_rows;
-    
+        
+        //loops through all the rows and saves the data from the columns 
         for($i=0; $i < $rows; $i++){
         
             $result->data_seek($i);
             $obj = $result->fetch_array(MYSQLI_ASSOC);
             $total_weight += $obj['amount'] * $obj['weight'];
             $total_price += $obj['amount'] * $obj['price'];
-            $cart_items .= generateDiv($obj['name'], $obj['amount'], $obj['weight'], $obj['price']); 
+            $cart_items .= generateDiv($obj['name'], $obj['amount'], $obj['weight'], $obj['price'], $obj['CategoryName']); 
         }
         $result->close();
         $conn->close();
     }
+    else{
+        $cart_items = "<h2>We are experiencing server error</h2>";
+    }
 
     
 
-
-    function generateDiv($name, $amount, $weight, $price){
+    //@desc: generates html code to display a new row inside the cart table 
+    function generateDiv($name, $amount, $weight, $price, $category){ //old img = item-10.jpg
         
         $total_price = $amount * $price;
         return '<tr class="table-row">
 							<td class="column-1">
 								<div class="cart-img-product b-rad-4 o-f-hidden">
-									<img src="images/item-10.jpg" alt="IMG-PRODUCT">
+									<img src="images/'.$category.'/'.$name.'.jpg" alt="IMG-PRODUCT">
 								</div>
 							</td>
 							<td class="column-2">'.$name.'</td>
@@ -231,7 +235,7 @@
 
 	<!-- Footer -->
 	<?php
-    require_once 'footer.html';
+        require_once 'footer.html';
     ?>
 
 

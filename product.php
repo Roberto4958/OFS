@@ -10,7 +10,7 @@
         for($i=0; $i < $rows; $i++){
             $result->data_seek($i);
             $obj = $result->fetch_array(MYSQLI_ASSOC);
-            $items_To_display .= generateItemsDiv($obj['Name'], $obj['CategoryName'], $obj['Price'], $obj['Weight'], $obj['Amount'], $obj['countyID']); 
+            $items_To_display .= generateItemsDiv($obj['Name'], $obj['CategoryName'], $obj['Price'], $obj['Weight'], $obj['Amount'], $obj['countyID'], $obj['Id']); 
         }
 
         $result->close();
@@ -23,7 +23,7 @@
     
 
 
-    function generateItemsDiv($name, $category, $price, $weight, $amount){
+    function generateItemsDiv($name, $category, $price, $weight, $amount, $countyID, $itemID){
         return '<div data-category = "'.$category.'"  class="foodCard col-sm-12 col-md-6 col-lg-4 p-b-50">
 							<!-- Block2 -->
 							<div class="block2">
@@ -42,7 +42,7 @@
 								</div>
 
 								<div class="block2-txt p-t-20">
-									<a class="block2-name dis-block s-text3 p-b-5">
+									<a data-countyid ="'.$countyID.'" data-itemid ="'.$itemID.'" class="block2-name dis-block s-text3 p-b-5">
 										'.$name.'
 									</a>
 
@@ -175,15 +175,7 @@
                         echo $items_To_display;
                         ?>
 						
-
-						
-					</div>
-
-					<!-- Pagination -->
-					<div class="pagination flex-m flex-w p-t-26">
-						<a href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">1</a>
-						<a href="#" class="item-pagination flex-c-m trans-0-4">2</a>
-					</div>
+					</div>					
 				</div>
 			</div>
 		</div>
@@ -237,22 +229,6 @@
 	<script type="text/javascript" src="js/slick-custom.js"></script>
 <!--===============================================================================================-->
 	<script type="text/javascript" src="vendor/sweetalert/sweetalert.min.js"></script>
-	<script type="text/javascript">
-		$('.block2-btn-addcart').each(function(){
-			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to cart !", "success");
-			});
-		});
-
-		$('.block2-btn-addwishlist').each(function(){
-			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to wishlist !", "success");
-			});
-		});
-	</script>
-
 <!--===============================================================================================-->
 	<script type="text/javascript" src="vendor/noui/nouislider.min.js"></script>
 	
