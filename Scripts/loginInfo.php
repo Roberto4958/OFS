@@ -1,8 +1,10 @@
+
+
 <?php
 
-$hn = 'localhost';//hostname
+$hn = '127.0.0.1';//hostname
 $db = 'OFS'; //db name
 $un = 'root';//username 
-$pw = '';//password
+$pw = 'root1234';//password
 
 ?>

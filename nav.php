@@ -1,15 +1,18 @@
 <?php
-require_once 'Scripts/loginInfo.php';
+require_once './Scripts/loginInfo.php';
     $items = '';
     $total_price = 0;
     $total_weight = 0; 
     $total_items = 0;
     $cart = '';
-    $conn = new mysqli($hn, $un, $pw, $db);
+    // Create connection
+	$conn = new mysqli($hn, $un, $pw);
 
 
     if (!$conn->connect_error){
-        $sql = "select i.name, sum(c.amount) as amount, i.weight, i.price from cart c, items i where i.id = c.ItemID and c.userid =1 group by i.name";
+    	$conn->query("Use OFS");
+
+        $sql = "select i.name, sum(c.amount) as amount, i.weight, i.price from cart c, items i where i.id = c.ItemID and c.userid =1 group by i.id";
         $result = $conn->query($sql);
         $total_items = $result->num_rows;
         
