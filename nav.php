@@ -22,7 +22,7 @@ require_once './Scripts/loginInfo.php';
             $obj = $result->fetch_array(MYSQLI_ASSOC);
             $total_weight += $obj['amount'] * $obj['weight'];
             $total_price += $obj['amount'] * $obj['price'];
-            $items .= generateCartItem($obj['name'], $obj['amount'], $obj['weight'], $obj['price']); 
+            $items .= generateCartItem($obj['name'], $obj['amount'], $obj['weight'], $obj['price'], $obj['CategoryName']); 
         }
         if($total_items > 0){
             $cart = generateCartHTML($items, $total_price, $total_items);
@@ -77,10 +77,10 @@ require_once './Scripts/loginInfo.php';
 						</div>';
     }
 
-    function generateCartItem($name, $amount, $weight, $price){
+    function generateCartItem($name, $amount, $weight, $price, $category){
         return '<li class="header-cart-item">
 									<div class="header-cart-item-img">
-										<img src="images/item-cart-01.jpg" alt="IMG">
+										<img src="images/'.$category.'/'.$name.'.jpg" alt="IMG">
 									</div>
 
 									<div class="header-cart-item-txt">
@@ -97,56 +97,6 @@ require_once './Scripts/loginInfo.php';
 
 ?>
 
-<!--
-<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-01.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											White Shirt With Pleat Detail Back
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $19.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-02.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Converse All Star Hi Black Canvas
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $39.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-03.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Nixon Porter Leather Watch In Tan
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $17.00
-										</span>
-									</div>
-								</li>
-
--->
 <header class="header2">
 		<!-- Header desktop -->
 		<div class="container-menu-header-v2 p-t-26">
@@ -160,7 +110,7 @@ require_once './Scripts/loginInfo.php';
 				</div>
 
 				<!-- Logo2 -->
-				<a href="index.html" class="logo2">
+				<a href="index.php" class="logo2">
 					<img src="images/icons/logo.png" alt="IMG-LOGO">
 				</a>
 
@@ -200,7 +150,6 @@ require_once './Scripts/loginInfo.php';
 						<ul class="main_menu">
 							<li>
 								<a href="index.php">Home</a>
-								
 							</li>
 
 							<li>
@@ -222,7 +171,7 @@ require_once './Scripts/loginInfo.php';
     <!-- Header Mobile -->
 		<div class="wrap_header_mobile">
 			<!-- Logo moblie -->
-			<a href="index.html" class="logo-mobile">
+			<a href="index.php" class="logo-mobile">
 				<img src="images/icons/logo.png" alt="IMG-LOGO">
 			</a>
 
@@ -299,7 +248,7 @@ require_once './Scripts/loginInfo.php';
 							<div class="header-cart-buttons">
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										View Cart
 									</a>
 								</div>
@@ -359,16 +308,16 @@ require_once './Scripts/loginInfo.php';
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="index.html">Home</a>
+						<a href="index.php">Home</a>
 						<i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="product.html">Shop</a>
+						<a href="product.php">Shop</a>
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="cart.html">Cart</a>
+						<a href="cart.php">Cart</a>
 					</li>
 
 				</ul>
