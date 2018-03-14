@@ -38,9 +38,9 @@ require_once './Scripts/loginInfo.php';
     }
 
     function generateCartHTML($items, $cost, $total_items){
-        return '	<span class="header-icons-noti">'.$total_items.'</span>
-                    <div class="header-cart header-dropdown">
-							<ul class="header-cart-wrapitem">
+        return '	<span id="icon-number" class="header-icons-noti">'.$total_items.'</span>
+                    <div id="cart-desktop" class="header-cart header-dropdown">
+							<ul id = "cart_list" class="header-cart-wrapitem">
                                 '.$items.'
 							</ul>
 
@@ -67,9 +67,9 @@ require_once './Scripts/loginInfo.php';
     }
 
     function generateEmptyCartHTML(){
-        return '<span class="header-icons-noti">0</span>
-                <div class="header-cart header-dropdown">
-							<ul class="header-cart-wrapitem">
+        return '<span id="icon-number" class="header-icons-noti">0</span>
+                <div id="cart-desktop" class="header-cart header-dropdown">
+							<ul id = "cart_list" class="header-cart-wrapitem">
                                 No Items on cart
 								
 							</ul>

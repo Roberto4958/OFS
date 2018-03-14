@@ -8,7 +8,7 @@ class response{}
 if(!$_POST || !isset($_POST['itemid']) || !isset($_POST['userid']) || !isset($_POST['countyid'])) $myObj->success = false;
 
 else {
-    $userID = $_POST['userid'];
+    $userID =  $_POST['userid'];
     $itemID = $_POST['itemid'];
     $countyID = $_POST['countyid']; 
     
@@ -24,6 +24,7 @@ else {
         if ($result->num_rows < 1 ){ //Not in cart
             if(addToCart($conn, $userID, $itemID, $countyID)){
                 $response->status = 'is added to cart !';
+                $response->cart = getCart($conn, $userID); 
             } else  $response->success = false;
 
         }
@@ -31,6 +32,7 @@ else {
         else {
             if(increaseAmountInCart($conn, $userID, $itemID, $countyID)){
                 $response->status = 'is incremented to cart !';
+                $response->cart = getCart($conn, $userID);
             } else  $response->success = false;
         }
         $result->close();
@@ -45,6 +47,24 @@ else {
     
     //---------------function -------------------------
     
+    function getCart($conn, $userID){
+        $sql = "select i.name, sum(c.amount) as amount, i.weight, i.price, i.CategoryName from cart c, items i where i.id = c.ItemID and c.userid = $userID group by i.id";
+        $result = $conn->query($sql);
+        $obj = array(); 
+        if($result){
+            $rows = $result->num_rows;
+            for($i=0; $i < $rows; $i++){
+                $result->data_seek($i);
+                $obj[] = $result->fetch_array(MYSQLI_ASSOC);
+            }
+        }else return false;
+        
+        $result->close();
+        return $obj; 
+    }
+
+
+
     //@desc: adds a new row to the the cart table in the db
     //@Param: $conn - connection to the database 
     //@param: $userID - int: users id 
