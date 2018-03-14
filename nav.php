@@ -12,7 +12,7 @@ require_once './Scripts/loginInfo.php';
     if (!$conn->connect_error){
     	$conn->query("Use OFS");
 
-        $sql = "select i.name, sum(c.amount) as amount, i.weight, i.price from cart c, items i where i.id = c.ItemID and c.userid =1 group by i.id";
+        $sql = "select i.name, sum(c.amount) as amount, i.weight, i.price, i.CategoryName from cart c, items i where i.id = c.ItemID and c.userid =1 group by i.id";
         $result = $conn->query($sql);
         $total_items = $result->num_rows;
         
