@@ -8,7 +8,7 @@ require_once './Scripts/loginInfo.php';
     // Create connection
 	$conn = new mysqli($hn, $un, $pw);
 
-
+//testing branch
     if (!$conn->connect_error){
     	$conn->query("Use OFS");
 
