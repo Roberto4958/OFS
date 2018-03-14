@@ -1,4 +1,5 @@
 <?php
+//Roberto made a change
 require_once './Scripts/loginInfo.php';
     $items = '';
     $total_price = 0;
