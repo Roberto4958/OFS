@@ -5,6 +5,7 @@ require_once './Scripts/loginInfo.php';
     $total_weight = 0; 
     $total_items = 0;
     $cart = '';
+    $cartItems = '';
     // Create connection
 	$conn = new mysqli($hn, $un, $pw);
 
@@ -22,7 +23,8 @@ require_once './Scripts/loginInfo.php';
             $obj = $result->fetch_array(MYSQLI_ASSOC);
             $total_weight += $obj['amount'] * $obj['weight'];
             $total_price += $obj['amount'] * $obj['price'];
-            $items .= generateCartItem($obj['name'], $obj['amount'], $obj['weight'], $obj['price'], $obj['CategoryName']); 
+            $items .= generateCartItem($obj['name'], $obj['amount'], $obj['weight'], $obj['price'], $obj['CategoryName']);
+            $cartItems .= mobileCartItem($obj['name'], $obj['amount'], $obj['weight'], $obj['price'], $obj['CategoryName']);
         }
         if($total_items > 0){
             $cart = generateCartHTML($items, $total_price, $total_items);
@@ -94,7 +96,25 @@ require_once './Scripts/loginInfo.php';
 									</div>
 								</li>';
     }
+    
+    function mobileCartItem($name, $amount, $weight, $price, $category){
+        return '<li class="header-cart-item">
+									<div class="header-cart-item-img">
+										<img src="images/'.$category.'/'.$name.'.jpg" alt="IMG">
+									</div>
 
+									<div class="header-cart-item-txt">
+										<a href="#" class="header-cart-item-name">
+											'.$name.'
+										</a>
+
+										<span class="header-cart-item-info">
+											'.$amount.' x '.$price.'
+										</span>
+									</div>
+								</li>';
+    }
+    
 ?>
 
 <header class="header2">
@@ -118,13 +138,6 @@ require_once './Scripts/loginInfo.php';
 					<span class="topbar-email">
 						fashe@example.com
 					</span>
-
-					<div class="topbar-language rs1-select2">
-						<select class="selection-1" name="time">
-							<option>USD</option>
-							<option>EUR</option>
-						</select>
-					</div>
 
 					<!--  -->
 					<a href="#" class="header-wrapicon1 dis-block m-l-30">
@@ -192,53 +205,7 @@ require_once './Scripts/loginInfo.php';
 						<!-- Header cart noti -->
 						<div class="header-cart header-dropdown">
 							<ul class="header-cart-wrapitem">
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-01.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											White Shirt With Pleat Detail Back
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $19.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-02.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Converse All Star Hi Black Canvas
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $39.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-03.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Nixon Porter Leather Watch In Tan
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $17.00
-										</span>
-									</div>
-								</li>
+                                <?php echo $cartItems;?>
 							</ul>
 
 							<div class="header-cart-total">
