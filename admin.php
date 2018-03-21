@@ -121,10 +121,10 @@
 
 <div id="fullscreen_bg" class="fullscreen_bg"/>
  <form class="form-signin">
-<div class="container">
+<div class="container";>
     <div class="row">
         <div class="col-md-5 col-md-offset-3">
-        <div class="panel panel-default">
+        <div class="panel panel-default" style = "width:600px;">
         <div class="panel panel-primary">
         
             <h3 class="text-center">
@@ -133,7 +133,7 @@
         <div class="panel-body">    
  
  
- <table class="table table-striped table-condensed">
+ <table class="table table-striped table-condensed"; style = "height:1000px; width:500px">
                   <thead>
                   <tr>
                       <th>Name</th>
@@ -145,19 +145,19 @@
                   </tr>
               </thead>   
               <tbody>
-                <tr>
+                <tr style ="height:35px">
                     
                     <td>Apple</td>
-                    <td><textarea style="resize:none; width:35px"; rows = "1"> 100 </textarea></td>
+                    <td><textarea style="resize:none; width:200px"; rows = "1"> 100 </textarea></td>
                     
                    
                     <td><a href="http://www.jquery2dotnet.com" class="btn btn-sm btn-primary btn-block" role="button">Update</a></td>
                     <td><a href="http://www.jquery2dotnet.com" class="btn btn-sm btn-primary btn-block" role="button">Delete</a></td>
                     </tr>
-                <tr>
+                <tr style ="height:35px">
                     
                     <td>Banana</td>
-                    <td><textarea style="resize:none; width:35px"; rows = "1"> 250 </textarea></td>
+                    <td><textarea style="resize:none; width:200px"; rows = "1"> 250 </textarea></td>
                     
            
                     <td><a href="http://www.jquery2dotnet.com" class="btn btn-sm btn-primary btn-block" role="button">Update</a></td>
@@ -166,7 +166,7 @@
                 <tr>
                     
                     <td>Orange</td>
-                    <td><textarea style="resize:none; width:35px"; rows = "1"> 30 </textarea></td>
+                    <td><textarea style="resize:none; width:200px"; rows = "1"> 30 </textarea></td>
                     
             
                     <td><a href="http://www.jquery2dotnet.com" class="btn btn-sm btn-primary btn-block" role="button">Update</a></td>
