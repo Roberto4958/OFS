@@ -147,8 +147,8 @@
               <tbody>
                 <tr>
                     
-                    <td>Filling</td>
-                    <td>100</td>
+                    <td>Apple</td>
+                    <td><textarea style="resize:none; width:35px"; rows = "1"> 100 </textarea></td>
                     
                    
                     <td><a href="http://www.jquery2dotnet.com" class="btn btn-sm btn-primary btn-block" role="button">Update</a></td>
@@ -156,8 +156,8 @@
                     </tr>
                 <tr>
                     
-                    <td>Crown</td>
-                    <td>250</td>
+                    <td>Banana</td>
+                    <td><textarea style="resize:none; width:35px"; rows = "1"> 250 </textarea></td>
                     
            
                     <td><a href="http://www.jquery2dotnet.com" class="btn btn-sm btn-primary btn-block" role="button">Update</a></td>
@@ -165,8 +165,8 @@
                 </tr>
                 <tr>
                     
-                    <td>braces</td>
-                    <td>30</td>
+                    <td>Orange</td>
+                    <td><textarea style="resize:none; width:35px"; rows = "1"> 30 </textarea></td>
                     
             
                     <td><a href="http://www.jquery2dotnet.com" class="btn btn-sm btn-primary btn-block" role="button">Update</a></td>
