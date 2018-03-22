@@ -2,19 +2,18 @@
     session_start();
     require_once 'Scripts/loginInfo.php';
     
-    $userID; 
+    $userID = -1; 
+    $countyID = 1;
     $items_To_display = '';
-
-    if(!isset($_SESSION["id"])) {
-        $userID = 1;
-    } else {
-        $userID = $_SESSION["id"];
-    }
-
-
     $conn = new mysqli($hn, $un, $pw, $db);
-    if (!$conn->connect_error){
+
+    if(isset($_SESSION["id"])) {
+        $userID = $_SESSION["id"];
         $countyID = getCountyId($userID, $conn);
+    } 
+
+    
+    if (!$conn->connect_error){
         
         $sql = "select * from items where countyID = $countyID";
         $result = $conn->query($sql);
@@ -23,7 +22,7 @@
         for($i=0; $i < $rows; $i++){
             $result->data_seek($i);
             $obj = $result->fetch_array(MYSQLI_ASSOC);
-            $items_To_display .= generateItemsDiv($obj['Name'], $obj['CategoryName'], $obj['Price'], $obj['Weight'], $obj['Amount'], $obj['countyID'], $obj['Id']); 
+            $items_To_display .= generateItemsDiv($userID, $obj['Name'], $obj['CategoryName'], $obj['Price'], $obj['Weight'], $obj['Amount'], $obj['countyID'], $obj['Id']); 
         }
 
         $result->close();
@@ -33,7 +32,7 @@
     }
     
     function getCountyId($userID, $conn){
-        $sql = "select c.id from users u, supportedCountys c where c.name= u.County and u.id = 1;";
+        $sql = "select c.id from users u, supportedCountys c where c.name= u.County and u.id = $userID;";
         $result = $conn->query($sql);
         $result->data_seek(0);
         $obj = $result->fetch_array(MYSQLI_ASSOC);
@@ -42,9 +41,16 @@
         return $countyID;
     }
     
+    
 
-
-    function generateItemsDiv($name, $category, $price, $weight, $amount, $countyID, $itemID){
+    function generateItemsDiv($userID, $name, $category, $price, $weight, $amount, $countyID, $itemID){
+        $button  = '';
+        if ($userID != -1){ //if user is not logged in remove the button
+            $button = '<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+				            Add to Cart
+				        </button>';
+        }
+        
         return '<div data-category = "'.$category.'"  class="foodCard col-sm-12 col-md-6 col-lg-4 p-b-50">
 							<!-- Block2 -->
 							<div class="block2">
@@ -54,10 +60,7 @@
 									<div class="block2-overlay trans-0-4">
 
 										<div class="block2-btn-addcart w-size1 trans-0-4">
-											<!-- Button -->
-											<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-												Add to Cart
-											</button>
+											'.$button.'
 										</div>
 									</div>
 								</div>

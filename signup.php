@@ -65,6 +65,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $id = getUserID($conn, $email);
             $stmt->close();
             if($id){
+                startSession($auth, $id);
                 header('Location: index.php');
             }
         }
@@ -105,7 +106,7 @@ function emailIsAvailable($conn, $email ){
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<link rel="stylesheet" type="text/css" href="./css/login.css">
 </head>
-<body style="background-image: url('images/grapesBanner.jpg');">
+<body style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('images/grapesBanner.jpg');">
 
 
 <div class="container">
@@ -123,7 +124,7 @@ function emailIsAvailable($conn, $email ){
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
-								<form id="register-form" action="signup.php" method="post" name="signup" role="form" style="display: block;">
+								<form onsubmit="return CreateAccountValidate(this)" id="register-form" method="post" name="signup" role="form" style="display: block;" >
 									<div class="form-group col-sm-6">
 										<input type="text" name="firstname" id="firstname" class="form-control" required value="<?php if($error) echo $fname; ?>" placeholder="First Name" />
 										<span class="text-danger"><?php if (isset($name_error)) echo $name_error; ?></span>
@@ -175,14 +176,15 @@ function emailIsAvailable($conn, $email ){
 		</div>
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4 text-center">	
-				Already Registered? <a href="signin.php">Login Here</a>
+                <p style='color:#FFF; display:inline;' >Already Registered? </p><a href="signin.php">Login Here</a>
 			</div>
 		</div>
 
 	</div>
-
+    <script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script type="text/javascript" src="./js/login.js"></script>
+    <script type="text/javascript" src="./js/authenticate.js"></script>
 </body>
 </html>

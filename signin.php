@@ -73,7 +73,7 @@ function passIsCorrect($conn, $email, $hashedpass){
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<link rel="stylesheet" type="text/css" href="./css/login.css">
 </head>
-<body  style="background-image: url('images/grapesBanner.jpg');">
+<body  style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('images/grapesBanner.jpg');">
 <div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
@@ -113,13 +113,13 @@ function passIsCorrect($conn, $email, $hashedpass){
 		</div>
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4 text-center">	
-				New User? <a href="signup.php">Sign Up Here</a>
+                <p style='color:#FFF; display:inline;' >New User?</p> <a href="signup.php">Sign Up Here</a>
 			</div>
 		</div>
 	</div>
 
+    <script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="./js/login.js"></script>
 </body>
 </html>
