@@ -125,14 +125,29 @@ function generateCartItem(name, amount, weight, price, category){
 									+'</div>'
 								+'</li>';
 }
-    
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
 
 
 //@desc: add to cart buttion clicked listiner. Gets items info and calls a php script to update cart
 $('.block2-btn-addcart').each(function(){
 			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
             var itemID =  $(this).parent().parent().parent().find('.block2-name').data('itemid')
-            var userID =  1;
+            var userID =  getCookie('id');
             var countyID = $(this).parent().parent().parent().find('.block2-name').data('countyid')
     
 			$(this).on('click', function(){

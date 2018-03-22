@@ -1,9 +1,22 @@
 <?php
+    session_start();
     require_once 'Scripts/loginInfo.php';
+    
+    $userID; 
     $items_To_display = '';
+
+    if(!isset($_SESSION["id"])) {
+        $userID = 1;
+    } else {
+        $userID = $_SESSION["id"];
+    }
+
+
     $conn = new mysqli($hn, $un, $pw, $db);
     if (!$conn->connect_error){
-        $sql = "select * from items where countyID = 1";
+        $countyID = getCountyId($userID, $conn);
+        
+        $sql = "select * from items where countyID = $countyID";
         $result = $conn->query($sql);
         $rows = $result->num_rows;
     
@@ -19,7 +32,15 @@
       $items_To_display = '<h2>Sorry we are experiencing server errors</h2>';  
     }
     
-
+    function getCountyId($userID, $conn){
+        $sql = "select c.id from users u, supportedCountys c where c.name= u.County and u.id = 1;";
+        $result = $conn->query($sql);
+        $result->data_seek(0);
+        $obj = $result->fetch_array(MYSQLI_ASSOC);
+        $countyID = $obj['id'] *1;
+        $result->close();
+        return $countyID;
+    }
     
 
 

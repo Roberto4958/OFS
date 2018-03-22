@@ -4,7 +4,9 @@ if(isset($_SESSION['usr_id'])) {
 	header("Location: index.php");
 }
 
-include_once './Scripts/config.php';
+include_once 'Scripts/config.php';
+include_once 'Scripts/loginInfo.php';
+include_once 'Scripts/helperScripts.php';
 
 //set validation error flag as false
 $error = false;
@@ -28,10 +30,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		$error = true;
 		$name_error = "Name must contain only alphabets and space";
 	}
-	// if (!preg_match("/^[a-zA-Z_-]+$/",$uname)) {
-	// 	$error = true;
-	// 	$name_error = "Invalid Username: can only contain alphabets, numbers, -,or _";
-	// }
+
 	if(!filter_var($email,FILTER_VALIDATE_EMAIL)) {
 		$error = true;
 		$email_error = "Please Enter Valid Email ID";
@@ -48,23 +47,66 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		$error = true;
 		$zip_error = "Only numbers..";
 	}
+    
+    
 	if (!$error) {
-		if(mysqli_query($conn, "INSERT INTO users(`firstname`, `lastname`, `email`, `password`, `county`, `zip`) VALUES('".$fname."', '".$lname."', '".$email."', '".md5($password)."', '".$county."', '".$zip."')")) {
-			$successmsg = "Successfully Registered! <a href='signin.php'>Click here to Login</a>";
-		} else {
-			$errormsg = "Error in registering...Please try again later!";
-			echo mysqli_error($conn);
-		}
+        $conn = new mysqli($hn, $un, $pw, $db);
+        if(!emailIsAvailable($conn, $email)){ //check if password is taken
+            $email_error = "Email is taken";
+        }
+        else{
+            $salt = randomString(10);
+            $auth = randomString(20);
+            $hashedPass = hash('sha256', $password . $salt);
+            
+            $stmt = $conn->prepare("INSERT INTO users ( Email, firstName, lastName, County, Password, Salt, authtoken ) VALUES (?,?,?,?, ?,?, ?)");
+            $stmt->bind_param('sssssss', $email, $fname, $lname, $county, $hashedPass, $salt, $auth );
+	        $result = $stmt->execute();
+            $id = getUserID($conn, $email);
+            $stmt->close();
+            if($id){
+                header('Location: index.php');
+            }
+        }
+        $conn->close();
 	}
 }
+
+
+function getUserID($conn, $email){
+    $stmt = $conn->prepare("select id from users where email = ?;");
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_array(MYSQLI_NUM);
+    $stmt->close();
+    if(!$row[0]) return false;
+    return $row[0];
+} 
+
+//returns True is email is not taken
+function emailIsAvailable($conn, $email ){
+    $stmt = $conn->prepare("select * from users where email = ?");
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_array(MYSQLI_NUM);
+    $stmt->close();
+    if(!$row)return true;
+    return false;
+} 
+
 ?>
 
 <!DOCTYPE html>
+<html>
 <head>
 	<title>Register</title>
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<link rel="stylesheet" type="text/css" href="./css/login.css">
 </head>
+<body style="background-image: url('images/grapesBanner.jpg');">
+
 
 <div class="container">
 		<div class="row">

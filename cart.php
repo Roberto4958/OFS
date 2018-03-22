@@ -1,15 +1,22 @@
 <?php
+session_start();
 //error_reporting(0); // stops displaying warning from user end
 
     require_once 'Scripts/loginInfo.php';
+    require_once 'Scripts/helperScripts.php';
+    
+    if(!SessionIsValid()){
+        header('Location: signin.php');
+    }
 
     $cart_items = '';
     $total_price = 0;
     $total_weight = 0; 
+    $id = $_SESSION['id'];
     $conn = new mysqli($hn, $un, $pw, $db); //connects to db
     
     if (!$conn->connect_error){ //checks if connected succesfully 
-        $sql = "select i.name, sum(c.amount) as amount, i.weight, i.price, i.CategoryName from cart c, items i where i.id = c.ItemID and c.userid =1 group by i.name";
+        $sql = "select i.name, sum(c.amount) as amount, i.weight, i.price, i.CategoryName from cart c, items i where i.id = c.ItemID and c.userid =$id group by i.name";
         $result = $conn->query($sql);
         $rows = $result->num_rows;
         
