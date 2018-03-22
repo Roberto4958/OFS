@@ -1,3 +1,8 @@
+<?php
+//echo $_SESSION['usr_id']."in here";
+
+include_once './Scripts/config.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,6 +43,7 @@
 <body class="animsition">
 	<!-- Header -->
 	<?php
+	session_start();
     require_once "nav.php";
     ?>
 

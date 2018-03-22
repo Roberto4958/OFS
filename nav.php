@@ -1,6 +1,8 @@
 <?php
+
 //Roberto made a change
-require_once './Scripts/loginInfo.php';
+require_once './Scripts/config.php';
+
     $items = '';
     $total_price = 0;
     $total_weight = 0; 
@@ -8,7 +10,7 @@ require_once './Scripts/loginInfo.php';
     $cart = '';
     $cartItems = '';
     // Create connection
-	$conn = new mysqli($hn, $un, $pw);
+	// $conn = new mysqli($hn, $un, $pw);
 
 
     if (!$conn->connect_error){
@@ -122,39 +124,39 @@ require_once './Scripts/loginInfo.php';
 		<!-- Header desktop -->
 		<div class="container-menu-header-v2 p-t-26">
 			<div class="topbar2">
-				<div class="topbar-social">
-					<a href="#" class="topbar-social-item fa fa-facebook"></a>
-					<a href="#" class="topbar-social-item fa fa-instagram"></a>
-					<a href="#" class="topbar-social-item fa fa-pinterest-p"></a>
-					<a href="#" class="topbar-social-item fa fa-snapchat-ghost"></a>
-					<a href="#" class="topbar-social-item fa fa-youtube-play"></a>
-				</div>
+				
 
 				<!-- Logo2 -->
 				<a href="index.php" class="logo2">
-					<img src="images/icons/logo.png" alt="IMG-LOGO">
+					<img src="images/icons/logo1.png" alt="IMG-LOGO">
 				</a>
 
 				<div class="topbar-child2">
-					<span class="topbar-email">
-						fashe@example.com
-					</span>
 
-					<!--  -->
-					<a href="#" class="header-wrapicon1 dis-block m-l-30">
-						<img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
-					</a>
+					
+					<ul class="nav">
+								<?php if (isset($_SESSION['usr_id'])) { ?>
+								<li><p class="navbar-text">Welcome <?php echo $_SESSION['usr_name']; ?></p></li>
+								<li><a href="logout.php">Log Out</a></li>
+								<?php } else { ?>
+								<li><a href="signin.php">Login</a></li>
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								<li><a href="signup.php">Sign Up</a></li>
+								<?php } ?>
+							</ul>
+					
 
 					<span class="linedivide1"></span>
                     <div class="header-wrapicon2 m-r-13">
 						<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
 						
 
-						<!-- Header cart noti -->
+						<!-- Header cart notice -->
 						<?php echo $cart; ?>
 					</div>
 				</div>
 			</div>
+			
 
 			<div class="wrap_header">
 
@@ -186,7 +188,7 @@ require_once './Scripts/loginInfo.php';
 		<div class="wrap_header_mobile">
 			<!-- Logo moblie -->
 			<a href="index.php" class="logo-mobile">
-				<img src="images/icons/logo.png" alt="IMG-LOGO">
+				<img src="images/icons/logo1.png" alt="IMG-LOGO">
 			</a>
 
 			<!-- Button show menu -->

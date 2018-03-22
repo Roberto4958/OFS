@@ -1,21 +1,20 @@
 <?php
 session_start();
+if(isset($_SESSION['usr_id'])) {
+	header("Location: index.php");
+}
 
-// if(isset($_SESSION['usr_id'])) {
-// 	header("Location: index.php");
-// }
-
-include_once './Scripts/logininfo.php';
+include_once './Scripts/config.php';
 
 //set validation error flag as false
 $error = false;
 
 //check if form is submitted
-if (isset($_POST['signup'])) {
-	echo "signing up...";
+if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$fname = mysqli_real_escape_string($conn, $_POST['firstname']);
 	$lname = mysqli_real_escape_string($conn, $_POST['lastname']);
-//	$uname = mysqli_real_escape_string($con, $_POST['username']);
+	$county = mysqli_real_escape_string($conn, $_POST['county']);
+	$zip = mysqli_real_escape_string($conn, $_POST['zip']);
 	$email = mysqli_real_escape_string($conn, $_POST['email']);
 	$password = mysqli_real_escape_string($conn, $_POST['password']);
 	$cpassword = mysqli_real_escape_string($conn, $_POST['cpassword']);
@@ -45,9 +44,13 @@ if (isset($_POST['signup'])) {
 		$error = true;
 		$cpassword_error = "Password and Confirm Password doesn't match";
 	}
+	if (!preg_match("/^[0-9]+$/",$zip)) {
+		$error = true;
+		$zip_error = "Only numbers..";
+	}
 	if (!$error) {
-		if(mysqli_query($conn, "INSERT INTO users(`firstname`, `lastname`, `Email`, `password`) VALUES('".$fname."', '".$lname."', '".$email."', '".md5($password)."')")) {
-			$successmsg = "Successfully Registered! <a href='login.php'>Click here to Login</a>";
+		if(mysqli_query($conn, "INSERT INTO users(`firstname`, `lastname`, `email`, `password`, `county`, `zip`) VALUES('".$fname."', '".$lname."', '".$email."', '".md5($password)."', '".$county."', '".$zip."')")) {
+			$successmsg = "Successfully Registered! <a href='signin.php'>Click here to Login</a>";
 		} else {
 			$errormsg = "Error in registering...Please try again later!";
 			echo mysqli_error($conn);
@@ -58,23 +61,19 @@ if (isset($_POST['signup'])) {
 
 <!DOCTYPE html>
 <head>
-	<title>Login/Register Page</title>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<link rel="stylesheet" type="text/css" href="./css/login.css">
+	<title>Register</title>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<link rel="stylesheet" type="text/css" href="./css/login.css">
 </head>
 
-<body>
 <div class="container">
-    	<div class="row">
+		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<div class="panel panel-login">
 					<div class="panel-heading">
 						<div class="row">
-							<div class="col-xs-6">
-								<a href="#" class="active" id="login-form-link">Login</a>
-							</div>
-							<div class="col-xs-6">
-								<a href="#" id="register-form-link">Register</a>
+							<div>
+								<a href="#register" class="active" id="register-form-link">Register</a>
 							</div>
 						</div>
 						<hr>
@@ -82,45 +81,17 @@ if (isset($_POST['signup'])) {
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
-								<form id="login-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" role="form" style="display: block;">
-									<div class="form-group col-sm-12">
-										<input type="text" name="email" id="email" class="form-control" placeholder="Email" value="<?php if($error) echo $email; ?>">
-									</div>
-									<div class="form-group col-sm-12">
-										<input type="password" name="password" id="password" class="form-control" placeholder="Password">
-									</div>
-									<!-- <div class="form-group text-center">
-										<input type="checkbox" tabindex="3" class="" name="remember" id="remember">
-										<label for="remember"> Remember Me</label>
-									</div> -->
-									<div class="form-group">
-										<div class="row">
-											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="login-submit" id="login-submit" class="form-control btn btn-login" value="Log In">
-											</div>
-										</div>
-									</div>
-									<!-- <div class="form-group">
-										<div class="row">
-											<div class="col-lg-12">
-												<div class="text-center">
-													<a href="#" class="forgot-password">Forgot Password?</a>
-												</div>
-											</div>
-										</div>
-									</div> -->
-								</form>
-								<form id="register-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="signup" role="form" style="display: none;">
+								<form id="register-form" action="signup.php" method="post" name="signup" role="form" style="display: block;">
 									<div class="form-group col-sm-6">
-										<input type="text" name="firstname" id="firstname" class="form-control" placeholder="First Name" required value="<?php if($error) echo $fname; ?>"/>
+										<input type="text" name="firstname" id="firstname" class="form-control" required value="<?php if($error) echo $fname; ?>" placeholder="First Name" />
 										<span class="text-danger"><?php if (isset($name_error)) echo $name_error; ?></span>
 									</div>
 									<div class="form-group col-sm-6">
-										<input type="text" name="lastname" id="lastname" class="form-control" placeholder="Last Name" required value="<?php if($error) echo $lname; ?>"/>
+										<input type="text" name="lastname" id="lastname" class="form-control" required value="<?php if($error) echo $lname; ?>" placeholder="Last Name" />
 										<span class="text-danger"><?php if (isset($name_error)) echo $name_error; ?></span>
 									</div>
 									<div class="form-group col-sm-12">
-										<input type="email" name="email" id="email" class="form-control" placeholder="Email Address" required value="<?php if($error) echo $email; ?>">
+										<input type="email" name="email" id="email" class="form-control" required value="<?php if($error) echo $email; ?>" placeholder="Email Address" />
 										<span class="text-danger"><?php if (isset($email_error)) echo $email_error; ?></span>
 									</div>
 									<div class="form-group col-sm-6">
@@ -128,8 +99,21 @@ if (isset($_POST['signup'])) {
 										<span class="text-danger"><?php if (isset($password_error)) echo $password_error; ?></span>
 									</div>
 									<div class="form-group col-sm-6">
-										<input type="password" name="confirm-password" id="confirm-password" required class="form-control" placeholder="Confirm Password">
+										<input type="password" name="cpassword" id="confirm-password" required class="form-control" placeholder="Confirm Password">
 										<span class="text-danger"><?php if (isset($cpassword_error)) echo $cpassword_error; ?></span>
+									</div>
+									<div class="form-group col-sm-6 custom-select custom-select-lg mb-3">
+<!-- 										<label for="inputState">County</label>
+ -->										<select id="county" name="county" class="form-control" required class="form-control" 											placeholder="County">
+											<option selected>Choose County...</option>
+											<option>Santa Clara</option>
+											<option>San Mateo</option>
+										</select>
+									</div>
+									<div class="form-group col-sm-6">
+										<!-- <label for="inputZip">Zip</label> -->
+										<input type="text" class="form-control" id="zip" name="zip" placeholder="Zip" required value="<?php if($error) echo $zip; ?>">
+										<span class="text-danger"><?php if (isset($zip_error)) echo $zip_error; ?></span>
 									</div>
 									<div class="form-group">
 										<div class="row">
@@ -147,11 +131,16 @@ if (isset($_POST['signup'])) {
 				</div>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4 text-center">	
+				Already Registered? <a href="signin.php">Login Here</a>
+			</div>
+		</div>
+
 	</div>
 
-
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="./js/login.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="./js/login.js"></script>
 </body>
 </html>
