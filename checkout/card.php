@@ -1,4 +1,4 @@
-<form class="form-horizontal" method="POST" action="map">
+<form class="form-horizontal" method="POST" action="map/index.php">
                     <!--CREDIT CART PAYMENT-->
 
 <div class="panel panel-info">
@@ -76,10 +76,9 @@
                             </div>
                             <div  class="form-group">
                                 <div class="top-margin col-md-6 col-sm-6 col-xs-12">
-                                    <button type="submit" class="btn btn-primary btn-submit-fix">Place Order</button>
+                                    <button name="orderSubmitted" type="submit" class="btn btn-primary btn-submit-fix">Place Order</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!--CREDIT CART PAYMENT END-->
 </form>
