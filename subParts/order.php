@@ -1,5 +1,4 @@
 <?php 
-
     $cart_items = '';
     $total_price = 0;
     $total_weight = 0; 
@@ -43,7 +42,7 @@
         
         return '<div class="form-group">
                                 <div class="col-sm-3 col-xs-3">
-                                    <img class="img-responsive" src="../images/'.$category.'/'.$name.'.jpg" />
+                                    <img class="img-responsive" src="images/'.$category.'/'.$name.'.jpg" />
                                 </div>
                                 <div class="col-sm-6 col-xs-6">
                                     <div class="col-xs-12"><h3 style="margin-top:0;">'.$name.'</h3></div>
@@ -59,7 +58,7 @@
 
 ?>
 
-<form class="form-horizontal" method="POST" action="index.php">
+<form class="form-horizontal" method="POST" action="checkout.php">
 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                     <!--REVIEW ORDER-->
                     <div class="panel panel-info">

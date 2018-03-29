@@ -3,9 +3,7 @@ body {
 }
 .style1 {font-size: 18px}
 
-html,body,.wrapper{
-    background: #f7f7f7;
-}
+
 .steps {
     margin-top: -41px;
     display: inline-block;
@@ -14,7 +12,7 @@ html,body,.wrapper{
 }
 .step {
     float: left;
-    background: white;
+    background: #ececec;
     padding: 7px 13px;
     border-radius: 1px;
     text-align: center;
@@ -25,13 +23,13 @@ html,body,.wrapper{
     margin: 0;
     width: 0;
     height: 0;
-    border-left: 16px solid #fff;
-    border-top: 16px solid transparent;
-    border-bottom: 16px solid transparent;
+    border-left: 16px solid #ececec;
+    border-top: 19.5px solid transparent;
+    border-bottom: 19.5px solid transparent;
     z-index: 1008;
     position: absolute;
     left: 99px;
-    top: 1px
+    top: 0px
 }
 .step_line.backline {
     border-left: 20px solid #f7f7f7;

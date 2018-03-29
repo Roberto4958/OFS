@@ -1,4 +1,4 @@
-<form onsubmit = "return ShippingaddressValidation(this)" class="form-horizontal" method="POST" action="index.php">
+<form onsubmit = "return ShippingaddressValidation(this)" class="form-horizontal" method="POST" action="checkout.php">
 
 <div class="panel panel-info">
                         <div class="panel-heading">Address</div>
