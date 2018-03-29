@@ -1,15 +1,47 @@
 <?php
-//error_reporting(0); // stops displaying warning from user end
+    session_start();
+
+//error_reporting(0); // stops displaying warning from user end    
 
     require_once 'Scripts/loginInfo.php';
+    require_once 'Scripts/helperScripts.php';
 
-    $cart_items = '';
-    $total_price = 0;
-    $total_weight = 0; 
+
+    //
+    if(!SessionIsValid() || !$_SESSION['admin']){
+        header('Location: signin.php');
+    }
+    if(!$_SESSION['admin']){ //checks if admin logged in
+        header('Location: index.php');
+    }
+
+
+    //---------handles input from user and saves it to db -------//
+
     $conn = new mysqli($hn, $un, $pw, $db); //connects to db
+    $userID = $_SESSION["id"];
+    $countyID = getCountyId($userID, $conn);
     
+    if(isset($_POST['Submit'])){ //form submitted
+        
+        $value = split(",", $_POST['Submit']);
+        $itemID = htmlspecialchars($value[0]);
+        $buttonPressed = htmlspecialchars($value[1]);
+        
+        if($buttonPressed == "update"){
+            updateCart($conn, $_POST[$itemID."amount"], $itemID);
+        }
+        if($buttonPressed == "clear"){
+            updateCart($conn, 0, $itemID);
+        }
+    }
+
+    //--------gets items from db and displays them-------//
+
+    $countyItems = '';
+
     if (!$conn->connect_error){ //checks if connected succesfully 
-        $sql = "select i.name, sum(c.amount) as amount, i.weight, i.price, i.CategoryName from cart c, items i where i.id = c.ItemID and c.userid =1 group by i.name";
+        $sql = "select id, name, amount from items where countyID = $countyID;";
         $result = $conn->query($sql);
         $rows = $result->num_rows;
         
@@ -18,65 +50,55 @@
         
             $result->data_seek($i);
             $obj = $result->fetch_array(MYSQLI_ASSOC);
-            $total_weight += $obj['amount'] * $obj['weight'];
-            $total_price += $obj['amount'] * $obj['price'];
-            $cart_items .= generateDiv($obj['name'], $obj['amount'], $obj['weight'], $obj['price'], $obj['CategoryName']); 
+            $countyItems .= generate($obj['name'], $obj['amount'], $obj['id']); 
         }
         $result->close();
         $conn->close();
     }
-    else{
-        $cart_items = "<h2>We are experiencing server error</h2>";
-    }
 
+    else $countyItems = "<h2>We are experiencing server error</h2>";
+    
     
 
     //@desc: generates html code to display a new row inside the cart table 
-    function generateDiv($name, $amount, $weight, $price, $category){ //old img = item-10.jpg
+    function generate($name, $amount, $itemID){ 
         
-        $total_price = $amount * $price;
-        return '<tr class="table-row">
-							<td class="column-1">
-								<div class="cart-img-product b-rad-4 o-f-hidden">
-									<img src="images/'.$category.'/'.$name.'.jpg" alt="IMG-PRODUCT">
-								</div>
-							</td>
-							<td class="column-2 adminLayout">'.$name.'</td>
-							<td class="column-3">
-                                <div class="flex-w bo5 of-hidden w-size17">
-									<button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
-										<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
-									</button>
+        return '<tr style ="height:35px">
+                    <td>'.$name.'</td>
+                        <td>
+                            <textarea name="'.$itemID.'amount" type="number" rows = "1">'.$amount.'</textarea>
+                        </td>
+                        <td>
+                            <button  name="Submit" type="submit" value="'.$itemID.',update" class="btn btn-sm btn-primary btn-block" role="button">Update</button>
+                        </td>
+                        <td>
+                            <button name="Submit" type="submit" value="'.$itemID.',clear" class="btn btn-sm btn-primary btn-block" role="button">Clear</button>
+                        </td>
+                </tr>';
+    }
 
-									<input class="size8 m-text18 t-center num-product" type="number" name="num-product1" value="'.$price.'">
+    function updateCart($conn, $amount, $itemID){
+        $sql = " update items set amount = $amount where id = $itemID;";
+        if($conn->query($sql)){
+            return true;
+        }else return false;
+    }
 
-									<button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">
-										<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
-									</button>
-								</div>
-                            </td>
-							<td class="column-4">
-								<div class="flex-w bo5 of-hidden w-size17">
-									<button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
-										<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
-									</button>
-
-									<input class="size8 m-text18 t-center num-product" type="number" name="num-product1" value="'.$amount.'">
-
-									<button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">
-										<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
-									</button>
-								</div>
-							</td>
-				            <td class="column-5">'."100".'</td>
-						</tr>';
+    function getCountyId($userID, $conn){
+        $sql = "select c.id from users u, supportedCountys c where c.name= u.County and u.id = $userID;";
+        $result = $conn->query($sql);
+        $result->data_seek(0);
+        $obj = $result->fetch_array(MYSQLI_ASSOC);
+        $countyID = $obj['id'] *1;
+        $result->close();
+        return $countyID;
     }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Cart</title>
+	<title>Inventory</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -103,87 +125,62 @@
 	<link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
-    <link rel="stylesheet" type="text/css" href="css/admin.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
+     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/admin.css">
+
     
 </head>
+    
+    <?php require_once "nav.php"?>
+    
+    <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(images/heading-pages-01.jpg);">
+		<h2 class="l-text2 t-center">
+			Sanata Clara County 
+		</h2>
+	</section>
+    
 <body class="animsition">
 
-	<!-- Header -->
-	
-
-	<!-- Cart -->
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-
-<div id="fullscreen_bg" class="fullscreen_bg"/>
- <form class="form-signin">
-<div class="container";>
-    <div class="row">
-        <div class="col-md-5 col-md-offset-3">
-        <div class="panel panel-default" style = "width:600px;">
-        <div class="panel panel-primary">
-        
-            <h3 class="text-center">
-                        Inventory</h3>
-        
-        <div class="panel-body">    
- 
- 
- <table class="table table-striped table-condensed"; style = "height:1000px; width:500px">
-                  <thead>
-                  <tr>
-                      <th>Name</th>
-                      <th>Amount</th>
-                      
-                    
-                      <th>Update</th>  
-                      <th>Delete</th> 
-                  </tr>
-              </thead>   
-              <tbody>
-                <tr style ="height:35px">
-                    
-                    <td>Apple</td>
-                    <td><textarea style="resize:none; width:200px"; rows = "1"> 100 </textarea></td>
-                    
-                   
-                    <td><a href="http://www.jquery2dotnet.com" class="btn btn-sm btn-primary btn-block" role="button">Update</a></td>
-                    <td><a href="http://www.jquery2dotnet.com" class="btn btn-sm btn-primary btn-block" role="button">Delete</a></td>
-                    </tr>
-                <tr style ="height:35px">
-                    
-                    <td>Banana</td>
-                    <td><textarea style="resize:none; width:200px"; rows = "1"> 250 </textarea></td>
-                    
-           
-                    <td><a href="http://www.jquery2dotnet.com" class="btn btn-sm btn-primary btn-block" role="button">Update</a></td>
-                    <td><a href="http://www.jquery2dotnet.com" class="btn btn-sm btn-primary btn-block" role="button">Delete</a></td>
-                </tr>
-                <tr>
-                    
-                    <td>Orange</td>
-                    <td><textarea style="resize:none; width:200px"; rows = "1"> 30 </textarea></td>
-                    
-            
-                    <td><a href="http://www.jquery2dotnet.com" class="btn btn-sm btn-primary btn-block" role="button">Update</a></td>
-                    <td><a href="http://www.jquery2dotnet.com" class="btn btn-sm btn-primary btn-block" role="button">Delete</a></td>
-                </tr>   
-              </tbody>
-  </div>
-       </div>
+    <div id="fullscreen_bg" class="fullscreen_bg"/>
+        <form class="form-signin" method = "post">
+            <div class="container";>
+                <div class="row">
+                    <div id="invetoryChart">
+                    <div class="panel panel-default" style = "width:100%;">
+                        <div class="panel panel-primary">
+                            <h3 class="text-center">Inventory</h3>
+                            <div class="panel-body">    
+                                <table class="table table-striped table-condensed"; style = " width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Amount</th>
+                                            <th>Update</th>  
+                                            <th>Delete</th> 
+                                        </tr>
+                                    </thead>   
+                                    <tbody>
+                                        
+                                        <?php echo $countyItems;?>
+                                         
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-</form>
+    </form>
 
-              
+    <?php
+        require_once 'footer.html';
+    ?>
             
-
-
 	<!-- Back to top -->
 	<div class="btn-back-to-top bg0-hov" id="myBtn">
 		<span class="symbol-btn-back-to-top">
@@ -191,34 +188,12 @@
 		</span>
 	</div>
 
-	<!-- Container Selection -->
-	<div id="dropDownSelect1"></div>
-	<div id="dropDownSelect2"></div>
 
 
 
-<!--===============================================================================================-->
-	<script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
 	<script type="text/javascript" src="vendor/animsition/js/animsition.min.js"></script>
-<!--===============================================================================================-->
-	<script type="text/javascript" src="vendor/bootstrap/js/popper.js"></script>
-	<script type="text/javascript" src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script type="text/javascript" src="vendor/select2/select2.min.js"></script>
-    <script type="text/javascript" src="js/cart.js"></script>
-	<script type="text/javascript">
-		$(".selection-1").select2({
-			minimumResultsForSearch: 20,
-			dropdownParent: $('#dropDownSelect1')
-		});
 
-		$(".selection-2").select2({
-			minimumResultsForSearch: 20,
-			dropdownParent: $('#dropDownSelect2')
-		});
-	</script>
-<!--===============================================================================================-->
 	<script src="js/main.js"></script>
 </body>
+    
 </html>

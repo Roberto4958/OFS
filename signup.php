@@ -59,8 +59,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $auth = randomString(20);
             $hashedPass = hash('sha256', $password . $salt);
             
-            $stmt = $conn->prepare("INSERT INTO users ( Email, firstName, lastName, County, Password, Salt, authtoken ) VALUES (?,?,?,?, ?,?, ?)");
-            $stmt->bind_param('sssssss', $email, $fname, $lname, $county, $hashedPass, $salt, $auth );
+            $stmt = $conn->prepare("INSERT INTO users ( Email, firstName, lastName, County, Password, Salt, authtoken, admin ) VALUES (?,?,?,?, ?,?, ?, false)");
+            $stmt->bind_param('sssssss', $email, $fname, $lname, $county, $hashedPass, $salt, $auth);
 	        $result = $stmt->execute();
             $id = getUserID($conn, $email);
             $stmt->close();

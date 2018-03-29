@@ -30,9 +30,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             else{
                 $token = randomString(20);
                 $id= $loginInfo[0];
+                $isAdmin = $loginInfo[1];                
                 $conn->query("update users set authtoken = '$token' where id = $id"); 
-                startSession($token, $id);
-                header('Location: index.php');
+                startSession($token, $id, $isAdmin);
+                
+                if($isAdmin)
+                    header('Location: admin.php');
+                else 
+                    header('Location: index.php');
             }
         }
     }
@@ -54,14 +59,14 @@ function getSalt($conn, $email){
 }
 
 function passIsCorrect($conn, $email, $hashedpass){
-    $stmt = $conn->prepare("select id from users where email = ? and password = ?");
+    $stmt = $conn->prepare("select id, admin from users where email = ? and password = ?");
     $stmt->bind_param('ss', $email, $hashedpass);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_array(MYSQLI_NUM);
     $stmt->close();
     if(!$row) return false;
-    return array($row[0]);
+    return array($row[0], $row[1]);
 }
 
 
