@@ -15,7 +15,7 @@
     
     if (!$conn->connect_error){
         
-        $sql = "select * from items where countyID = $countyID";
+        $sql = "select * from items where countyID = $countyID and amount > 0";
         $result = $conn->query($sql);
         $rows = $result->num_rows;
     

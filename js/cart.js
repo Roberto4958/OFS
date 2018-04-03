@@ -17,22 +17,25 @@ $(document).ready(function(){
     
     //updateCart
      $("#updateCart").click(function() {
+         updatecart()
          //alert(JSON.stringify(getItemsAndUpdateDB()));
      });
 }); 
 
 function updatecart(){
-//    json = JSON.stringify(getItemsAndUpdateDB())
-//    communicatToDatabase(json)
+    json = JSON.stringify(getItems())
+    alert(json);
+    communicatToDatabase(json)
 }
 
-//@desc: gets json string of all items in cart
+//@desc: Loops through dom to get all the items in cart 
+//@return: a array with array of that has the values {itemID, amount}
 function getItems(){
     items = []
     $('tr.table-row').each(function () {
         amount = parseFloat($(this).find("td.column-4").find("div").find('input').val());
         itemID = parseFloat($(this).find("td.column-6").find("i").data("itemid"))
-        items.push({itemID, amount})
+        items.push([itemID, amount])
     });
     return items;
 }
@@ -71,8 +74,70 @@ function updateTotalWeightAndPrice(){
     $('#totalPrice').replaceWith('<th id= "totalPrice" class="column-5" style="white-space: nowrap">$'+totalPrice.toFixed(2)+'</th>');    
     
     $('#totalWeight').replaceWith('<th id= "totalWeight" class="column-5" style="white-space: nowrap">'+totalWeight.toFixed(2)+' lb</th>');
+}
+
+//--------navigation logic ---------// 
+function updateNav(items){
+    HTML_cart_items = ''
+    total_price = 0
+    total_weight = 0
+    total_items = 0
+    for(i=0; i < items.length; i++){
+        total_weight += items[i]['amount'] * items[i]['weight']
+        total_price += items[i]['amount'] * items[i]['price']
+        HTML_cart_items += generateCartItem(items[i]['name'], items[i]['amount'], items[i]['weight'], items[i]['price'], items[i]['CategoryName'])
+    }
     
-    //@desc: calls the the addToCart php script to update the database. Passes vaibles by doing a POST request. 
+    cart = generateCartHTML(HTML_cart_items, total_price)
+    $('#icon-number').replaceWith('<span id="icon-number" class="header-icons-noti">'+items.length+'</span>')
+    $('#cart-desktop').replaceWith(cart)
+}
+
+function generateCartItem(name, amount, weight, price, category){
+        return '<li class="header-cart-item">'
+									+'<div class="header-cart-item-img">'
+										+'<img src="images/' + category + '/'+ name + '.jpg" alt="IMG">'
+									+'</div>'
+
+									+'<div class="header-cart-item-txt">'
+										+'<a href="#" class="header-cart-item-name">'
+											+ name 
+										+'</a>'
+
+										+'<span class="header-cart-item-info">'
+											+ amount + 'x' + price
+										+'</span>'
+									+'</div>'
+								+'</li>';
+}
+
+function generateCartHTML(items, cost){
+        return '<div id="cart-desktop" class="header-cart header-dropdown">'
+							+'<ul id = "cart_list" class="header-cart-wrapitem">'
+                                +items
+							+'</ul>'
+
+							+'<div class="header-cart-total">'
+								+"Total: " +cost.toFixed(2)
+							+"</div>"
+
+							+'<div class="header-cart-buttons">'
+								+'<div class="header-cart-wrapbtn">'
+    
+									+'<a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">View Cart</a>'									
+								+"</div>"
+								+'<div class="header-cart-wrapbtn">'
+									+'<a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">Check Out</a>'
+								+"</div>"
+							+"</div>"
+						+"</div>";
+    }
+
+
+//----- Ajax ---------// 
+
+
+//@desc: calls the the addToCart php script to update the database. Passes vaibles by doing a POST request. 
 function communicatToDatabase(items){
     $.ajax({
                 url: "Scripts/updateCart.php",
@@ -83,22 +148,22 @@ function communicatToDatabase(items){
                 success: function (data) {
                     if(data){
                         if(data.success){
-//                            swal(nameProduct, data.status, "success");
-//                            updateNav(data.cart)
+                            swal( "success", "Cart Has Been Updated", "success");
+                            updateNav(data.cart)
                         }
                         else {
-                            swal({ title: "Error", text: "Please try again later", icon: "error"});
+                            swal({ title: "Error1", text: "Please try again later", icon: "error"});
                         }
                     }
-                    else swal({ title: "Error", text: "Please try again later", icon: "error"});
+                    else swal({ title: "Error2", text: "Please try again later", icon: "error"});
                     
                     },
                 error: function (jqXHR, exception) {
-                    swal({ title: "Error", text: "Please try again later", icon: "error"});
+                    swal({ title: "Error3", text: "Please try again later", icon: "error"});
                 }
             });
 }
-}
+
 
 
 

@@ -73,7 +73,10 @@ else {
     function addToCart($conn, $userID, $itemID, $countyID){
         $sql = "insert into cart(itemID, amount, userID, countyID) values($itemID, 1, $userID, $countyID)";
         if($conn->query($sql)){
-            return true;
+            if(decrementItem($itemID, $conn)){
+               return true; 
+            }
+            else return false;
         }else return false;
     }
 
@@ -84,6 +87,16 @@ else {
     //@param: $itemID - int: id of county 
     function increaseAmountInCart($conn, $userID, $itemID, $countyID){
         $sql = "update cart set amount = amount+1  where userID =$userID and itemID = $itemID";
+        if($conn->query($sql)){
+            if(decrementItem($itemID, $conn)){
+               return true; 
+            }
+            else return false;
+        }else return false;
+    }
+
+    function decrementItem($itemID, $conn){
+        $sql = "update items set amount = amount - 1 where id = $itemID;"; 
         if($conn->query($sql)){
             return true;
         }else return false;
