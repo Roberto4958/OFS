@@ -63,7 +63,8 @@ session_start();
 									</button>
 								</div>
 							</td>
-				            <td class="column-5">$'.$total_price.'</td>
+                            <td class="column-5 p-l-8">'.$weight.'</td>
+				            <td class="column-6">$'.$total_price.'</td>
 						</tr>';
     }
 ?>
@@ -126,8 +127,9 @@ session_start();
 							<th class="column-1"></th>
 							<th class="column-2">Product</th>
 							<th class="column-3">Price</th>
-							<th class="column-4 p-l-70">Quantity</th>
-							<th class="column-5">Total</th>
+							<th class="column-4 p-l-30">Quantity</th>
+                            <th class="column-5">Weight</th>
+							<th class="column-6">Total</th>
 						</tr>
                         
 <!--                    display cart items-->
@@ -181,7 +183,7 @@ session_start();
 
 					<div class="w-size20 w-full-sm">
 						<p class="s-text8 p-b-23">
-							We can drone Items right now! The first 15 punds is on us!
+							We can drone Items right now! The first 15 pounds is on us!
 						</p>
 
 						<span class="s-text19">

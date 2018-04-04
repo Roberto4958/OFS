@@ -63,8 +63,9 @@ session_start();
 									</button>
 								</div>
 							</td>
-				            <td class="column-5">$'.$total_price.'</td>
-                            <td class="column-6" style="padding-top:0; padding-bottom:0;"><i data-itemid = "'.$id.'" class="fa fa-trash delete"></i></td>
+                            <td class"column-5">'.$weight.'</td>
+				            <td class="column-6">$'.$total_price.'</td>
+                            <td class="column-7" style="padding-top:0; padding-bottom:0;"><i data-itemid = "'.$id.'" class="fa fa-trash delete"></i></td>
                             
 						</tr>';
     }
@@ -129,7 +130,8 @@ session_start();
 							<th class="column-2">Product</th>
 							<th class="column-3">Price</th>
 							<th class="column-4 p-l-70">Quantity</th>
-							<th class="column-5">Total</th>
+                            <th class="column-5">Weight</th>
+							<th class="column-6">Total</th>
 						</tr>
                         
 <!--                    display cart items-->
