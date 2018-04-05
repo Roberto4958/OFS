@@ -1,9 +1,8 @@
 <?php
 
-require_once 'Scripts/config.php';
+//require_once 'Scripts/config.php';
 require_once 'Scripts/helperScripts.php';
 require_once 'Scripts/loginInfo.php';
-
 $displayCart = "";
 
     if(SessionIsValid()){
@@ -15,13 +14,13 @@ $displayCart = "";
         $cartItems = '';
         $id = $_SESSION['id'];
         // Create connection
-	   $conn = new mysqli($hn, $un, $pw);
+	   $conn = new mysqli($hn, $un, $pw, $db);
 
 
         if (!$conn->connect_error){
-    	   $conn->query("Use OFS");
+//    	   $conn->query("Use OFS");
 
-            $sql = "select i.name, sum(c.amount) as amount, i.weight, i.price, i.CategoryName from cart c, items i where i.id = c.ItemID and c.userid =$id group by i.id";
+            $sql = "select i.name, sum(c.amount) as amount, i.weight, i.price, i.CategoryName from Cart c, Items i where i.id = c.ItemID and c.userid =$id group by i.id";
             $result = $conn->query($sql);
             $total_items = $result->num_rows;
         
@@ -78,7 +77,7 @@ $displayCart = "";
 
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="checkout.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										Check Out
 									</a>
 								</div>
@@ -226,7 +225,7 @@ $displayCart = "";
 
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="checkout.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										Check Out
 									</a>
 								</div>

@@ -58,11 +58,11 @@ else {
     
     //@desc: gets county id 
     function getCountyId($userID, $conn){
-        $sql = "select c.id from users u, supportedCountys c where c.name= u.County and u.id = $userID;";
+        $sql = "select c.Id from users u, supportedCountys c where c.Name= u.County and u.Id = $userID";
         $result = $conn->query($sql);
         $result->data_seek(0);
         $obj = $result->fetch_array(MYSQLI_ASSOC);
-        $countyID = $obj['id'] *1;
+        $countyID = $obj['Id'] *1;
         $result->close();
         return $countyID;
     }
@@ -71,7 +71,7 @@ else {
     function incrementItems($items, $conn){
         for($i = 0; $i < count($items); $i++) {
             
-            $itemID = $items[$i]["id"];
+            $itemID = $items[$i]["Id"];
             $amount = $items[$i]["amount"];
             if(!incrementItem($itemID, $amount, $conn)){ //increment item
                 return false;
@@ -81,14 +81,14 @@ else {
     }
 
     function incrementItem($itemID, $amount, $conn){
-        $sql = "update items set amount = amount + $amount where id =$itemID;"; 
+        $sql = "update Items set Amount = Amount + $amount where Id =$itemID"; 
         if($conn->query($sql)){
             return true;
         }else return false;
     }
 
     function decrementItem($itemID, $amount, $conn){
-        $sql = "update items set amount = amount - $amount where id = $itemID;"; 
+        $sql = "update Items set Amount = Amount - $amount where Id = $itemID"; 
         if($conn->query($sql)){
             return true;
         }else return false;
@@ -96,14 +96,14 @@ else {
 
 
     function dropCart($userID, $conn){
-        $sql = "delete from cart where userID = $userID"; 
+        $sql = "delete from Cart where userID = $userID"; 
         if($conn->query($sql)){
             return true;
         }else return false;
     }
 
     function getCart($conn, $userID){
-        $sql = "select i.id, i.name, sum(c.amount) as amount, i.weight, i.price, i.CategoryName from cart c, items i where i.id = c.ItemID and c.userid = $userID group by i.id";
+        $sql = "select i.Id, i.Name, sum(c.amount) as amount, i.Weight, i.Price, i.CategoryName from Cart c, Items i where i.id = c.ItemID and c.userID = $userID group by i.Id";
         $result = $conn->query($sql);
         $obj = array(); 
         if($result){
@@ -126,7 +126,7 @@ else {
     //@param: $itemID - int: id of food item
     //@param: $itemID - int: id of county 
     function addToCart($conn, $userID, $itemID, $countyID, $amount){
-        $sql = "insert into cart(itemID, amount, userID, countyID) values($itemID, $amount, $userID, $countyID)";
+        $sql = "insert into Cart(ItemID, Amount, userID, countyID) values($itemID, $amount, $userID, $countyID)";
         if($conn->query($sql)){
             if(decrementItem($itemID, $amount, $conn)){
                 return true;
@@ -147,7 +147,7 @@ else {
     //@param: $itemID - int: id of food item
     //@param: $itemID - int: id of county 
     function increaseAmountInCart($conn, $userID, $itemID, $countyID){
-        $sql = "update cart set amount = amount+1  where userID =$userID and itemID = $itemID";
+        $sql = "update Cart set Amount = Amount+1  where userID =$userID and itemID = $itemID";
         if($conn->query($sql)){
             return true;
         }else return false;
@@ -157,7 +157,7 @@ else {
     //@desc: checks items and sees if the desired amount is less than the total amount in the db
     function checkItemAmount($itemID, $desiredAmount, $conn) {
         
-        $sql = "select name, amount from items where id = $itemID";
+        $sql = "select Name, Amount from Items where Id = $itemID";
         $result = $conn->query($sql);
         $result->data_seek(0);
         $obj = $result->fetch_array(MYSQLI_ASSOC);

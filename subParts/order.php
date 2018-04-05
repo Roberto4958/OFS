@@ -6,7 +6,7 @@
     $conn = new mysqli($hn, $un, $pw, $db); //connects to db
     
     if (!$conn->connect_error){ //checks if connected succesfully 
-        $sql = "select i.name, sum(c.amount) as amount, i.weight, i.price, i.CategoryName from cart c, items i where i.id = c.ItemID and c.userid =$id group by i.name";
+        $sql = "select i.Name, sum(c.amount) as amount, i.Weight, i.Price, i.CategoryName from Cart c, Items i where i.Id = c.ItemID and c.userID =$id group by i.Name";
         
         $result = $conn->query($sql);
         $rows = $result->num_rows;
@@ -16,9 +16,9 @@
         
             $result->data_seek($i);
             $obj = $result->fetch_array(MYSQLI_ASSOC);
-            $total_weight += $obj['amount'] * $obj['weight'];
-            $total_price += $obj['amount'] * $obj['price'];
-            $cart_items .= generateDiv($obj['name'], $obj['amount'], $obj['weight'], $obj['price'], $obj['CategoryName']); 
+            $total_weight += $obj['amount'] * $obj['Weight'];
+            $total_price += $obj['amount'] * $obj['Price'];
+            $cart_items .= generateDiv($obj['Name'], $obj['amount'], $obj['Weight'], $obj['Price'], $obj['CategoryName']); 
         }
         $result->close();
         $conn->close();
@@ -26,7 +26,7 @@
         $shippingCost = 2*(floor($total_weight/15)); //round down
         $total_price += $shippingCost;
         if($total_price == 0){
-            header('Location: ../cart.php');
+            //header('Location: index.php'); if cart empty move user to new window
         }
     }
     else{
@@ -63,7 +63,7 @@
                     <!--REVIEW ORDER-->
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            Review Order <div class="pull-right"><small><a class="afix-1" href="#">Edit Cart</a></small></div>
+                            Review Order <div class="pull-right"><small></small></div>
                         </div>
                         <div class="panel-body">
                             <?php echo $cart_items;?>

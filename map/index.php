@@ -11,7 +11,6 @@ session_start();
     if(!isset($_POST['orderSubmitted'])){ //did user come from check out form
         header('Location: ../checkout.php');
     }
-
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -60,13 +59,10 @@ session_start();
                 swal("Success", "Your Order Has Arrived", "success");
                 return;
             }
-
             var p = poly.GetPointAtDistance(d);
             map.panTo(p);
             marker.setPoint(p);
-            setTimeout("animate("+(d+step)+")", tick);
-            
-            
+            setTimeout("animate("+(d+step)+")", tick);            
         }
 
 
@@ -145,5 +141,4 @@ session_start();
         }
         return "";
     }
-
     </script>

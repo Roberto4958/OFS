@@ -1,6 +1,6 @@
 <?php
     session_start();
-
+ini_set('display_errors', 1);
 //error_reporting(0); // stops displaying warning from user end    
 
     require_once 'Scripts/loginInfo.php';
@@ -24,12 +24,14 @@
     
     if(isset($_POST['Submit'])){ //form submitted
         
-        $value = split(",", $_POST['Submit']);
-        $itemID = htmlspecialchars($value[0]);
-        $buttonPressed = htmlspecialchars($value[1]);
+        $output = $_POST['Submit'];
+        $value = explode(",", $output);
+        $itemID = $value[0];
+        $buttonPressed = $value[1];
         
         if($buttonPressed == "update"){
-            updateCart($conn, $_POST[$itemID."amount"], $itemID);
+            $inputVal = $itemID."amount";
+            updateCart($conn, $_POST[$inputVal], $itemID);
         }
         if($buttonPressed == "clear"){
             updateCart($conn, 0, $itemID);
@@ -41,16 +43,15 @@
     $countyItems = '';
 
     if (!$conn->connect_error){ //checks if connected succesfully 
-        $sql = "select id, name, amount from items where countyID = $countyID;";
+        $sql = "select Id, Name, Amount from Items where countyID = $countyID";
         $result = $conn->query($sql);
         $rows = $result->num_rows;
         
         //loops through all the rows and saves the data from the columns 
         for($i=0; $i < $rows; $i++){
-        
             $result->data_seek($i);
             $obj = $result->fetch_array(MYSQLI_ASSOC);
-            $countyItems .= generate($obj['name'], $obj['amount'], $obj['id']); 
+            $countyItems .= generate($obj['Name'], $obj['Amount'], $obj['Id']); 
         }
         $result->close();
         $conn->close();
@@ -78,18 +79,18 @@
     }
 
     function updateCart($conn, $amount, $itemID){
-        $sql = " update items set amount = $amount where id = $itemID;";
+        $sql = "update Items set Amount = $amount where Id = $itemID";
         if($conn->query($sql)){
             return true;
         }else return false;
     }
 
     function getCountyId($userID, $conn){
-        $sql = "select c.id from users u, supportedCountys c where c.name= u.County and u.id = $userID;";
+        $sql = "select c.Id from users u, supportedCountys c where c.Name= u.County and u.Id = $userID";
         $result = $conn->query($sql);
         $result->data_seek(0);
         $obj = $result->fetch_array(MYSQLI_ASSOC);
-        $countyID = $obj['id'] *1;
+        $countyID = $obj['Id'] *1;
         $result->close();
         return $countyID;
     }
@@ -146,7 +147,7 @@
 <body class="animsition">
 
     <div id="fullscreen_bg" class="fullscreen_bg"/>
-        <form class="form-signin" method = "post">
+        <form class="form-signin" method = "POST" action ="admin.php">
             <div class="container";>
                 <div class="row">
                     <div id="invetoryChart">

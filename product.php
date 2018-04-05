@@ -15,7 +15,7 @@
     
     if (!$conn->connect_error){
         
-        $sql = "select * from items where countyID = $countyID and amount > 0";
+        $sql = "select * from Items where countyID = $countyID and amount > 0";
         $result = $conn->query($sql);
         $rows = $result->num_rows;
     
@@ -32,11 +32,11 @@
     }
     
     function getCountyId($userID, $conn){
-        $sql = "select c.id from users u, supportedCountys c where c.name= u.County and u.id = $userID;";
+        $sql = "select c.Id from users u, supportedCountys c where c.Name= u.County and u.Id = $userID;";
         $result = $conn->query($sql);
         $result->data_seek(0);
         $obj = $result->fetch_array(MYSQLI_ASSOC);
-        $countyID = $obj['id'] *1;
+        $countyID = $obj['Id'] *1;
         $result->close();
         return $countyID;
     }

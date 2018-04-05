@@ -16,7 +16,7 @@ session_start();
     $conn = new mysqli($hn, $un, $pw, $db); //connects to db
     
     if (!$conn->connect_error){ //checks if connected succesfully 
-        $sql = "select i.Name, sum(c.amount) as amount, i.Weight, i.Price, i.CategoryName, i.Id from Cart c, Items i where i.Id = c.ItemID and c.userID =$id group by i.Name";
+        $sql = "select i.name, sum(c.amount) as amount, i.weight, i.price, i.CategoryName, i.id from cart c, items i where i.id = c.ItemID and c.userid =$id group by i.name";
         $result = $conn->query($sql);
         $rows = $result->num_rows;
         
@@ -25,9 +25,9 @@ session_start();
         
             $result->data_seek($i);
             $obj = $result->fetch_array(MYSQLI_ASSOC);
-            $total_weight += $obj['amount'] * $obj['Weight'];
-            $total_price += $obj['amount'] * $obj['Price'];
-            $cart_items .= generateDiv($obj['Name'], $obj['amount'], $obj['Weight'], $obj['Price'], $obj['CategoryName'], $obj['Id']); 
+            $total_weight += $obj['amount'] * $obj['weight'];
+            $total_price += $obj['amount'] * $obj['price'];
+            $cart_items .= generateDiv($obj['name'], $obj['amount'], $obj['weight'], $obj['price'], $obj['CategoryName'], $obj['id']); 
         }
         $result->close();
         $conn->close();
@@ -63,8 +63,9 @@ session_start();
 									</button>
 								</div>
 							</td>
-				            <td class="column-5">$'.$total_price.'</td>
-                            <td class="column-6" style="padding-top:0; padding-bottom:0;"><i data-itemid = "'.$id.'" class="fa fa-trash delete"></i></td>
+                            <td class"column-5">'.$weight.'</td>
+				            <td class="column-6">$'.$total_price.'</td>
+                            <td class="column-7" style="padding-top:0; padding-bottom:0;"><i data-itemid = "'.$id.'" class="fa fa-trash delete"></i></td>
                             
 						</tr>';
     }
@@ -130,7 +131,8 @@ session_start();
 							<th class="column-2">Product</th>
 							<th class="column-3">Price</th>
 							<th class="column-4 p-l-70">Quantity</th>
-							<th class="column-5">Total</th>
+                            <th class="column-5">Weight</th>
+							<th class="column-6">Total</th>
 						</tr>
                         
 <!--                    display cart items-->
@@ -170,25 +172,15 @@ session_start();
 			</div>
             <div class="flex-w flex-sb-m p-t-25 p-b-25 bo8 p-l-35 p-r-60 p-lr-15-sm">
 				<div class="flex-w flex-m w-full-sm">
-                    <div class="size10 trans-0-4 m-t-10 m-b-10" >
-                    <button   class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-				        Checkout
-                    </button>
-                </div>
 				</div>
-                
-                
-                
+
 				<div class="size10 trans-0-4 m-t-10 m-b-10">
 					<!-- Button -->
 					<button id = "updateCart" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
 						Update Cart
 					</button>
-                    
-				</div> 
-                
+				</div>
 			</div>
-            
 
 			<!-- Total -->
 			

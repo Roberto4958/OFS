@@ -53,7 +53,7 @@ $processBar = ' <span class="step step_complete">
 
 
 function getCountyId($userID, $conn){
-        $sql = "select c.latitude, c.longitude from users u, supportedCountys c where c.name = u.County and u.id = $userID;";
+        $sql = "select c.latitude, c.longitude from users u, supportedCountys c where c.Name = u.County and u.Id = $userID;";
         $result = $conn->query($sql);
         $result->data_seek(0);
         $obj = $result->fetch_array(MYSQLI_ASSOC);
@@ -93,12 +93,11 @@ function getCountyId($userID, $conn){
     <link rel="stylesheet" href="css/checkout.css" >
     
     
-<head>
 
+    <?php 
+        require_once "nav.php" 
+    ?>
     
-
-</head>
-    <?php require_once "nav.php"?>
 <body class="animsition">
 
 

@@ -18,13 +18,11 @@ $(document).ready(function(){
     //updateCart
      $("#updateCart").click(function() {
          updatecart()
-         //alert(JSON.stringify(getItemsAndUpdateDB()));
      });
 }); 
 
 function updatecart(){
     json = JSON.stringify(getItems())
-    alert(json);
     communicatToDatabase(json)
 }
 
@@ -66,6 +64,8 @@ function updateTotalWeightAndPrice(){
     
         amount = parseFloat($(this).find("td.column-4").find("div").find('input').val());
         
+        $(this).find("td.column-5").replaceWith(' <td class="column-5">$'+(amount * productPrice).toFixed(2)+'</td>')
+        
         totalWeight += amount * productWight
         totalPrice += amount * productPrice
         
@@ -83,9 +83,9 @@ function updateNav(items){
     total_weight = 0
     total_items = 0
     for(i=0; i < items.length; i++){
-        total_weight += items[i]['amount'] * items[i]['weight']
-        total_price += items[i]['amount'] * items[i]['price']
-        HTML_cart_items += generateCartItem(items[i]['name'], items[i]['amount'], items[i]['weight'], items[i]['price'], items[i]['CategoryName'])
+        total_weight += items[i]['amount'] * items[i]['Weight']
+        total_price += items[i]['amount'] * items[i]['Price']
+        HTML_cart_items += generateCartItem(items[i]['Name'], items[i]['amount'], items[i]['Weight'], items[i]['Price'], items[i]['CategoryName'])
     }
     
     cart = generateCartHTML(HTML_cart_items, total_price)
