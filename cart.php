@@ -171,9 +171,11 @@ session_start();
             <div class="flex-w flex-sb-m p-t-25 p-b-25 bo8 p-l-35 p-r-60 p-lr-15-sm">
 				<div class="flex-w flex-m w-full-sm">
                     <div class="size10 trans-0-4 m-t-10 m-b-10" >
-                    <button   class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-				        Checkout
-                    </button>
+                    <a href="checkout.php">
+                        <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+                            Checkout	
+                        </button> 
+                    </a>
                 </div>
 				</div>
                 
