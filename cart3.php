@@ -63,9 +63,9 @@ session_start();
 									</button>
 								</div>
 							</td>
-                            <td class"column-5">'.$weight.'</td>
+                            <td class"column-5">'.$weight.' lb</td>
 				            <td class="column-6">$'.$total_price.'</td>
-                            <td class="column-7" style="padding-top:0; padding-bottom:0;"><i data-itemid = "'.$id.'" class="fa fa-trash delete"></i></td>
+                            <td class="column-7 p-l-20" style="padding-top:0; padding-bottom:0;"><i data-itemid = "'.$id.'" class="fa fa-trash delete"></i></td>
                             
 						</tr>';
     }
