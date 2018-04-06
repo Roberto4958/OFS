@@ -138,7 +138,7 @@ ini_set('display_errors', 1);
     
     <?php require_once "nav.php"?>
     
-    <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(images/heading-pages-01.jpg);">
+    <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(images/grapesBanner.jpg);">
 		<h2 class="l-text2 t-center">
 			Sanata Clara County 
 		</h2>
