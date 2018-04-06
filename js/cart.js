@@ -32,7 +32,7 @@ function getItems(){
     items = []
     $('tr.table-row').each(function () {
         amount = parseFloat($(this).find("td.column-4").find("div").find('input').val());
-        itemID = parseFloat($(this).find("td.column-6").find("i").data("itemid"))
+        itemID = parseFloat($(this).find("td.column-7").find("i").data("itemid"))
         items.push([itemID, amount])
     });
     return items;
@@ -63,11 +63,14 @@ function updateTotalWeightAndPrice(){
         productWight = parseFloat(productWight.substring(0, productWight.length-3));
     
         amount = parseFloat($(this).find("td.column-4").find("div").find('input').val());
+       
         
-        $(this).find("td.column-5").replaceWith(' <td class="column-5">$'+(amount * productPrice).toFixed(2)+'</td>')
+        $(this).find("td.column-6").replaceWith(' <td class="column-6">$'+(amount * productPrice).toFixed(2)+'</td>')
         
         totalWeight += amount * productWight
         totalPrice += amount * productPrice
+        
+        $(this).find("td.column-5").replaceWith(' <td class="column-5">'+(totalWeight).toFixed(2)+' lb</td>');
         
     });
     
