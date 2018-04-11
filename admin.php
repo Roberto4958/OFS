@@ -29,12 +29,13 @@ ini_set('display_errors', 1);
         $itemID = $value[0];
         $buttonPressed = $value[1];
         
-        if($buttonPressed == "update"){
+        if($buttonPressed == "add"){
             $inputVal = $itemID."amount";
-            updateCart($conn, $_POST[$inputVal], $itemID);
+            addCart($conn, $_POST[$inputVal], $itemID);
         }
-        if($buttonPressed == "clear"){
-            updateCart($conn, 0, $itemID);
+        if($buttonPressed == "subtract"){
+            $inputVal = $itemID."amount";
+            subtractCart($conn, $_POST[$inputVal], $itemID);
         }
     }
 
@@ -70,10 +71,10 @@ ini_set('display_errors', 1);
                             <textarea name="'.$itemID.'amount" type="number" rows = "1">'.$amount.'</textarea>
                         </td>
                         <td>
-                            <button  name="Submit" type="submit" value="'.$itemID.',update" class="btn btn-sm btn-primary btn-block" role="button">Update</button>
+                            <button  name="Submit" type="submit" value="'.$itemID.',add" class="btn btn-sm btn-primary btn-block" role="button">Add to Inventory</button>
                         </td>
                         <td>
-                            <button name="Submit" type="submit" value="'.$itemID.',clear" class="btn btn-sm btn-primary btn-block" role="button">Clear</button>
+                            <button name="Submit" type="submit" value="'.$itemID.',subtract" class="btn btn-sm btn-primary btn-block" role="button">Subtract from Inventory</button>
                         </td>
                 </tr>';
     }
@@ -84,6 +85,21 @@ ini_set('display_errors', 1);
             return true;
         }else return false;
     }
+
+    function subtractCart($conn, $amount, $itemID){
+        $sql = "update Items set Amount = Amount - $amount where ID = $itemID";
+         if($conn->query($sql)){
+            return true;
+        }else return false;
+    }
+
+    function addCart($conn, $amount, $itemID){
+        $sql = "update Items set Amount = Amount + $amount where ID = $itemID";
+         if($conn->query($sql)){
+            return true;
+        }else return false;
+    }
+
 
     function getCountyId($userID, $conn){
         $sql = "select c.Id from users u, supportedCountys c where c.Name= u.County and u.Id = $userID";
