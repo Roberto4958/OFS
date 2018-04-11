@@ -70,7 +70,7 @@ function updateTotalWeightAndPrice(){
         totalWeight += amount * productWight
         totalPrice += amount * productPrice
         
-        $(this).find("td.column-5").replaceWith(' <td class="column-5">'+(totalWeight).toFixed(2)+' lb</td>');
+        $(this).find("td.column-5").replaceWith(' <td class="column-5">'+(amount * productWight).toFixed(2)+' lb</td>');
         
     });
     
