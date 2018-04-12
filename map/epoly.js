@@ -1,6 +1,5 @@
 /*********************************************************************\
 *                                                                     *
-* epolys.js                                          by Mike Williams *
 *                                                                     *
 * A Google Maps API Extension                                         *
 *                                                                     *
@@ -30,12 +29,6 @@
 *                   if v1 is null, returns bearing from first to last *
 *                   if v2 is null, returns bearing from v1 to next    *
 *                                                                     *
-*                                                                     *
-***********************************************************************
-*                                                                     *
-* Version 1.1       6-Jun-2007                                        *
-* Version 1.2       1-Jul-2007 - fix: Bounds was omitting vertex zero *
-*                                add: Bearing                         *
 *                                                                     *
 \*********************************************************************/
 
