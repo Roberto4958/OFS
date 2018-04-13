@@ -24,13 +24,11 @@ if(isset($_POST['submiteAdress'])){ //address form signed
         $onAddress = 'step_complete'; 
     
         $seesionTime = time() + $GLOBALS['SESSION_TIME']; 
-        $streetAddress = $_POST['address'];
-        $state = $_POST['state'];
-        $shippingAddress = $streetAddress.", ".$state;
+        $shippingAddress = $_POST['address'];
         setcookie('userAddress',  $shippingAddress, $seesionTime, "/");
     
         $id = $_SESSION['id'];
-        $countyLocation = getCountyId($id, $conn);
+        $countyLocation = getCountyCordinates($id, $conn);
         setcookie('countyAddress',  $countyLocation, $seesionTime, "/");
     }
 }
@@ -52,7 +50,7 @@ $processBar = ' <span class="step step_complete">
                ';
 
 
-function getCountyId($userID, $conn){
+function getCountyCordinates($userID, $conn){
         $sql = "select c.latitude, c.longitude from users u, supportedCountys c where c.Name = u.County and u.Id = $userID;";
         $result = $conn->query($sql);
         $result->data_seek(0);
@@ -63,6 +61,18 @@ function getCountyId($userID, $conn){
     
         $result->close();
         return $lat.",".$long;
+    }
+
+function getCountyName($userID, $conn){
+        $sql = "select c.Name from users u, supportedCountys c where c.Name = u.County and u.Id = $userID";
+        $result = $conn->query($sql);
+        $result->data_seek(0);
+        $obj = $result->fetch_array(MYSQLI_ASSOC);
+    
+        $name = $obj['Name'];
+    
+        $result->close();
+        return $name;
     }
 
 ?>
@@ -89,6 +99,7 @@ function getCountyId($userID, $conn){
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="vendor/sweetalert/sweetalert.min.js"></script>
     <script type="text/javascript" src="js/authenticate.js"></script>
     <link rel="stylesheet" href="css/checkout.css" >
     

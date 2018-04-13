@@ -44,19 +44,23 @@ session_start();
         var tick = 50; // milliseconds
         var poly;
         var eol;
-        var car = new GIcon();
-            car.image="caricon.png"
-            car.iconSize=new GSize(32,18);
-            car.iconAnchor=new GPoint(16,9);
+        var drone = new GIcon();
+            drone.image="caricon.png"
+            drone.iconSize=new GSize(32,18);
+            drone.iconAnchor=new GPoint(16,9);
         var marker;
         var k=0;
+        var mph = 30/2.24;
 
 
         function animate(d) {
             
             //Drone Arrived 
             if (d>eol) { 
-                swal("Success", "Your Order Has Arrived", "success");
+                swal("Success", "Your Order Has Arrived", "success")
+                    .then((value) => {
+                        window.location.replace("../");
+                    });
                 return;
             }
             var p = poly.GetPointAtDistance(d);
@@ -73,22 +77,23 @@ session_start();
         map.setCenter(poly.getVertex(0),17);
         map.addOverlay(new GMarker(poly.getVertex(0),G_START_ICON));
         map.addOverlay(new GMarker(poly.getVertex(poly.getVertexCount()-1),G_END_ICON));
-        marker = new GMarker(poly.getVertex(0),{icon:car});
+        marker = new GMarker(poly.getVertex(0),{icon:drone});
         map.addOverlay(marker);
         
         
         //timer logic
-        reloadTime = 1000/tick 
+        reloadTime = 1000/tick;
         stepdist = dirn.getRoute(0).getDistance().meters;
         steptime = dirn.getRoute(0).getDuration().seconds;
 //        stepspeed = ((stepdist/steptime) * 2.24).toFixed(0);
 //        step = stepspeed/2.5;
 //        step = stepdist/ steptime;
 //        startTime(((eol/step)/reloadTime)+2);
-        step = (eol/steptime)/ reloadTime;
-        startTime((steptime)+2);
+
+        step = (1609.344 * mph)/(3600)
+        startTime(((eol/step)/reloadTime)+2.5);
+        setTimeout("animate(0)",2000);  // Allow time for the initial map display  
         
-        setTimeout("animate(0)",2000);  // Allow time for the initial map display          
       });
 
         

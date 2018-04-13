@@ -15,7 +15,7 @@
     
     if (!$conn->connect_error){
         
-        $sql = "select * from Items where countyID = $countyID and amount > 0";
+        $sql = "select * from Items where countyID = $countyID";
         $result = $conn->query($sql);
         $rows = $result->num_rows;
     
@@ -51,7 +51,7 @@
 				        </button>';
         }
         
-        return '<div data-category = "'.$category.'"  class="foodCard col-sm-12 col-md-6 col-lg-4 p-b-50">
+        if($amount > 0){return'<div data-category = "'.$category.'"  class="foodCard col-sm-12 col-md-6 col-lg-4 p-b-50">
 							<!-- Block2 -->
 							<div class="block2">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative">
@@ -75,7 +75,25 @@
 									</span>
 								</div>
 							</div>
-						</div>'; 
+						</div>';}
+        else{return'<div data-category = "'.$category.'"  class="foodCard col-sm-12 col-md-6 col-lg-4 p-b-50">
+							<!-- Block2 -->
+							<div class="block2">
+								<div class="block2-img wrap-pic-w of-hidden pos-relative">
+									<img src="images/outOfStock.jpg" alt="IMG-PRODUCT">
+								</div>
+
+								<div class="block2-txt p-t-20">
+									<a data-countyid ="'.$countyID.'" data-itemid ="'.$itemID.'" class="block2-name dis-block s-text3 p-b-5">
+										'.$name.'
+									</a>
+
+									<span class="block2-price m-text6 p-r-5">
+										$'.$price.'
+									</span>
+								</div>
+							</div>
+						</div>';}
     }
 
 ?>
