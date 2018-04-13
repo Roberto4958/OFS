@@ -78,7 +78,11 @@ function updateNav(items, itemClicked){
         total_weight += items[i]['amount'] * items[i]['Weight']
         total_price += items[i]['amount'] * items[i]['Price']
         HTML_cart_items += generateCartItem(items[i]['Name'], items[i]['amount'], items[i]['Weight'], items[i]['Price'], items[i]['CategoryName'])
+<<<<<<< HEAD
         if(items[i]["Id"] == itemClicked && items[i]["quantity"] <= 0){
+=======
+    if(items[i]["Id"] == itemClicked && items[i]["quantity"] <= 0){
+>>>>>>> 998598f4f85454be31c2e50e685d09f3808f1a97
             window.location.reload();
         }
     }
