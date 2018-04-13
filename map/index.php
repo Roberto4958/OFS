@@ -10,6 +10,20 @@ session_start();
     }
     if(!isset($_POST['orderSubmitted'])){ //did user come from check out form
         header('Location: ../checkout.php');
+        
+    }
+    else{
+        $conn = new mysqli($hn, $un, $pw, $db);
+        $userID =  $_SESSION["id"];
+        dropCart($userID, $conn);
+    }
+
+
+function dropCart($userID, $conn){
+        $sql = "delete from Cart where userID = $userID"; 
+        if($conn->query($sql)){
+            return true;
+        }else return false;
     }
 ?>
 
