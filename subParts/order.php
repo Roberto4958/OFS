@@ -3,6 +3,7 @@
     $total_price = 0;
     $total_weight = 0; 
     $id = $_SESSION['id'];
+    $submitButton = "";
     $conn = new mysqli($hn, $un, $pw, $db); //connects to db
     
     if (!$conn->connect_error){ //checks if connected succesfully 
@@ -25,8 +26,8 @@
         
         $shippingCost = 2*(floor($total_weight/15)); //round down
         $total_price += $shippingCost;
-        if($total_price == 0){
-            //header('Location: index.php'); if cart empty move user to new window
+        if($total_price != 0){
+            $submitButton = '<button name="SubmitOrder" type="submit" value="Submit" class="btn btn-primary btn-submit-fix">Continue</button>';
         }
     }
     else{
@@ -92,7 +93,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <button name="SubmitOrder" type="submit" value="Submit" class="btn btn-primary btn-submit-fix">Continue</button>
+                                    <?php echo $submitButton; ?>
                                 </div>
                             </div>
                             
