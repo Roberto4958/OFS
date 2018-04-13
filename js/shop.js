@@ -69,7 +69,7 @@ function hideGrains(){
     });
 }
 
-function updateNav(items){
+function updateNav(items, itemClicked){
     HTML_cart_items = ''
     total_price = 0
     total_weight = 0
@@ -78,6 +78,10 @@ function updateNav(items){
         total_weight += items[i]['amount'] * items[i]['Weight']
         total_price += items[i]['amount'] * items[i]['Price']
         HTML_cart_items += generateCartItem(items[i]['Name'], items[i]['amount'], items[i]['Weight'], items[i]['Price'], items[i]['CategoryName'])
+        alert(items[i]["Id"] + " and " + itemClicked)
+    if(items[i]["Id"] == itemClicked && items[i]["quantity"] <= 0){
+            window.location.reload();
+        }
     }
     
     cart = generateCartHTML(HTML_cart_items, total_price)
@@ -163,12 +167,11 @@ function communicatToDatabase(nameProduct, itemID, userID, countyID){
                 type: 'POST',
                 data: { itemid: itemID, userid: userID, countyid: countyID},
                 dataType: 'json',
-                
                 success: function (data) {
                     if(data){
                         if(data.success){
                             swal(nameProduct, data.status, "success");
-                            updateNav(data.cart)
+                            updateNav(data.cart, itemID)
                         }
                         else {
                             swal({ title: "Error", text: "Please try again later", icon: "error"});
