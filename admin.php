@@ -68,7 +68,7 @@ ini_set('display_errors', 1);
         return '<tr style ="height:35px">
                     <td>'.$name.'</td>
                         <td>
-                            <textarea name="'.$itemID.'amount" type="number" rows = "1">'.$amount.'</textarea>
+                            <textarea name="'.$itemID.'amount" type="number" rows = "1" onkeyup="this.value=this.value.replace(/[^\d]/,\'\')">'.$amount.'</textarea>
                         </td>
                         <td>
                             <button  name="Submit" type="submit" value="'.$itemID.',add" class="btn btn-sm btn-primary btn-block" role="button">Add to Inventory</button>
