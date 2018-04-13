@@ -48,7 +48,7 @@ else {
     //---------------function -------------------------
     
     function getCart($conn, $userID){
-        $sql = "select i.Name, sum(c.amount) as amount, i.Weight, i.Price, i.CategoryName from Cart c, Items i where i.Id = c.ItemID and c.userID = $userID group by i.Id";
+        $sql = "select i.Name, sum(c.amount) as amount, i.Weight, i.Price, i.CategoryName,i.Id, i.amount as quantity from Cart c, Items i where i.Id = c.ItemID and c.userID = $userID group by i.Id";
         $result = $conn->query($sql);
         $obj = array(); 
         if($result){
@@ -96,7 +96,7 @@ else {
     }
 
     function decrementItem($itemID, $conn){
-        $sql = "update Items set amount = amount - 1 where Id = $itemID;"; 
+        $sql = "update Items set amount = amount - 1 where Id = $itemID;";
         if($conn->query($sql)){
             return true;
         }else return false;
