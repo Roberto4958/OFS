@@ -86,7 +86,11 @@
     <div class="controls">
       <div class="row-fluid">
         <div class="span1">
+<<<<<<< HEAD
           <input type="text" class="input-block-level" autocomplete="off" minlength="3" maxlength="4" pattern="\d{3-4}" title="Three-Four digits at back of your card" required>
+=======
+          <input type="text" class="input-block-level" autocomplete="off" minlength="3" maxlength="4" pattern="\d{3-4}" title="Three digits at back of your card" required>
+>>>>>>> ankit
       </div>
 
   </div>
