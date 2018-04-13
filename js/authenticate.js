@@ -1,6 +1,29 @@
+
 var UserNameLegthMin = 5;
 var passwordLengthMin = 5;
 
+function ShippingaddressValidation(form){
+    
+    country = $("#country").text();
+    state = $("#administrative_area_level_1").text();
+    city = $("#locality").text();
+    streetAdress =  $("#street_number").text() +" "+$("#route").text();
+    zip = $("#postal_code").text();
+    usersCounty = $("#addressForm").data("county")
+    
+    fail = validateCountry(country)
+    fail += validateState(state)
+    fail += validateZip(zip, usersCounty)
+    
+    p = country +", "+ state + ", " + city + ", " + streetAdress + ", " + zip
+    
+    if(fail == "")
+       return true;
+    else {
+        swal({ title: "Invalid Input", text: "Sorry we cannot ship to this address", icon: "error"});
+        return false
+    }    
+}
 
 function CreateAccountValidate(form){
     
@@ -20,6 +43,33 @@ function CreateAccountValidate(form){
         swal({ title: "Invalid Input", text: fail, icon: "error"});
         return false 
     }
+}
+
+function validateCountry(country){
+    if(country.length == 0)
+        return "Please enter your country \n"
+    if (country !== "United States")
+        return "This service is only available in the United States \n"
+    return ""
+}
+
+function validateState(state) {
+    if(state.length == 0)
+        return "Please enter your state \n"
+    if(state !== "CA"){
+        return "This service is not available in your State \n"
+    }
+    return ""
+}
+
+function validateZip(zipcode, usersCounty){
+    allZipcodes = supportedCounties[usersCounty];
+    
+    if(zipcode.length ==0)
+        return "please enter your zipcode \n"
+    if(allZipcodes[zipcode])
+        return ""
+    return "This service is not available in your county \n"
 }
 
 function validateFirstName(name){
@@ -71,5 +121,11 @@ function validatePassword(password, cpassword){
         return "Passwords do not match.\n";
 	return ""
 }
+
+var SantaClaraCountyZip = { "94022": true, "94023": true, "94024": true, "94043": true };
+var SanMateoCountyZip = { "94002": true, "94005": true, "94010": true, "94011": true };
+var supportedCounties = {"Santa Clara": SantaClaraCountyZip, "San Mateo": SanMateoCountyZip}
+
+
 
   
