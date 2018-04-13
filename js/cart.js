@@ -1,5 +1,11 @@
 $(document).ready(function(){
     
+    //prevent user from typing in the input
+    $('input').keydown(function(e) {
+        e.preventDefault();
+        return false;
+    });
+    
     //decrement buttton clicked
     $(".btn-num-product-down").click(function() {
         updateTotalWeightAndPrice();
