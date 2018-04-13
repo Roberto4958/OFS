@@ -1,40 +1,79 @@
 <?php
 session_start();
 
-// if(isset($_SESSION['usr_id'])!="") {
-
-// 	header("Location: index.php");
-// }
-
-include_once './Scripts/config.php';
+include_once 'Scripts/config.php';
+include_once 'Scripts/loginInfo.php';
+include_once 'Scripts/helperScripts.php';
 
 //check if form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$email = mysqli_real_escape_string($conn, $_POST['email']);
 	$password = mysqli_real_escape_string($conn, $_POST['password']);
 
-
-	$query = "SELECT * FROM users WHERE email = '". $email ."' and password = '".md5($password)."'";
-	$result = mysqli_query($conn, $query);
-
-	print_r($result);
-	if ($row = mysqli_fetch_array($result)) {
-		$_SESSION['usr_id'] = $row['id'];
-		$_SESSION['email'] = $row['email'];
-		//header("Location: index.php");
-		echo $_SESSION['usr_id'];
-	} else {
-		$errormsg = "Incorrect Email or Password!!!";
-	}
+    $conn = new mysqli($hn, $un, $pw, $db);
+    if (!$conn->connect_error){
+        $salt  = getSalt($conn, $email);
+        if(! $salt){
+            //Email does not exist
+        }
+        else{
+            $hashedpass = hash('sha256', $password . $salt);
+            $loginInfo = passIsCorrect($conn, $email, $hashedpass);
+            if(!$loginInfo){
+                //Wrong user email/password combination
+            }
+            else{
+                $token = randomString(20);
+                $id= $loginInfo[0];
+                $isAdmin = $loginInfo[1];                
+                $conn->query("update users set authtoken = '$token' where id = $id"); 
+                startSession($token, $id, $isAdmin);
+                
+                if($isAdmin)
+                    header('Location: admin.php');
+                else 
+                    header('Location: index.php');
+            }
+        }
+    }
+    $conn->close();
 }
+
+
+
+
+function getSalt($conn, $email){
+    $stmt = $conn->prepare("select salt from users where email = ?");
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_array(MYSQLI_NUM);
+    $stmt->close();
+    if(!$row) return false;
+    return $row[0];
+}
+
+function passIsCorrect($conn, $email, $hashedpass){
+    $stmt = $conn->prepare("select id, admin from users where email = ? and password = ?");
+    $stmt->bind_param('ss', $email, $hashedpass);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_array(MYSQLI_NUM);
+    $stmt->close();
+    if(!$row) return false;
+    return array($row[0], $row[1]);
+}
+
+
 ?>
 <!DOCTYPE html>
+<html>
 <head>
 	<title>Login</title>
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<link rel="stylesheet" type="text/css" href="./css/login.css">
 </head>
-
+<body  style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('images/grapesBanner.jpg');">
 <div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
@@ -74,13 +113,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		</div>
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4 text-center">	
-				New User? <a href="signup.php">Sign Up Here</a>
+                <p style='color:#FFF; display:inline;' >New User?</p> <a href="signup.php">Sign Up Here</a>
 			</div>
 		</div>
 	</div>
 
+    <script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="./js/login.js"></script>
 </body>
 </html>

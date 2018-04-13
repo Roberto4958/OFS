@@ -1,46 +1,60 @@
 <?php
 
-//Roberto made a change
-require_once './Scripts/config.php';
+//require_once 'Scripts/config.php';
+require_once 'Scripts/helperScripts.php';
+require_once 'Scripts/loginInfo.php';
+$displayCart = "";
 
-    $items = '';
-    $total_price = 0;
-    $total_weight = 0; 
-    $total_items = 0;
-    $cart = '';
-    $cartItems = '';
-    // Create connection
-	// $conn = new mysqli($hn, $un, $pw);
+    if(SessionIsValid()){
+        $items = '';
+        $total_price = 0;
+        $total_weight = 0; 
+        $total_items = 0;
+        $cart = '';
+        $cartItems = '';
+        $id = $_SESSION['id'];
+        // Create connection
+	   $conn = new mysqli($hn, $un, $pw, $db);
 
 
-    if (!$conn->connect_error){
-    	$conn->query("Use OFS");
+        if (!$conn->connect_error){
+//    	   $conn->query("Use OFS");
 
-        $sql = "select i.name, sum(c.amount) as amount, i.weight, i.price, i.CategoryName from cart c, items i where i.id = c.ItemID and c.userid =1 group by i.id";
-        $result = $conn->query($sql);
-        $total_items = $result->num_rows;
+            $sql = "select i.name, sum(c.amount) as amount, i.weight, i.price, i.CategoryName from Cart c, Items i where i.id = c.ItemID and c.userid =$id group by i.id";
+            $result = $conn->query($sql);
+            $total_items = $result->num_rows;
         
-        for($i=0; $i < $total_items; $i++){
+            for($i=0; $i < $total_items; $i++){
         
-            $result->data_seek($i);
-            $obj = $result->fetch_array(MYSQLI_ASSOC);
-            $total_weight += $obj['amount'] * $obj['weight'];
-            $total_price += $obj['amount'] * $obj['price'];
-            $items .= generateCartItem($obj['name'], $obj['amount'], $obj['weight'], $obj['price'], $obj['CategoryName']);
-            $cartItems .= mobileCartItem($obj['name'], $obj['amount'], $obj['weight'], $obj['price'], $obj['CategoryName']);
-        }
-        if($total_items > 0){
-            $cart = generateCartHTML($items, $total_price, $total_items);
-        }else{
+                $result->data_seek($i);
+                $obj = $result->fetch_array(MYSQLI_ASSOC);
+                $total_weight += $obj['amount'] * $obj['weight'];
+                $total_price += $obj['amount'] * $obj['price'];
+                $items .= generateCartItem($obj['name'], $obj['amount'], $obj['weight'], $obj['price'], $obj['CategoryName']);
+                $cartItems .= mobileCartItem($obj['name'], $obj['amount'], $obj['weight'], $obj['price'], $obj['CategoryName']);
+            }
+            if($total_items > 0){
+                $cart = generateCartHTML($items, $total_price, $total_items);
+            }else{
+                $cart = generateEmptyCartHTML();
+            }
+        
+            $result->close();
+            $conn->close();
+        
+        } else {
             $cart = generateEmptyCartHTML();
         }
-        
-        $result->close();
-        $conn->close();
-        
-    } else{
-        $cart = generateEmptyCartHTML();
+        $displayCart = '<span class="linedivide1"></span>
+                    <div class="header-wrapicon2 m-r-13">
+						<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+						
+						'.$cart.'
+					</div>';        
     }
+
+    
+    
 
     function generateCartHTML($items, $cost, $total_items){
         return '	<span id="icon-number" class="header-icons-noti">'.$total_items.'</span>
@@ -63,7 +77,7 @@ require_once './Scripts/config.php';
 
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="checkout.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										Check Out
 									</a>
 								</div>
@@ -132,11 +146,8 @@ require_once './Scripts/config.php';
 				</a>
 
 				<div class="topbar-child2">
-
-					
 					<ul class="nav">
-								<?php if (isset($_SESSION['usr_id'])) { ?>
-								<li><p class="navbar-text">Welcome <?php echo $_SESSION['usr_name']; ?></p></li>
+								<?php if (isset($_SESSION['id'])) { ?>
 								<li><a href="logout.php">Log Out</a></li>
 								<?php } else { ?>
 								<li><a href="signin.php">Login</a></li>
@@ -144,16 +155,7 @@ require_once './Scripts/config.php';
 								<li><a href="signup.php">Sign Up</a></li>
 								<?php } ?>
 							</ul>
-					
-
-					<span class="linedivide1"></span>
-                    <div class="header-wrapicon2 m-r-13">
-						<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-						
-
-						<!-- Header cart notice -->
-						<?php echo $cart; ?>
-					</div>
+					       <?php echo $displayCart;?>
 				</div>
 			</div>
 			
@@ -171,9 +173,7 @@ require_once './Scripts/config.php';
 							<li>
 								<a href="product.php">Shop</a>
 							</li>
-							<li>
-								<a href="cart.php">Cart</a>
-							</li>
+				
 						</ul>
 					</nav>
 				</div>
@@ -225,7 +225,7 @@ require_once './Scripts/config.php';
 
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="checkout.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										Check Out
 									</a>
 								</div>
@@ -284,10 +284,6 @@ require_once './Scripts/config.php';
 
 					<li class="item-menu-mobile">
 						<a href="product.php">Shop</a>
-					</li>
-
-					<li class="item-menu-mobile">
-						<a href="cart.php">Cart</a>
 					</li>
 
 				</ul>

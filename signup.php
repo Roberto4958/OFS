@@ -1,10 +1,9 @@
 <?php
 session_start();
-if(isset($_SESSION['usr_id'])) {
-	header("Location: index.php");
-}
 
-include_once './Scripts/config.php';
+include_once 'Scripts/config.php';
+include_once 'Scripts/loginInfo.php';
+include_once 'Scripts/helperScripts.php';
 
 //set validation error flag as false
 $error = false;
@@ -28,10 +27,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		$error = true;
 		$name_error = "Name must contain only alphabets and space";
 	}
-	// if (!preg_match("/^[a-zA-Z_-]+$/",$uname)) {
-	// 	$error = true;
-	// 	$name_error = "Invalid Username: can only contain alphabets, numbers, -,or _";
-	// }
+
 	if(!filter_var($email,FILTER_VALIDATE_EMAIL)) {
 		$error = true;
 		$email_error = "Please Enter Valid Email ID";
@@ -48,23 +44,67 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		$error = true;
 		$zip_error = "Only numbers..";
 	}
+    
+    
 	if (!$error) {
-		if(mysqli_query($conn, "INSERT INTO users(`firstname`, `lastname`, `email`, `password`, `county`, `zip`) VALUES('".$fname."', '".$lname."', '".$email."', '".md5($password)."', '".$county."', '".$zip."')")) {
-			$successmsg = "Successfully Registered! <a href='signin.php'>Click here to Login</a>";
-		} else {
-			$errormsg = "Error in registering...Please try again later!";
-			echo mysqli_error($conn);
-		}
+        $conn = new mysqli($hn, $un, $pw, $db);
+        if(!emailIsAvailable($conn, $email)){ //check if password is taken
+            $email_error = "Email is taken";
+        }
+        else{
+            $salt = randomString(10);
+            $auth = randomString(20);
+            $hashedPass = hash('sha256', $password . $salt);
+            
+            $stmt = $conn->prepare("INSERT INTO users ( Email, firstName, lastName, County, Password, Salt, authtoken, admin ) VALUES (?,?,?,?, ?,?, ?, false)");
+            $stmt->bind_param('sssssss', $email, $fname, $lname, $county, $hashedPass, $salt, $auth);
+	        $result = $stmt->execute();
+            $id = getUserID($conn, $email);
+            $stmt->close();
+            if($id){
+                startSession($auth, $id, false);
+                header('Location: index.php');
+            }
+        }
+        $conn->close();
 	}
 }
+
+
+function getUserID($conn, $email){
+    $stmt = $conn->prepare("select id from users where email = ?;");
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_array(MYSQLI_NUM);
+    $stmt->close();
+    if(!$row[0]) return false;
+    return $row[0];
+} 
+
+//returns True is email is not taken
+function emailIsAvailable($conn, $email ){
+    $stmt = $conn->prepare("select * from users where email = ?");
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_array(MYSQLI_NUM);
+    $stmt->close();
+    if(!$row)return true;
+    return false;
+} 
+
 ?>
 
 <!DOCTYPE html>
+<html>
 <head>
 	<title>Register</title>
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<link rel="stylesheet" type="text/css" href="./css/login.css">
 </head>
+<body style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('images/grapesBanner.jpg');">
+
 
 <div class="container">
 		<div class="row">
@@ -81,7 +121,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
-								<form id="register-form" action="signup.php" method="post" name="signup" role="form" style="display: block;">
+								<form onsubmit="return CreateAccountValidate(this)" id="register-form" method="post" name="signup" role="form" style="display: block;" >
 									<div class="form-group col-sm-6">
 										<input type="text" name="firstname" id="firstname" class="form-control" required value="<?php if($error) echo $fname; ?>" placeholder="First Name" />
 										<span class="text-danger"><?php if (isset($name_error)) echo $name_error; ?></span>
@@ -133,14 +173,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		</div>
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4 text-center">	
-				Already Registered? <a href="signin.php">Login Here</a>
+                <p style='color:#FFF; display:inline;' >Already Registered? </p><a href="signin.php">Login Here</a>
 			</div>
 		</div>
 
 	</div>
-
+    <script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script type="text/javascript" src="./js/login.js"></script>
+    <script type="text/javascript" src="./js/authenticate.js"></script>
 </body>
 </html>

@@ -16,7 +16,7 @@ else {
 
     $conn = new mysqli($hn, $un, $pw, $db);
     if (!$conn->connect_error){ //connected to db succesfully 
-        $sql = "select itemId from cart where userID = $userID and itemID = $itemID";
+        $sql = "select itemId from Cart where userID = $userID and itemID = $itemID";
         $result = $conn->query($sql);
         $response->success = true; //adds success atribute to the response object
         
@@ -48,7 +48,7 @@ else {
     //---------------function -------------------------
     
     function getCart($conn, $userID){
-        $sql = "select i.name, sum(c.amount) as amount, i.weight, i.price, i.CategoryName from cart c, items i where i.id = c.ItemID and c.userid = $userID group by i.id";
+        $sql = "select i.Name, sum(c.amount) as amount, i.Weight, i.Price, i.CategoryName from Cart c, Items i where i.Id = c.ItemID and c.userID = $userID group by i.Id";
         $result = $conn->query($sql);
         $obj = array(); 
         if($result){
@@ -71,9 +71,12 @@ else {
     //@param: $itemID - int: id of food item
     //@param: $itemID - int: id of county 
     function addToCart($conn, $userID, $itemID, $countyID){
-        $sql = "insert into cart(itemID, amount, userID, countyID) values($itemID, 1, $userID, $countyID)";
+        $sql = "insert into Cart(itemID, amount, userID, countyID) values($itemID, 1, $userID, $countyID)";
         if($conn->query($sql)){
-            return true;
+            if(decrementItem($itemID, $conn)){
+               return true; 
+            }
+            else return false;
         }else return false;
     }
 
@@ -83,7 +86,17 @@ else {
     //@param: $itemID - int: id of food item
     //@param: $itemID - int: id of county 
     function increaseAmountInCart($conn, $userID, $itemID, $countyID){
-        $sql = "update cart set amount = amount+1  where userID =$userID and itemID = $itemID";
+        $sql = "update Cart set amount = amount+1  where userID =$userID and itemID = $itemID";
+        if($conn->query($sql)){
+            if(decrementItem($itemID, $conn)){
+               return true; 
+            }
+            else return false;
+        }else return false;
+    }
+
+    function decrementItem($itemID, $conn){
+        $sql = "update Items set amount = amount - 1 where Id = $itemID;"; 
         if($conn->query($sql)){
             return true;
         }else return false;
