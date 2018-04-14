@@ -147,7 +147,7 @@ function getCookie(cname) {
 
 
 //@desc: add to cart buttion clicked listiner. Gets items info and calls a php script to update cart
-$('.block2-btn-addcart').each(function(){
+$('.addtocartbutton').each(function(){
 			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
             var itemID =  $(this).parent().parent().parent().find('.block2-name').data('itemid')
             var userID =  getCookie('id');

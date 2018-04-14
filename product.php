@@ -46,26 +46,25 @@
     function generateItemsDiv($userID, $name, $category, $price, $weight, $amount, $countyID, $itemID){
         $button  = '';
         if ($userID != -1){ //if user is not logged in remove the button
-            $button = '<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+            $button = '<button class="addtocartbutton flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
 				            Add to Cart
 				        </button>';
         }
         
-        if($amount > 0){return'<div data-category = "'.$category.'"  class="foodCard col-sm-12 col-md-6 col-lg-4 p-b-50">
+        if($amount > 0){
+            return'<div data-category = "'.$category.'"  class="foodCard col-sm-12 col-md-6 col-lg-4 p-b-50">
 							<!-- Block2 -->
 							<div class="block2">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative">
 									<img src="images/'.$category.'/'.$name.'.jpg" alt="IMG-PRODUCT">
 
 									<div class="block2-overlay trans-0-4">
-
-										<div class="block2-btn-addcart w-size1 trans-0-4">
-											'.$button.'
-										</div>
 									</div>
 								</div>
 
 								<div class="block2-txt p-t-20">
+											'.$button.'
+								    <br>
 									<a data-countyid ="'.$countyID.'" data-itemid ="'.$itemID.'" class="block2-name dis-block s-text3 p-b-5">
 										'.$name.'
 									</a>
@@ -73,10 +72,14 @@
 									<span class="block2-price m-text6 p-r-5">
 										$'.$price.'
 									</span>
+                                    
+                                    
 								</div>
 							</div>
-						</div>';}
-        else{return'<div data-category = "'.$category.'"  class="foodCard col-sm-12 col-md-6 col-lg-4 p-b-50">
+						</div>';
+        }
+        else{
+            return'<div data-category = "'.$category.'"  class="foodCard col-sm-12 col-md-6 col-lg-4 p-b-50">
 							<!-- Block2 -->
 							<div class="block2">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative">
@@ -93,7 +96,8 @@
 									</span>
 								</div>
 							</div>
-						</div>';}
+						</div>';
+        }
     }
 
 ?>
