@@ -77,7 +77,7 @@ function updateNav(items, itemClicked){
     for(i=0; i < items.length; i++){
         total_weight += items[i]['amount'] * items[i]['Weight']
         total_price += items[i]['amount'] * items[i]['Price']
-        HTML_cart_items += generateCartItem(items[i]['Name'], items[i]['amount'], items[i]['Weight'], items[i]['Price'], items[i]['CategoryName'])
+        HTML_cart_items += generateCartItem(items[i]['Name'], items[i]['amount'], items[i]['Weight'], items[i]['Price'], items[i]['CategoryName'],items[i]['itemName'])
         if(items[i]["Id"] == itemClicked && items[i]["quantity"] <= 0){
             window.location.reload();
         }
@@ -111,7 +111,7 @@ function generateCartHTML(items, cost){
 						+"</div>";
     }
 
-function generateCartItem(name, amount, weight, price, category){
+function generateCartItem(name, amount, weight, price, category, itemName){
         return '<li class="header-cart-item">'
 									+'<div class="header-cart-item-img">'
 										+'<img src="images/' + category + '/'+ name + '.jpg" alt="IMG">'
@@ -119,7 +119,7 @@ function generateCartItem(name, amount, weight, price, category){
 
 									+'<div class="header-cart-item-txt">'
 										+'<a href="#" class="header-cart-item-name">'
-											+ name 
+											+ itemName 
 										+'</a>'
 
 										+'<span class="header-cart-item-info">'

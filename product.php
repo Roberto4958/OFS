@@ -22,7 +22,7 @@
         for($i=0; $i < $rows; $i++){
             $result->data_seek($i);
             $obj = $result->fetch_array(MYSQLI_ASSOC);
-            $items_To_display .= generateItemsDiv($userID, $obj['Name'], $obj['CategoryName'], $obj['Price'], $obj['Weight'], $obj['Amount'], $obj['countyID'], $obj['Id']); 
+            $items_To_display .= generateItemsDiv($userID, $obj['Name'], $obj['CategoryName'], $obj['Price'], $obj['Weight'], $obj['Amount'], $obj['countyID'], $obj['Id'], $obj['itemName']); 
         }
 
         $result->close();
@@ -43,7 +43,7 @@
     
     
 
-    function generateItemsDiv($userID, $name, $category, $price, $weight, $amount, $countyID, $itemID){
+    function generateItemsDiv($userID, $name, $category, $price, $weight, $amount, $countyID, $itemID, $itemName){
         $button  = '';
         if ($userID != -1){ //if user is not logged in remove the button
             $button = '<button class="addtocartbutton flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
@@ -66,7 +66,7 @@
 											'.$button.'
 								    <br>
 									<a data-countyid ="'.$countyID.'" data-itemid ="'.$itemID.'" class="block2-name dis-block s-text3 p-b-5">
-										'.$name.'
+										'.$itemName.'
 									</a>
 
 									<span class="block2-price m-text6 p-r-5">

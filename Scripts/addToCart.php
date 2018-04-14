@@ -48,7 +48,7 @@ else {
     //---------------function -------------------------
     
     function getCart($conn, $userID){
-        $sql = "select i.Name, sum(c.amount) as amount, i.Weight, i.Price, i.CategoryName,i.Id, i.amount as quantity from Cart c, Items i where i.Id = c.ItemID and c.userID = $userID group by i.Id";
+        $sql = "select i.Name, sum(c.amount) as amount, i.Weight, i.Price, i.CategoryName,i.Id, i.amount as quantity, i.itemName from Cart c, Items i where i.Id = c.ItemID and c.userID = $userID group by i.Id";
         $result = $conn->query($sql);
         $obj = array(); 
         if($result){
