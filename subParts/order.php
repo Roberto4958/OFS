@@ -72,7 +72,7 @@
                              <div class="form-group">
                                 <div class="col-xs-12">
                                     <strong>Total Weight</strong>
-                                    <div class="pull-right"><span>$</span><span><?php echo $total_weight; ?></span></div>
+                                    <div class="pull-right"><span><?php echo $total_weight; ?></span><span> lb</span></div>
                                 </div>
                             </div>
                             
