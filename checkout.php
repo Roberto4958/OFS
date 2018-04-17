@@ -27,7 +27,7 @@ if(isset($_POST['submiteAdress'])){ //address form signed
         $shippingAddress = $_POST['address'];
         setcookie('userAddress',  $shippingAddress, $seesionTime, "/");
     
-        $id = $_SESSION['id'];
+        $id = $_SESSION['id'];                
         $countyLocation = getCountyCordinates($id, $conn);
         setcookie('countyAddress',  $countyLocation, $seesionTime, "/");
     }
@@ -48,6 +48,7 @@ $processBar = ' <span class="step step_complete">
                     <span class="step_line '.$onAddress.'"></span>
                 </span>
                ';
+
 
 
 function getCountyCordinates($userID, $conn){
