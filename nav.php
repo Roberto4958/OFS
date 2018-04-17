@@ -20,7 +20,7 @@ $displayCart = "";
         if (!$conn->connect_error){
 //    	   $conn->query("Use OFS");
 
-            $sql = "select i.name, sum(c.amount) as amount, i.weight, i.price, i.CategoryName from Cart c, Items i where i.id = c.ItemID and c.userid =$id group by i.id";
+            $sql = "select i.name, sum(c.amount) as amount, i.weight, i.price, i.CategoryName, i.itemName from Cart c, Items i where i.id = c.ItemID and c.userid =$id group by i.id";
             $result = $conn->query($sql);
             $total_items = $result->num_rows;
         
@@ -30,8 +30,8 @@ $displayCart = "";
                 $obj = $result->fetch_array(MYSQLI_ASSOC);
                 $total_weight += $obj['amount'] * $obj['weight'];
                 $total_price += $obj['amount'] * $obj['price'];
-                $items .= generateCartItem($obj['name'], $obj['amount'], $obj['weight'], $obj['price'], $obj['CategoryName']);
-                $cartItems .= mobileCartItem($obj['name'], $obj['amount'], $obj['weight'], $obj['price'], $obj['CategoryName']);
+                $items .= generateCartItem($obj['name'], $obj['amount'], $obj['weight'], $obj['price'], $obj['CategoryName'],$obj['itemName']);
+                $cartItems .= mobileCartItem($obj['name'], $obj['amount'], $obj['weight'], $obj['price'], $obj['CategoryName'], $obj['itemName']);
             }
             if($total_items > 0){
                 $cart = generateCartHTML($items, $total_price, $total_items);
@@ -96,7 +96,7 @@ $displayCart = "";
 						</div>';
     }
 
-    function generateCartItem($name, $amount, $weight, $price, $category){
+    function generateCartItem($name, $amount, $weight, $price, $category, $itemName){
         return '<li class="header-cart-item">
 									<div class="header-cart-item-img">
 										<img src="images/'.$category.'/'.$name.'.jpg" alt="IMG">
@@ -104,7 +104,7 @@ $displayCart = "";
 
 									<div class="header-cart-item-txt">
 										<a href="#" class="header-cart-item-name">
-											'.$name.'
+											'.$itemName.'
 										</a>
 
 										<span class="header-cart-item-info">
@@ -114,7 +114,7 @@ $displayCart = "";
 								</li>';
     }
     
-    function mobileCartItem($name, $amount, $weight, $price, $category){
+    function mobileCartItem($name, $amount, $weight, $price, $category, $itemName){
         return '<li class="header-cart-item">
 									<div class="header-cart-item-img">
 										<img src="images/'.$category.'/'.$name.'.jpg" alt="IMG">
@@ -122,7 +122,7 @@ $displayCart = "";
 
 									<div class="header-cart-item-txt">
 										<a href="#" class="header-cart-item-name">
-											'.$name.'
+											'.$itemName.'
 										</a>
 
 										<span class="header-cart-item-info">
@@ -248,42 +248,20 @@ $displayCart = "";
 				<ul class="main-menu">
 					<li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
 						<span class="topbar-child1">
-							Free shipping for standard order over $100
+							Free shipping for orders less than 15 lb
 						</span>
-					</li>
-
-					<li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
-						<div class="topbar-child2-mobile">
-							<span class="topbar-email">
-								fashe@example.com
-							</span>
-
-							<div class="topbar-language rs1-select2">
-								<select class="selection-1" name="time">
-									<option>USD</option>
-									<option>EUR</option>
-								</select>
-							</div>
-						</div>
-					</li>
-
-					<li class="item-topbar-mobile p-l-10">
-						<div class="topbar-social-mobile">
-							<a href="#" class="topbar-social-item fa fa-facebook"></a>
-							<a href="#" class="topbar-social-item fa fa-instagram"></a>
-							<a href="#" class="topbar-social-item fa fa-pinterest-p"></a>
-							<a href="#" class="topbar-social-item fa fa-snapchat-ghost"></a>
-							<a href="#" class="topbar-social-item fa fa-youtube-play"></a>
-						</div>
 					</li>
 
 					<li class="item-menu-mobile">
 						<a href="index.php">Home</a>
-						<i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
 					</li>
-
+                    <hr style="margin:0;">
 					<li class="item-menu-mobile">
 						<a href="product.php">Shop</a>
+					</li>
+                    <hr style="margin:0;">
+                    <li class="item-menu-mobile">
+						<a href="logout.php">Log out</a>
 					</li>
 
 				</ul>

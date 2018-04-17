@@ -16,7 +16,7 @@ session_start();
     $conn = new mysqli($hn, $un, $pw, $db); //connects to db
     
     if (!$conn->connect_error){ //checks if connected succesfully 
-        $sql = "select i.Name, sum(c.amount) as amount, i.Weight, i.Price, i.CategoryName, i.Id from Cart c, items i where i.Id = c.ItemID and c.userID =$id group by i.Name";
+        $sql = "select i.Name, sum(c.amount) as amount, i.Weight, i.Price, i.CategoryName, i.Id, i.itemName from Cart c, items i where i.Id = c.ItemID and c.userID =$id group by i.Name";
         $result = $conn->query($sql);
         $rows = $result->num_rows;
         
@@ -27,7 +27,7 @@ session_start();
             $obj = $result->fetch_array(MYSQLI_ASSOC);
             $total_weight += $obj['amount'] * $obj['Weight'];
             $total_price += $obj['amount'] * $obj['Price'];
-            $cart_items .= generateDiv($obj['Name'], $obj['amount'], $obj['Weight'], $obj['Price'], $obj['CategoryName'], $obj['Id']); 
+            $cart_items .= generateDiv($obj['Name'], $obj['amount'], $obj['Weight'], $obj['Price'], $obj['CategoryName'], $obj['Id'], $obj['itemName']); 
         }
         $result->close();
         $conn->close();
@@ -39,7 +39,7 @@ session_start();
     
 
     //@desc: generates html code to display a new row inside the cart table 
-    function generateDiv($name, $amount, $weight, $price, $category, $id){ //old img = item-10.jpg
+    function generateDiv($name, $amount, $weight, $price, $category, $id, $itemName){ //old img = item-10.jpg
         
         $total_price = $amount * $price;
         $total_weight = $amount * $weight;
@@ -49,7 +49,7 @@ session_start();
 									<img src="images/'.$category.'/'.$name.'.jpg" alt="IMG-PRODUCT">
 								</div>
 							</td>
-							<td class="column-2">'.$name.'</td>
+							<td class="column-2">'.$itemName.'</td>
 							<td class="column-3">$'.$price.'/'.$weight.' lb</td>
 							<td class="column-4">
 								<div class="flex-w bo5 of-hidden w-size17">

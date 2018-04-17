@@ -103,7 +103,7 @@ else {
     }
 
     function getCart($conn, $userID){
-        $sql = "select i.Id, i.Name, sum(c.amount) as amount, i.Weight, i.Price, i.CategoryName from Cart c, Items i where i.id = c.ItemID and c.userID = $userID group by i.Id";
+        $sql = "select i.Id, i.Name, sum(c.amount) as amount, i.Weight, i.Price, i.CategoryName, i.itemName from Cart c, Items i where i.id = c.ItemID and c.userID = $userID group by i.Id";
         $result = $conn->query($sql);
         $obj = array(); 
         if($result){
