@@ -10,6 +10,7 @@ $displayCart = "";
         $total_price = 0;
         $total_weight = 0; 
         $total_items = 0;
+        $mobileCart = '';
         $cart = '';
         $cartItems = '';
         $id = $_SESSION['id'];
@@ -34,8 +35,10 @@ $displayCart = "";
                 $cartItems .= mobileCartItem($obj['name'], $obj['amount'], $obj['weight'], $obj['price'], $obj['CategoryName'], $obj['itemName']);
             }
             if($total_items > 0){
+                $mobileCart = mobileCart($cartItems, $total_price, $total_items);
                 $cart = generateCartHTML($items, $total_price, $total_items);
             }else{
+                $mobileCart = MobileEmptyCartHTML();
                 $cart = generateEmptyCartHTML();
             }
         
@@ -96,6 +99,21 @@ $displayCart = "";
 						</div>';
     }
 
+    function MobileEmptyCartHTML(){
+
+        return '<div class="header-wrapicon2">
+						<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+						<span class="header-icons-noti">0</span>
+
+						<!-- Header cart noti -->
+						<div class="header-cart header-dropdown">
+							<ul class="header-cart-wrapitem">
+                                No Items on cart
+							</ul>
+						</div>
+					</div>';
+    }
+
     function generateCartItem($name, $amount, $weight, $price, $category, $itemName){
         return '<li class="header-cart-item">
 									<div class="header-cart-item-img">
@@ -131,6 +149,41 @@ $displayCart = "";
 									</div>
 								</li>';
     }
+
+    function mobileCart($items, $cost, $total_items){
+        
+        return '<div class="header-wrapicon2">
+						<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+						<span class="header-icons-noti">'.$total_items.'</span>
+
+						<!-- Header cart noti -->
+						<div class="header-cart header-dropdown">
+							<ul class="header-cart-wrapitem">
+                                '.$items.'
+							</ul>
+
+							<div class="header-cart-total">
+								Total: $'.$cost.'
+							</div>
+
+							<div class="header-cart-buttons">
+								<div class="header-cart-wrapbtn">
+									<!-- Button -->
+									<a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+										View Cart
+									</a>
+								</div>
+
+								<div class="header-cart-wrapbtn">
+									<!-- Button -->
+									<a href="checkout.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+										Check Out
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>';
+    }
     
 ?>
 
@@ -148,11 +201,13 @@ $displayCart = "";
 				<div class="topbar-child2">
 					<ul class="nav">
 								<?php if (isset($_SESSION['id'])) { ?>
-								<li><a href="logout.php">Log Out</a></li>
+								<li><p class="">Welcome, <?php echo $_SESSION['id']; ?></p></li>
+								&nbsp;&nbsp;&nbsp;
+								<li><a href="logout.php">| Log Out</a></li>
 								<?php } else { ?>
-								<li><a href="signin.php">Login</a></li>
-								&nbsp;&nbsp;&nbsp;&nbsp;
-								<li><a href="signup.php">Sign Up</a></li>
+								<li><a href="signin.php">Login |</a></li>
+								&nbsp;
+								<li><a href="signup.php">| Sign Up</a></li>
 								<?php } ?>
 							</ul>
 					       <?php echo $displayCart;?>
@@ -200,12 +255,13 @@ $displayCart = "";
 					</a>
 
 					<span class="linedivide2"></span>
+                    <?php echo $mobileCart; ?>
 
+<!--
 					<div class="header-wrapicon2">
 						<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
 						<span class="header-icons-noti">3</span>
 
-						<!-- Header cart noti -->
 						<div class="header-cart header-dropdown">
 							<ul class="header-cart-wrapitem">
                                 <?php echo $cartItems;?>
@@ -217,14 +273,12 @@ $displayCart = "";
 
 							<div class="header-cart-buttons">
 								<div class="header-cart-wrapbtn">
-									<!-- Button -->
 									<a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										View Cart
 									</a>
 								</div>
 
 								<div class="header-cart-wrapbtn">
-									<!-- Button -->
 									<a href="checkout.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										Check Out
 									</a>
@@ -232,6 +286,7 @@ $displayCart = "";
 							</div>
 						</div>
 					</div>
+-->
 				</div>
 
 				<div class="btn-show-menu-mobile hamburger hamburger--squeeze">

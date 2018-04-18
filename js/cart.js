@@ -88,6 +88,7 @@ function updateTotalWeightAndPrice(){
 //--------navigation logic ---------// 
 function updateNav(items){
     HTML_cart_items = ''
+    HTML_cart_item_mobile= ''
     total_price = 0
     total_weight = 0
     total_items = 0
@@ -95,12 +96,50 @@ function updateNav(items){
         total_weight += items[i]['amount'] * items[i]['Weight']
         total_price += items[i]['amount'] * items[i]['Price']
         HTML_cart_items += generateCartItem(items[i]['Name'], items[i]['amount'], items[i]['Weight'], items[i]['Price'], items[i]['CategoryName'], items[i]['itemName'])
+        
+        HTML_cart_item_mobile = generateMobileCartItem(items[i]['Name'], items[i]['amount'], items[i]['Weight'], items[i]['Price'], items[i]['CategoryName'], items[i]['itemName'])
     }
-    
+
     cart = generateCartHTML(HTML_cart_items, total_price)
+    mobileCart = generateMobileCartHTML(HTML_cart_items, total_price)
+    
     $('#icon-number').replaceWith('<span id="icon-number" class="header-icons-noti">'+items.length+'</span>')
     $('#cart-desktop').replaceWith(cart)
+    
+    $("#icon-number-mobile").replaceWith('<span id="icon-number-mobile" class="header-icons-noti">'+items.length+'</span>')
+    $('#cart-mobile').replaceWith(mobileCart)
 }
+
+
+function generateMobileCartItem(name, amount, weight, price, category, itemName) {
+    
+    return '<li class="header-cart-item">'
+                +'<div class="header-cart-item-img">'
+				+'<img src="images/' +category+ '/'+ name +'.jpg" alt="IMG">'
+                    +'</div>'
+                    +'<div class="header-cart-item-txt">'
+				    +'<a href="#" class="header-cart-item-name">'+itemName+'</a>'
+                    + '<span class="header-cart-item-info">'+ amount + ' x '+ price +'</span>'				
+					+ '</div>'				
+				    +'</li>'
+    
+}
+
+function generateMobileCartHTML(items, cost){
+    return '<div id="cart-mobile" class="header-cart header-dropdown">'
+            + '<ul class="header-cart-wrapitem">' + items +'</ul>'
+            + '<div class="header-cart-total">Total: $' + cost.toFixed(2) +'</div>'
+            + '<div class="header-cart-buttons">'
+                + '<div class="header-cart-wrapbtn">'		
+                    + '<a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">View Cart</a>'
+                + '</div>'						
+		          + '<div class="header-cart-wrapbtn">'
+                    + '<a href="checkout.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">Check Out</a>'
+				+ '</div>'
+            + '</div>'
+        +'</div>'
+}
+
 
 function generateCartItem(name, amount, weight, price, category, itemName){
         return '<li class="header-cart-item">'

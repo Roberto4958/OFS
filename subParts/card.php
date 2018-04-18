@@ -23,17 +23,8 @@
         <label class="control-label">Card Number</label>
         <div class="controls">
           <div class="row-fluid">
-            <div class="span1">
-              <input type="text" class="input-block-level" autocomplete="off" maxlength="4" pattern="\d{4}" title="First four digits" required>
-          </div>
-          <div class="span1">
-              <input type="text" class="input-block-level" autocomplete="off" maxlength="4" pattern="\d{4}" title="Second four digits" required>
-          </div>
-          <div class="span1">
-              <input type="text" class="input-block-level" autocomplete="off" maxlength="4" pattern="\d{4}" title="Third four digits" required>
-          </div>
-          <div class="span1">
-              <input type="text" class="input-block-level" autocomplete="off" maxlength="4" pattern="\d{4}" title="Fourth four digits" required>
+            <div class="span4">
+              <input type="text" class="input-block-level" autocomplete="off" maxlength="16" pattern="\d{16}" title="16 digits required" required>
           </div>
       </div>
   </div>
@@ -86,7 +77,12 @@
     <div class="controls">
       <div class="row-fluid">
         <div class="span1">
+<<<<<<< HEAD
           <input type="text" class="input-block-level" autocomplete="off" minlength="3" maxlength="4" pattern="\d{3-4}" title="Three-Four digits at back of your card" required>
+=======
+
+          <input type="text" class="input-block-level" autocomplete="off" maxlength="4" minlength="3" pattern="\d{3-4}" title="3-4 digits at back of your card" required>
+>>>>>>> ed54035590e2e50f78920d9e54e91adff26bda21
       </div>
 
   </div>
