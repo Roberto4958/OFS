@@ -104,14 +104,12 @@ function getCountyName($userID, $conn){
     <script type="text/javascript" src="js/authenticate.js"></script>
     <link rel="stylesheet" href="css/checkout.css" >
     
-    
 
-    <?php 
-        require_once "nav.php" 
-    ?>
     
 <body class="animsition">
-
+    <?php 
+        include "nav.php" 
+    ?>
 
 <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(images/healthy.jpg);">
 		<h2 class="l-text2 t-center">
@@ -120,7 +118,7 @@ function getCountyName($userID, $conn){
 	</section>
 
 
-<!------ Include the above in your HEAD tag ---------->
+<!-- Include the above in your HEAD tag -->
 <div class="container wrapper">
             <div class="row cart-head">
                 <div class="container">

@@ -4,7 +4,7 @@
 require_once 'Scripts/helperScripts.php';
 require_once 'Scripts/loginInfo.php';
 $displayCart = "";
-
+$loggedIn = False;
     if(SessionIsValid()){
         $items = '';
         $total_price = 0;
@@ -14,6 +14,7 @@ $displayCart = "";
         $cart = '';
         $cartItems = '';
         $id = $_SESSION['id'];
+        $loggedIn = isset($id) ? True : False;
         // Create connection
 	   $conn = new mysqli($hn, $un, $pw, $db);
 
@@ -184,6 +185,12 @@ $displayCart = "";
 						</div>
 					</div>';
     }
+
+    function logOutButton(){
+    	return '<li class="item-menu-mobile">
+								<a href="logout.php">Log out</a>
+							 </li>';
+    }
     
 ?>
 
@@ -201,8 +208,8 @@ $displayCart = "";
 				<div class="topbar-child2">
 					<ul class="nav">
 								<?php if (isset($_SESSION['id'])) { ?>
-								<li><p class="">Welcome, <?php echo $_SESSION['id']; ?></p></li>
-								&nbsp;&nbsp;&nbsp;
+								<li><p class="name-tag" >Welcome, <?php echo $_SESSION['name']; ?></p></li>
+								<!-- &nbsp;&nbsp;&nbsp; -->
 								<li><a href="logout.php">| Log Out</a></li>
 								<?php } else { ?>
 								<li><a href="signin.php">Login |</a></li>
@@ -250,12 +257,14 @@ $displayCart = "";
 			<div class="btn-show-menu">
 				<!-- Header Icon mobile -->
 				<div class="header-icons-mobile">
-					<a href="#" class="header-wrapicon1 dis-block">
+					<!-- <a href="#" class="header-wrapicon1 dis-block">
 						<img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
-					</a>
+					</a> -->
 
 					<span class="linedivide2"></span>
-                    <?php echo $mobileCart; ?>
+                    <?php if(isset($mobileCart)) {
+                    	echo $mobileCart;}
+                    ?>
 
 <!--
 					<div class="header-wrapicon2">
@@ -315,9 +324,13 @@ $displayCart = "";
 						<a href="product.php">Shop</a>
 					</li>
                     <hr style="margin:0;">
-                    <li class="item-menu-mobile">
-						<a href="logout.php">Log out</a>
-					</li>
+                     <?php 
+                     if($loggedIn){
+                     	echo logOutButton();
+                     }
+
+                     ?>
+                    
 
 				</ul>
 			</nav>

@@ -27,9 +27,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			else{
 				$token = randomString(20);
 				$id= $loginInfo[0];
-				$isAdmin = $loginInfo[1];                
+				$isAdmin = $loginInfo[1];
+				$name = $loginInfo[2];                
 				$conn->query("update users set authtoken = '$token' where id = $id"); 
-				startSession($token, $id, $isAdmin);
+				startSession($token, $id, $isAdmin, $name);
 
 				if($isAdmin)
 					header('Location: admin.php');
@@ -56,14 +57,14 @@ function getSalt($conn, $email){
 }
 
 function passIsCorrect($conn, $email, $hashedpass){
-	$stmt = $conn->prepare("select id, admin from users where email = ? and password = ?");
+	$stmt = $conn->prepare("select id, admin, firstName, lastName from users where email = ? and password = ?");
 	$stmt->bind_param('ss', $email, $hashedpass);
 	$stmt->execute();
 	$result = $stmt->get_result();
 	$row = $result->fetch_array(MYSQLI_NUM);
 	$stmt->close();
 	if(!$row) return false;
-	return array($row[0], $row[1]);
+	return array($row[0], $row[1], $row[2], $row[3]);
 }
 
 
@@ -75,7 +76,7 @@ function passIsCorrect($conn, $email, $hashedpass){
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<link rel="stylesheet" type="text/css" href="./css/login.css">
 </head>
-<body  style="background-image: url('https://orig00.deviantart.net/728c/f/2013/034/1/9/rainbow_dash_login_background__series_1__by_mateo_thefox-d5tozbc.jpg'); background-repeat: no-repeat; background-size: 100%;">
+<body  style="background-image: url('https://orig00.deviantart.net/728c/f/2013/034/1/9/rainbow_dash_login_background__series_1__by_mateo_thefox-d5tozbc.jpg'); background-repeat: no-repeat; background-size: 100%; height: 100vh;">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">

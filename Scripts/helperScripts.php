@@ -24,7 +24,7 @@ function removeHTML($input){
 //--- Session handeler ---///
 $SESSION_TIME = 86400 * 30; // one day
 
-function startSession($token, $id, $isAdmin){
+function startSession($token, $id, $isAdmin, $name){
     $seesionTime = time() + $GLOBALS['SESSION_TIME']; 
     $cookie_name = 'token';
     $cookie_value = $token;
@@ -34,6 +34,7 @@ function startSession($token, $id, $isAdmin){
 
     $_SESSION['id'] = $id;
     $_SESSION['admin'] = $isAdmin;
+    $_SESSION['name'] = $name;
     $_SESSION['check'] = hash('ripemd128', $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] . $token);
 }
 

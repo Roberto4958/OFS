@@ -152,7 +152,7 @@ session_start();
 							<th class="column-2"> </th>
 							<th class="column-3"> </th>
 							<th class="column-4"> </th>
-							<th id= "totalWeight" class="column-5" style="white-space: nowrap"><?php echo $total_weight;?> lb</th>
+							<th id= "totalWeight" class="column-5" style="white-space: nowrap; overflow: hidden;"><?php echo $total_weight;?> lb</th>
                     </tr>
                 </table>
 			</div>
