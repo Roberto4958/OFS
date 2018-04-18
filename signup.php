@@ -42,56 +42,56 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	}
 	if (!preg_match("/^[0-9]+$/",$zip)) {
 		$error = true;
-		$zip_error = "Only numbers..";
+		$zip_error = "5 digit zipcode required";
 	}
-    
-    
+
+
 	if (!$error) {
-        $conn = new mysqli($hn, $un, $pw, $db);
+		$conn = new mysqli($hn, $un, $pw, $db);
         if(!emailIsAvailable($conn, $email)){ //check if password is taken
-            $email_error = "Email is taken";
+        	$email_error = "Email is taken";
         }
         else{
-            $salt = randomString(10);
-            $auth = randomString(20);
-            $hashedPass = hash('sha256', $password . $salt);
-            
-            $stmt = $conn->prepare("INSERT INTO users ( Email, firstName, lastName, County, Password, Salt, authtoken, admin ) VALUES (?,?,?,?, ?,?, ?, false)");
-            $stmt->bind_param('sssssss', $email, $fname, $lname, $county, $hashedPass, $salt, $auth);
-	        $result = $stmt->execute();
-            $id = getUserID($conn, $email);
-            $stmt->close();
-            if($id){
-                startSession($auth, $id, false);
-                header('Location: index.php');
-            }
+        	$salt = randomString(10);
+        	$auth = randomString(20);
+        	$hashedPass = hash('sha256', $password . $salt);
+
+        	$stmt = $conn->prepare("INSERT INTO users ( Email, firstName, lastName, County, Password, Salt, authtoken, admin ) VALUES (?,?,?,?, ?,?, ?, false)");
+        	$stmt->bind_param('sssssss', $email, $fname, $lname, $county, $hashedPass, $salt, $auth);
+        	$result = $stmt->execute();
+        	$id = getUserID($conn, $email);
+        	$stmt->close();
+        	if($id){
+        		startSession($auth, $id, false);
+        		header('Location: index.php');
+        	}
         }
         $conn->close();
-	}
+    }
 }
 
 
 function getUserID($conn, $email){
-    $stmt = $conn->prepare("select id from users where email = ?;");
-    $stmt->bind_param('s', $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_array(MYSQLI_NUM);
-    $stmt->close();
-    if(!$row[0]) return false;
-    return $row[0];
+	$stmt = $conn->prepare("select id from users where email = ?;");
+	$stmt->bind_param('s', $email);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$row = $result->fetch_array(MYSQLI_NUM);
+	$stmt->close();
+	if(!$row[0]) return false;
+	return $row[0];
 } 
 
 //returns True is email is not taken
 function emailIsAvailable($conn, $email ){
-    $stmt = $conn->prepare("select * from users where email = ?");
-    $stmt->bind_param('s', $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_array(MYSQLI_NUM);
-    $stmt->close();
-    if(!$row)return true;
-    return false;
+	$stmt = $conn->prepare("select * from users where email = ?");
+	$stmt->bind_param('s', $email);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$row = $result->fetch_array(MYSQLI_NUM);
+	$stmt->close();
+	if(!$row)return true;
+	return false;
 } 
 
 ?>
@@ -103,17 +103,18 @@ function emailIsAvailable($conn, $email ){
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<link rel="stylesheet" type="text/css" href="./css/login.css">
 </head>
-<body style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('images/grapesBanner.jpg');">
+<body style="background-image: url('https://orig00.deviantart.net/728c/f/2013/034/1/9/rainbow_dash_login_background__series_1__by_mateo_thefox-d5tozbc.jpg'); background-repeat: no-repeat; background-size: 100%;">
 
 
-<div class="container">
+	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<div class="panel panel-login">
 					<div class="panel-heading">
 						<div class="row">
 							<div>
-								<a href="#register" class="active" id="register-form-link">Register</a>
+								<a href="index.php" class="" id="">Home</a>
+								<a href="#register" class="active" id="register-form-link">| Register</a>
 							</div>
 						</div>
 						<hr>
@@ -144,44 +145,44 @@ function emailIsAvailable($conn, $email ){
 									</div>
 									<div class="form-group col-sm-6 custom-select custom-select-lg mb-3">
 <!-- 										<label for="inputState">County</label>
- -->										<select id="county" name="county" class="form-control" required class="form-control" 											placeholder="County">
-											<option selected>Choose County...</option>
-											<option>Santa Clara</option>
-											<option>San Mateo</option>
-										</select>
-									</div>
-									<div class="form-group col-sm-6">
-										<!-- <label for="inputZip">Zip</label> -->
-										<input type="text" class="form-control" id="zip" name="zip" placeholder="Zip" required value="<?php if($error) echo $zip; ?>">
-										<span class="text-danger"><?php if (isset($zip_error)) echo $zip_error; ?></span>
-									</div>
-									<div class="form-group">
-										<div class="row">
-											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="register-submit" id="register-submit" class="form-control btn btn-register" value="Register Now">
-											</div>
-										</div>
-									</div>
-								</form>
-								<span class="text-success"><?php if (isset($successmsg)) { echo $successmsg; } ?></span>
-								<span class="text-danger"><?php if (isset($errormsg)) { echo $errormsg; } ?></span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+-->										<select id="county" name="county" class="form-control" required class="form-control" 											placeholder="County">
+	<option selected>Choose County...</option>
+	<option>Santa Clara</option>
+	<option>San Mateo</option>
+</select>
+</div>
+<div class="form-group col-sm-6">
+	<!-- <label for="inputZip">Zip</label> -->
+	<input type="text" class="form-control" id="zip" name="zip" placeholder="Zip" required value="<?php if($error) echo $zip; ?>">
+	<span class="text-danger"><?php if (isset($zip_error)) echo $zip_error; ?></span>
+</div>
+<div class="form-group">
+	<div class="row">
+		<div class="col-sm-6 col-sm-offset-3">
+			<input type="submit" name="register-submit" id="register-submit" class="form-control btn btn-register" value="Register Now">
 		</div>
-		<div class="row">
-			<div class="col-md-4 col-md-offset-4 text-center">	
-                <p style='color:#FFF; display:inline;' >Already Registered? </p><a href="signin.php">Login Here</a>
-			</div>
-		</div>
-
 	</div>
-    <script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<script type="text/javascript" src="./js/login.js"></script>
-    <script type="text/javascript" src="./js/authenticate.js"></script>
+</div>
+</form>
+<span class="text-success"><?php if (isset($successmsg)) { echo $successmsg; } ?></span>
+<span class="text-danger"><?php if (isset($errormsg)) { echo $errormsg; } ?></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row">
+	<div class="col-md-4 col-md-offset-4 text-center">	
+		<p style='color:#FFF; display:inline;' >Already Registered? </p><a href="signin.php">Login Here</a>
+	</div>
+</div>
+
+</div>
+<script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript" src="./js/login.js"></script>
+<script type="text/javascript" src="./js/authenticate.js"></script>
 </body>
 </html>
