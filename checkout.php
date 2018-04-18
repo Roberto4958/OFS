@@ -79,7 +79,7 @@ function getCountyName($userID, $conn){
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
+<head>
 <title>Checkout</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -105,7 +105,7 @@ function getCountyName($userID, $conn){
     <link rel="stylesheet" href="css/checkout.css" >
     
 
-    
+  </head>  
 <body class="animsition">
     <?php 
         include "nav.php" 
