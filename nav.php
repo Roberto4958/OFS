@@ -148,11 +148,13 @@ $displayCart = "";
 				<div class="topbar-child2">
 					<ul class="nav">
 								<?php if (isset($_SESSION['id'])) { ?>
-								<li><a href="logout.php">Log Out</a></li>
+								<li><p class="">Welcome, <?php echo $_SESSION['id']; ?></p></li>
+								&nbsp;&nbsp;&nbsp;
+								<li><a href="logout.php">| Log Out</a></li>
 								<?php } else { ?>
-								<li><a href="signin.php">Login</a></li>
-								&nbsp;&nbsp;&nbsp;&nbsp;
-								<li><a href="signup.php">Sign Up</a></li>
+								<li><a href="signin.php">Login |</a></li>
+								&nbsp;
+								<li><a href="signup.php">| Sign Up</a></li>
 								<?php } ?>
 							</ul>
 					       <?php echo $displayCart;?>
