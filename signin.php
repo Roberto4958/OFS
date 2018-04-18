@@ -76,13 +76,19 @@ function passIsCorrect($conn, $email, $hashedpass){
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<link rel="stylesheet" type="text/css" href="./css/login.css">
 </head>
-<body  style="background-image: url('https://orig00.deviantart.net/728c/f/2013/034/1/9/rainbow_dash_login_background__series_1__by_mateo_thefox-d5tozbc.jpg'); background-repeat: no-repeat; background-size: 100%; height: 100vh;">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
+<body class="signin-body" style="margin-top: 0px; padding-top: 0px;">
+	<div class="container-fluid signin-container" style="padding: 0px 0px 0px 0px !important;
+		margin: 0px 0px 0px 0px !important;
+		background-image: url('./images/signinbg.jpg');
+		background-repeat: no-repeat;
+		background-size: auto;
+		height: 100vh;
+		min-width: 100%;">
+		<div class="row" style="margin-top: 5%; margin-left: 0px; margin-right: 0px;">
+			<div class="col-md-4 col-md-offset-4">
 				<div class="panel panel-login">
 					<div class="panel-heading">
-						<div class="row">
+						<div class="row" style="margin: 0px 0px 0px 0px;">
 							<div>
 								<a href="index.php" class="" id="">Home</a>
 								<a href="#login" class="active" id="login-form-link">| Login</a>
@@ -91,7 +97,7 @@ function passIsCorrect($conn, $email, $hashedpass){
 						<hr>
 					</div>
 					<div class="panel-body">
-						<div class="row">
+						<div class="row" style="margin: 0px 0px 0px 0px;">
 							<div class="col-lg-12">
 								<form id="login-form" action="signin.php" method="post" name="login" role="form" style="display: block;">
 									<div class="form-group col-sm-12">
@@ -115,9 +121,9 @@ function passIsCorrect($conn, $email, $hashedpass){
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" style="margin: 0px 0px 0px 0px;">
 			<div class="col-md-4 col-md-offset-4 text-center">	
-				<p style='color:#FFF; display:inline;' >New User?</p> <a href="signup.php">Sign Up Here</a>
+				<p style='color:#000; display:inline;' >New User?</p> <a href="signup.php">Sign Up Here</a>
 			</div>
 		</div>
 	</div>
