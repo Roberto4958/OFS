@@ -206,11 +206,10 @@ $loggedIn = False;
 				</a>
 
 				<div class="topbar-child2">
-					<ul class="nav">
+					<ul class="nav" style="display: inherit;">
 								<?php if (isset($_SESSION['id'])) { ?>
-								<li><p class="name-tag" >Welcome, <?php echo $_SESSION['name']; ?></p></li>
-								<!-- &nbsp;&nbsp;&nbsp; -->
-								<li><a href="logout.php">| Log Out</a></li>
+								<li><p class="name-tag" >Welcome, <?php echo $_SESSION['name']; ?></p></li>&nbsp;&nbsp;&nbsp;
+								<li><a href="logout.php" style="padding: 0; color: black;">| Log Out</a></li>
 								<?php } else { ?>
 								<li><a href="signin.php">Login |</a></li>
 								&nbsp;

@@ -140,26 +140,19 @@ session_start();
                         <?php echo $cart_items?>
                         
 					</table>
-				</div>
-			</div>
 
-			<div class="flex-w flex-sb-m p-t-25 p-b-25 bo8 p-l-35 p-r-60 p-lr-15-sm">
-				<div class="flex-w flex-m w-full-sm">
-				</div>
-				<table class="table-shopping-cart">
+					<table class="table-shopping-cart" style="margin-top: 1%; margin-bottom: 0px;">
                     <tr>
 							<th class="column-1"><h4 >Total Weight:</h4></th>
 							<th class="column-2"> </th>
 							<th class="column-3"> </th>
 							<th class="column-4"> </th>
-							<th id= "totalWeight" class="column-5" style="white-space: nowrap; overflow: hidden;"><?php echo $total_weight;?> lb</th>
+							<th id= "totalWeight" class="column-5" style="white-space: nowrap;"><?php echo $total_weight;?> lb</th>
                     </tr>
                 </table>
-			</div>
-            <div class="flex-w flex-sb-m p-t-25 p-b-25 bo8 p-l-35 p-r-60 p-lr-15-sm">
-				<div class="flex-w flex-m w-full-sm">
-				</div>
-				<table class="table-shopping-cart">
+                <hr />
+
+                <table class="table-shopping-cart">
 				
                     <tr>
 							<th class="column-1"><h4>Total:</h4></th>
@@ -170,7 +163,11 @@ session_start();
                     </tr>
 
                 </table>
+                <hr />
+
+				</div>
 			</div>
+
             <div class="flex-w flex-sb-m p-t-25 p-b-25 bo8 p-l-35 p-r-60 p-lr-15-sm">
 				<div class="flex-w flex-m w-full-sm">
 				</div>
