@@ -13,7 +13,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$fname = mysqli_real_escape_string($conn, $_POST['firstname']);
 	$lname = mysqli_real_escape_string($conn, $_POST['lastname']);
 	$county = mysqli_real_escape_string($conn, $_POST['county']);
-	$zip = mysqli_real_escape_string($conn, $_POST['zip']);
 	$email = mysqli_real_escape_string($conn, $_POST['email']);
 	$password = mysqli_real_escape_string($conn, $_POST['password']);
 	$cpassword = mysqli_real_escape_string($conn, $_POST['cpassword']);
@@ -40,11 +39,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		$error = true;
 		$cpassword_error = "Password and Confirm Password doesn't match";
 	}
-	if (!preg_match("/^[0-9]+$/",$zip)) {
-		$error = true;
-		$zip_error = "5 digit zipcode required";
-	}
-
 
 	if (!$error) {
 		$conn = new mysqli($hn, $un, $pw, $db);
@@ -100,6 +94,7 @@ function emailIsAvailable($conn, $email ){
 <html>
 <head>
 	<title>Register</title>
+    <link rel="icon" type="image/png" href="images/icons/favicon.png"/>
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<link rel="stylesheet" type="text/css" href="./css/login.css">
 </head>
@@ -154,11 +149,6 @@ function emailIsAvailable($conn, $email ){
 	<option>Santa Clara</option>
 	<option>San Mateo</option>
 </select>
-</div>
-<div class="form-group col-sm-6">
-	<!-- <label for="inputZip">Zip</label> -->
-	<input type="text" class="form-control" id="zip" name="zip" placeholder="Zip" required value="<?php if($error) echo $zip; ?>">
-	<span class="text-danger"><?php if (isset($zip_error)) echo $zip_error; ?></span>
 </div>
 <div class="form-group">
 	<div class="row">

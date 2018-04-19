@@ -83,7 +83,7 @@ session_start();
 
 						<div class="wrap-btn-slide1 w-size1 animated visible-false" data-appear="fadeInDown">
 							<!-- Button -->
-							<a href="product.html" class="flex-c-m size2 bo-rad-23 s-text2 bgwhite hov1 trans-0-4">
+							<a href="product.php" class="flex-c-m size2 bo-rad-23 s-text2 bgwhite hov1 trans-0-4">
 								Shop Now
 							</a>
 						</div>
@@ -98,7 +98,7 @@ session_start();
 
 						<div class="wrap-btn-slide1 w-size1 animated visible-false" data-appear="lightSpeedIn">
 							<!-- Button -->
-							<a href="product.html" class="flex-c-m size2 bo-rad-23 s-text2 bgwhite hov1 trans-0-4">
+							<a href="product.php" class="flex-c-m size2 bo-rad-23 s-text2 bgwhite hov1 trans-0-4">
 								Shop Now
 							</a>
 						</div>
@@ -145,13 +145,13 @@ session_start();
 				<div class="col-sm-10 col-md-4 p-b-30 m-l-r-auto">
 					<!-- Block3 -->
 					<div class="block3">
-						<a href="blog-detail.html" class="block3-img dis-block hov-img-zoom">
+						<a href="product.php" class="block3-img dis-block hov-img-zoom">
 							<img src="images/time.jpg" alt="IMG-BLOG">
 						</a>
 
 						<div class="block3-txt p-t-14">
 							<h4 class="p-b-7">
-								<a href="blog-detail.html" class="m-text11">
+								<a href="product.php" class="m-text11">
 									Save time
 								</a>
 							</h4>
@@ -166,13 +166,13 @@ session_start();
 				<div class="col-sm-10 col-md-4 p-b-30 m-l-r-auto">
 					<!-- Block3 -->
 					<div class="block3">
-						<a href="blog-detail.html" class="block3-img dis-block hov-img-zoom">
+						<a href="product.php" class="block3-img dis-block hov-img-zoom">
 							<img src="images/environment.jpg" alt="IMG-BLOG">
 						</a>
 
 						<div class="block3-txt p-t-14">
 							<h4 class="p-b-7">
-								<a href="blog-detail.html" class="m-text11">
+								<a href="product.php" class="m-text11">
 									Save The Environment 
 								</a>
 							</h4>
@@ -193,7 +193,7 @@ session_start();
 
 						<div class="block3-txt p-t-14">
 							<h4 class="p-b-7">
-								<a href="blog-detail.html" class="m-text11">
+								<a href="product.php" class="m-text11">
 									Enjoy Quality Food
 								</a>
 							</h4>

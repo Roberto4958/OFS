@@ -73,6 +73,7 @@ function passIsCorrect($conn, $email, $hashedpass){
 <html>
 <head>
 	<title>Login</title>
+    <link rel="icon" type="image/png" href="images/icons/favicon.png"/>
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<link rel="stylesheet" type="text/css" href="./css/login.css">
 </head>

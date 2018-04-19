@@ -59,7 +59,17 @@ ini_set('display_errors', 1);
     }
 
     else $countyItems = "<h2>We are experiencing server error</h2>";
+
+    // gets county Name
+    $countyName = "San Mateo";
+    $conn = new mysqli($hn, $un, $pw, $db); //connects to db
+    if (!$conn->connect_error){ 
+        $countyName = getCountyName($userID, $conn);
+        $conn->close();
+    }
     
+    
+            
     
 
     //@desc: generates html code to display a new row inside the cart table 
@@ -110,6 +120,18 @@ ini_set('display_errors', 1);
         $result->close();
         return $countyID;
     }
+
+ function getCountyName($userID, $conn){
+        $sql = "select c.Name from users u, supportedCountys c where c.Name = u.County and u.Id = $userID";
+        $result = $conn->query($sql);
+        $result->data_seek(0);
+        $obj = $result->fetch_array(MYSQLI_ASSOC);
+    
+        $name = $obj['Name'];
+    
+        $result->close();
+        return $name;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -156,7 +178,7 @@ ini_set('display_errors', 1);
     
     <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(images/grapesBanner.jpg);">
 		<h2 class="l-text2 t-center">
-			Sanata Clara County 
+			<?php echo $countyName;?> 
 		</h2>
 	</section>
     

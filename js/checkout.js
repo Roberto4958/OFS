@@ -74,6 +74,7 @@ function getAddress(){
 
         // Get each component of the address from the place details
         // and fill the corresponding field on the form.
+        clearAddress();
         for (var i = 0; i < place.address_components.length; i++) {
           var addressType = place.address_components[i].types[0];
 //            alert("adress type: "+addressType)
@@ -86,6 +87,14 @@ function getAddress(){
           }
         }
       }
+    function clearAddress(){
+        $("#country").text("")
+        $("#administrative_area_level_1").text("")
+        $("#locality").text("")
+        $("#street_number").text("")
+        $("#route").text("")
+        $("#postal_code").text("")
+    }
 
       // Bias the autocomplete object to the user's geographical location,
       // as supplied by the browser's 'navigator.geolocation' object.

@@ -106,7 +106,7 @@ function getCountyName($userID, $conn){
     
 
   </head>  
-<body class="animsition">
+<body class="animsition" style="padding:0">
     <?php 
         include "nav.php" 
     ?>

@@ -32,7 +32,6 @@ function CreateAccountValidate(form){
     fail = validateFirstName(form.firstname.value);
     fail += validateLastName(form.lastname.value);
     fail += validateCounty(form.county.value);
-    fail += validateZipcode(form.zip.value);
     fail += validatePassword(form.password.value, form.cpassword.value);
     fail += validateEmail(form.email.value);
 		

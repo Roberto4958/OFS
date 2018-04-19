@@ -5,13 +5,14 @@ session_start();
     require_once '../Scripts/loginInfo.php';
     require_once '../Scripts/helperScripts.php';
 
+
     $userID =  $_SESSION["id"];
     $conn = new mysqli($hn, $un, $pw, $db);
 
     if(!SessionIsValid()){ //is user logged in
         header('Location: ../signin.php');
     }
-    if(!isset($_POST['orderSubmitted'])){ //did user come from check out form
+    if(!isset($_POST['orderSubmitted'])){ //user did not come from check out form
         
         $droneInfo = getDrone($userID, $conn);
         
@@ -22,6 +23,7 @@ session_start();
         
         //user has drones in the db
         else{
+            unset($_POST);
             $countyLocation = getCountyCordinates($userID, $conn);
             setcookie("startTime", $droneInfo["startTime"], time()*60);
             setcookie("userAddress",$droneInfo["address"], time()*60);
@@ -29,6 +31,7 @@ session_start();
         }
     }
     else{
+        unset($_POST['orderSubmitted']);
         dropCart($conn, $userID);
         sendDrone($conn, $userID); 
     }
@@ -87,6 +90,7 @@ function dropCart($conn, $userID){
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
 
 <head>
+    <link rel="icon" type="image/png" href="../images/icons/favicon.png"/>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <title>Google Maps</title>
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=AIzaSyCHdx-m6xOsxi9Un8XTSvjAZjUzl1qLX6Q" type="text/javascript"></script>
@@ -101,3 +105,8 @@ function dropCart($conn, $userID){
   </body>
 </html>
 <script src="map.js" type="text/javascript"></script>
+<script type="text/javascript">
+if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
