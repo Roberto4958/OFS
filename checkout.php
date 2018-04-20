@@ -27,12 +27,6 @@ if(isset($_POST['submiteAdress'])){ //address form signed
         $onOrder = 'step_complete';
         $onAddress = 'step_complete';
        
-//        if(authenticateTest()) {
-//            echo($_POST('address'));
-//        }
-//        else {
-//            echo("Well shit...");
-//        }
     
         $seesionTime = time() + $GLOBALS['SESSION_TIME']; 
         $shippingAddress = $_POST['address'];
