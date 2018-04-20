@@ -25,9 +25,9 @@ session_start();
         else{
             unset($_POST);
             $countyLocation = getCountyCordinates($userID, $conn);
-            setcookie("startTime", $droneInfo["startTime"], time()*60);
-            setcookie("userAddress",$droneInfo["address"], time()*60);
-            setcookie('countyAddress', $countyLocation,  time()*60);
+            setcookie("startTime", $droneInfo["startTime"], time()+(60*60));
+            setcookie("userAddress",$droneInfo["address"], time()+(60*60));
+            setcookie('countyAddress', $countyLocation,  time()+(60*60));
         }
     }
     else{
@@ -54,7 +54,7 @@ function sendDrone($conn, $userID){
     
     $time = ceil(microtime(true)*1000); //current time in milisec
     $address = $_COOKIE["userAddress"];
-    setcookie("startTime", $time, time()*60);
+    setcookie("startTime", $time, time()+(60*60));
          
     deployDrone($conn, $time, $address, $userID);
 }
