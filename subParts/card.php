@@ -36,7 +36,7 @@
     <div class="controls">
       <div class="row-fluid">
         <div class="span2">
-          <select class="input-block-level">
+          <select class="input-block-level" required>
             <option value="">Month</option>
             <option value="01">01</option>
             <option value="02">02</option>
@@ -53,7 +53,7 @@
         </select>
     </div>
     <div class="span2">
-      <select class="input-block-level">
+      <select class="input-block-level" required>
         <option value="">Year</option>
         <option value="2018">2018</option>
         <option value="2019">2019</option>

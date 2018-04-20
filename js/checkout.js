@@ -31,7 +31,7 @@ function getAddress(){
     streetAdress =  $("#street_number").text() +" "+$("#route").text();
     zip = $("#postal_code").text();
     
-    return streetAdress + ", " + city + ", " + state + ", " + country
+    return streetAdress + ", " + city + ", " + state + ", " + country + " " + zip;
 }
 
 // This example displays an address form, using the autocomplete feature

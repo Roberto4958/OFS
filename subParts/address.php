@@ -1,5 +1,4 @@
 <?php 
-
 $countName = "San Mateo";
 
 $conn = new mysqli($hn, $un, $pw, $db);
@@ -8,6 +7,7 @@ $conn = new mysqli($hn, $un, $pw, $db);
         $countName = getCountyName($userID, $conn);
     }
 ?>
+<!--onsubmit = "return ShippingaddressValidation(this)"-->
 
 <form id= "addressForm" <?php echo "data-county = '$countName'";?> onsubmit = "return ShippingaddressValidation(this)" class="form-horizontal" method="POST" action="checkout.php">
 

@@ -1,7 +1,11 @@
 <?php 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
 require_once 'Scripts/loginInfo.php';
 require_once 'Scripts/helperScripts.php';
+require_once 'Scripts/authenticate.php';
 
 if(!SessionIsValid()){
     header('Location: signin.php');
@@ -21,15 +25,33 @@ if(isset($_POST['submiteAdress'])){ //address form signed
     if(!$conn->connect_error){
         $page = "subParts/card.php";
         $onOrder = 'step_complete';
-        $onAddress = 'step_complete'; 
+        $onAddress = 'step_complete';
+       
+//        if(authenticateTest()) {
+//            echo($_POST('address'));
+//        }
+//        else {
+//            echo("Well shit...");
+//        }
     
         $seesionTime = time() + $GLOBALS['SESSION_TIME']; 
         $shippingAddress = $_POST['address'];
+        $exploded = explode(" ", $shippingAddress);
+        $ziploc = count($exploded);
+        $zipCode = $exploded[$ziploc-1];
+        
         setcookie('userAddress',  $shippingAddress, $seesionTime, "/");
     
         $id = $_SESSION['id'];                
         $countyLocation = getCountyCordinates($id, $conn);
         setcookie('countyAddress',  $countyLocation, $seesionTime, "/");
+        
+        $countyName = getCountyName($id, $conn);
+        
+        if(!authenticateTest($zipCode, $countyName)){
+         $url = "index.php";
+         header('Location: '.$url);   
+        }
     }
 }
 
