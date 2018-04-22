@@ -88,7 +88,7 @@
 
 								<div class="block2-txt p-t-20">
 									<a data-countyid ="'.$countyID.'" data-itemid ="'.$itemID.'" class="block2-name dis-block s-text3 p-b-5">
-										'.$name.'
+										'.$itemName.'
 									</a>
 
 									<span class="block2-price m-text6 p-r-5">
