@@ -233,8 +233,7 @@ $loggedIn = False;
 
 							<li>
 								<a href="product.php">Shop</a>
-							</li>
-				
+							</li>				
 						</ul>
 					</nav>
 				</div>
@@ -327,6 +326,16 @@ $loggedIn = False;
                      if($loggedIn){
                      	echo logOutButton();
                      }
+                    else {
+                        echo ' 
+                                <li class="item-menu-mobile">
+				                    <a href="signin.php">Sign In</a>
+				                </li>
+                                <hr style="margin:0;">
+				                <li class="item-menu-mobile">
+				                    <a href="signup.php">Sign Up</a>
+				                </li>';
+                    }
 
                      ?>
                     
