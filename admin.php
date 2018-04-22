@@ -44,7 +44,7 @@ ini_set('display_errors', 1);
     $countyItems = '';
 
     if (!$conn->connect_error){ //checks if connected succesfully 
-        $sql = "select Id, Name, Amount from Items where countyID = $countyID";
+        $sql = "select Id, Name, Amount, itemName from Items where countyID = $countyID";
         $result = $conn->query($sql);
         $rows = $result->num_rows;
         
@@ -52,7 +52,7 @@ ini_set('display_errors', 1);
         for($i=0; $i < $rows; $i++){
             $result->data_seek($i);
             $obj = $result->fetch_array(MYSQLI_ASSOC);
-            $countyItems .= generate($obj['Name'], $obj['Amount'], $obj['Id']); 
+            $countyItems .= generate($obj['itemName'], $obj['Amount'], $obj['Id']); 
         }
         $result->close();
         $conn->close();

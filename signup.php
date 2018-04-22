@@ -56,7 +56,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         	$id = getUserID($conn, $email);
         	$stmt->close();
         	if($id){
-        		startSession($auth, $id, false);
+        		startSession($auth, $id, false, $fname);
         		header('Location: index.php');
         	}
         }

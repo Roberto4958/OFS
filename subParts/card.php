@@ -77,7 +77,7 @@
     <div class="controls">
       <div class="row-fluid">
         <div class="span1">
-          <input type="text" class="input-block-level" autocomplete="off" maxlength="4" minlength="3" pattern="\d{3-4}" title="3-4 digits at back of your card" required>
+          <input type="text" class="input-block-level" autocomplete="off" maxlength="4" minlength="3" pattern="\d{3}||\d{4}" title="3-4 digits at back of your card" required>
       </div>
 
   </div>

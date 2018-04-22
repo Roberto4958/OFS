@@ -311,7 +311,7 @@ $loggedIn = False;
 				<ul class="main-menu">
 					<li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
 						<span class="topbar-child1">
-							Free shipping for orders less than 15 lb
+							Orders my only be up to 15 lb
 						</span>
 					</li>
 
