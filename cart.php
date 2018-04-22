@@ -16,7 +16,7 @@ session_start();
     $conn = new mysqli($hn, $un, $pw, $db); //connects to db
     
     if (!$conn->connect_error){ //checks if connected succesfully 
-        $sql = "select i.Name, sum(c.amount) as amount, i.Weight, i.Price, i.CategoryName, i.Id, i.itemName from Cart c, items i where i.Id = c.ItemID and c.userID =$id group by i.Name";
+        $sql = "select i.Name, sum(c.amount) as amount, i.Weight, i.Price, i.CategoryName, i.Id, i.itemName from Cart c, Items i where i.Id = c.ItemID and c.userID =$id group by i.Name order by i.Id ASC";
         $result = $conn->query($sql);
         $rows = $result->num_rows;
         

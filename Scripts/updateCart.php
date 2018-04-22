@@ -22,20 +22,27 @@ else {
     if (!$conn->connect_error){ //connected to db succesfully         
         
         $oldCart = getCart($conn, $userID);
+        $missingItems = enoughAmountOfItems($oldCart, $items);
         
-        if (!incrementItems( $oldCart , $conn)){ 
+        if($missingItems != "") {
             $response->success = false;
+            $response->missing = $missingItems;
         }
         else {
-            if(dropCart($userID, $conn)){
-                if(createCart($userID, $countyID, $items, $conn)){
-                    $response->cart = getCart($conn, $userID);
-                    $response->success = true;
-                }
+            
+            if (!incrementItems( $oldCart , $conn)){ 
+                $response->success = false;
             }
-            else $response->success = false;
+            else {
+                if(dropCart($userID, $conn)){
+                    if(createCart($userID, $countyID, $items, $conn)){
+                        $response->cart = getCart($conn, $userID);
+                        $response->success = true;
+                    }
+                }
+                else $response->success = false;
+            }
         }
-        
         $conn->close();
         
     }else $response->success = false;
@@ -103,7 +110,7 @@ else {
     }
 
     function getCart($conn, $userID){
-        $sql = "select i.Id, i.Name, sum(c.amount) as amount, i.Weight, i.Price, i.CategoryName, i.itemName from Cart c, Items i where i.id = c.ItemID and c.userID = $userID group by i.Id";
+        $sql = "select i.Id, i.Name, sum(c.amount) as amount, i.Weight, i.Price, i.CategoryName, i.itemName, i.Amount as itemAmount from Cart c, Items i where i.id = c.ItemID and c.userID = $userID group by i.Id order by i.Id ASC";
         $result = $conn->query($sql);
         $obj = array(); 
         if($result){
@@ -138,7 +145,33 @@ else {
 
 
     //-----------------unused methods, but might be helpful later-------------------//
+    
 
+    //@desc: checks if the we have enough items of what the user requested to fullfill request 
+    //@param: $oldCart - array of an associated array with coloumns of db from items table
+    //@param: $newCart - array of an int[]. amount = $newCart[$j][1]; itemID = $newCart[$j][0];
+    function enoughAmountOfItems($oldCart, $newCart){
+                
+        $j = 0; 
+        for($i = 0; $i < count($oldCart); $i++) {
+            $cart1itemID = $oldCart[$i]["Id"];
+            $cart2itemID = $newCart[$j][0];
+            
+            if ($cart1itemID == $cart2itemID) {
+                $amountLeft = $oldCart[$i]["itemAmount"];
+                $cart1Amount = $oldCart[$i]["amount"];
+                $cart2Amount = $newCart[$j][1];
+                
+                $amountAdded = $cart2Amount - $cart1Amount;
+                $itemName = $oldCart[$i]["itemName"];
+                if($amountLeft - $amountAdded < 0) {
+                    return $itemName;
+                }
+                $j++;
+            }
+        }
+        return "";
+    }
 
 
     //@desc: increments the amount of food item into the database

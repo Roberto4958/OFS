@@ -200,7 +200,14 @@ function communicatToDatabase(items){
                             updateNav(data.cart)
                         }
                         else {
-                            swal({ title: "Error1", text: "Please try again later", icon: "error"});
+                            //check if not enough items to fulfill request 
+                            if(data.missing != null){ 
+                                errorMessage = "Sorry we do not have enough " +data.missing + " to update your cart."
+                                swal({ title: "Error", text: errorMessage, icon: "error"});
+                            }
+                            else {
+                                swal({ title: "Error", text: errorMessage, icon: "error"});
+                            }                                
                         }
                     }
                     else swal({ title: "Error2", text: "Please try again later", icon: "error"});
