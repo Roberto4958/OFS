@@ -1,5 +1,10 @@
 <?php
     session_start();
+        //$old_submit = $_['Submit']; // this gets the submit variable you appended in your form
+        $current_url = 'admin.php';
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            header("Location: $current_url");
+        }    
 ini_set('display_errors', 1);
 //error_reporting(0); // stops displaying warning from user end    
 
@@ -23,7 +28,7 @@ ini_set('display_errors', 1);
     $countyID = getCountyId($userID, $conn);
     
     if(isset($_POST['Submit'])){ //form submitted
-        
+       
         $output = $_POST['Submit'];
         $value = explode(",", $output);
         $itemID = $value[0];
