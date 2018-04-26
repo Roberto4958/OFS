@@ -1,8 +1,7 @@
 <?php 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 session_start();
+error_reporting(0);  // stops displaying warning from user end
+
 require_once 'Scripts/loginInfo.php';
 require_once 'Scripts/helperScripts.php';
 require_once 'Scripts/authenticate.php';

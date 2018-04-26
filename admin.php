@@ -1,5 +1,7 @@
 <?php
     session_start();
+    error_reporting(0);  // stops displaying warning from user end
+
         //$old_submit = $_['Submit']; // this gets the submit variable you appended in your form
         $current_url = 'admin.php';
         if($_SERVER['REQUEST_METHOD'] == 'POST') {

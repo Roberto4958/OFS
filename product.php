@@ -1,6 +1,8 @@
 <?php
-    session_start();
-    require_once 'Scripts/loginInfo.php';
+    session_start(); 
+    error_reporting(0);  // stops displaying warning from user end
+
+    require_once 'Scripts/loginInfo.php'; 
     
     $userID = -1; 
     $countyID = 1;
@@ -168,7 +170,7 @@
 
 						<ul class="p-b-54">
 							<li class="p-t-4">
-								<a id = 'All' href="#row" class="s-text13 active1">
+								<a id = 'All' href="#row" class="s-text13">
 									All
 								</a>
 							</li>
@@ -199,6 +201,7 @@
 						</ul>
 
 						<!--  -->
+<!--
 						<h4 class="m-text14 p-b-32">
 							Search
 						</h4>
@@ -210,6 +213,7 @@
 								<i class="fs-12 fa fa-search" aria-hidden="true"></i>
 							</button>
 						</div>
+-->
 					</div>
 				</div>
 

@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(0);  // stops displaying warning from user end
 
 include_once 'Scripts/config.php';
 include_once 'Scripts/loginInfo.php';
