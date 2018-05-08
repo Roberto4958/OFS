@@ -12,7 +12,7 @@ error_reporting(0); // stops displaying warning from user end
     if(!SessionIsValid()){ //is user logged in
         header('Location: ../signin.php');
     }
-    if(!isset($_POST['orderSubmitted'])){ //user did not come from check out form
+    if(!isset($_SESSION['orderSubmitted'])){ //user did not come from check out form
         
         $droneInfo = getDrone($userID, $conn);
         
@@ -23,7 +23,6 @@ error_reporting(0); // stops displaying warning from user end
         
         //user has drones in the db
         else{
-            unset($_POST);
             $countyLocation = getCountyCordinates($userID, $conn);
             setcookie("startTime", $droneInfo["startTime"], time()+(60*60));
             setcookie("userAddress",$droneInfo["address"], time()+(60*60));
@@ -31,7 +30,7 @@ error_reporting(0); // stops displaying warning from user end
         }
     }
     else{
-        unset($_POST['orderSubmitted']);
+        unset($_SESSION['orderSubmitted']);
         dropCart($conn, $userID);
         sendDrone($conn, $userID); 
     }

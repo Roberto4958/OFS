@@ -1,4 +1,4 @@
-<form class="form-horizontal" method="POST" action="map/index.php">
+<form class="form-horizontal" method="POST" action="checkout.php">
 
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
@@ -21,22 +21,27 @@
 
       <div class="control-group">
         <label class="control-label">Card Number</label>
+          
         <div class="controls">
           <div class="row-fluid">
             <div class="span4">
-              <input type="text" class="input-block-level" autocomplete="off" maxlength="16" pattern="\d{16}" title="16 digits required" required>
+              <input name = "cardNumber" type="text" class="input-block-level" autocomplete="off" minlength ="13" maxlength="19" pattern="\d[13-16]" title="16 digits required" required>
           </div>
+              
       </div>
+            <?php echo $errors[0];?>
+<!--            <p style="color:#f00">Invalid Number</p>-->
   </div>
 
 </div>
 
 <div class="control-group">
     <label class="control-label">Card Expiry Date</label>
+    
     <div class="controls">
       <div class="row-fluid">
         <div class="span2">
-          <select class="input-block-level" required>
+          <select name = "month" class="input-block-level" required>
             <option value="">Month</option>
             <option value="01">01</option>
             <option value="02">02</option>
@@ -53,7 +58,7 @@
         </select>
     </div>
     <div class="span2">
-      <select class="input-block-level" required>
+      <select name = "year" class="input-block-level" required>
         <option value="">Year</option>
         <option value="2018">2018</option>
         <option value="2019">2019</option>
@@ -69,8 +74,11 @@
     </select>
 </div>
 </div>
+        <?php echo $errors[1];?>
+<!--        <br><p style="color:#f00">Card Expiered</p>-->
+</div> 
 </div>
-</div>
+        
 
 <div class="control-group">
     <label class="control-label">Card CVV</label>
@@ -85,7 +93,7 @@
 </div>
 <div class="form-group" >
     <div class="top-margin col-md-6 col-sm-6 col-xs-12">
-        <button name="orderSubmitted" type="submit" class="btn btn-primary btn-block" >Place Order</button>
+        <button name="cardSubmitted" type="submit" class="btn btn-primary btn-block" >Place Order</button>
     </div>
 </div>
 </div>

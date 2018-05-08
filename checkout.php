@@ -13,7 +13,10 @@ if(!SessionIsValid()){
 $page = "subParts/order.php";
 $onOrder = '';
 $onAddress = '';
+$errors = array("", "");
 
+
+$number = "authenticateCreditCard($cardNumber, $month, $year);"; 
 if(isset($_POST['SubmitOrder'])){ //order form signed 
     $page = "subParts/address.php";
     $onOrder = 'step_complete';
@@ -45,6 +48,20 @@ if(isset($_POST['submiteAdress'])){ //address form signed
          $url = "index.php";
          header('Location: '.$url);   
         }
+    }
+}
+if(isset($_POST['cardSubmitted'])){
+    $page = "subParts/card.php";
+    $onOrder = 'step_complete';
+    $onAddress = 'step_complete';
+    
+    $cardNumber = $_POST["cardNumber"];
+    $month = $_POST["month"];
+    $year = $_POST["year"];
+    $errors = authenticateCreditCard($cardNumber, $month, $year); 
+    if($errors[0] == "" && $errors[1]=="") {
+        $_SESSION['orderSubmitted'] = true;
+        header('Location: map');
     }
 }
 
