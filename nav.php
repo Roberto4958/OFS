@@ -211,9 +211,9 @@ $loggedIn = False;
 								<li><p class="name-tag" >Welcome, <?php echo $_SESSION['name']; ?></p></li>&nbsp;&nbsp;&nbsp;
 								<li><a href="logout.php" style="padding: 0; color: black;">| Log Out</a></li>
 								<?php } else { ?>
-								<li><a href="signin.php">Login |</a></li>
+								<li><a href="signin.php">Log In |</a></li>
 								&nbsp;
-								<li><a href="signup.php">| Sign Up</a></li>
+								<li><a href="signup.php">| Register</a></li>
 								<?php } ?>
 							</ul>
 					       <?php echo $displayCart;?>

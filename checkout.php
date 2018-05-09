@@ -10,7 +10,7 @@ if(!SessionIsValid()){
     header('Location: signin.php');
 }
 
-$page = "subParts/order.php";
+$page = "subParts/card.php";
 $onOrder = '';
 $onAddress = '';
 $errors = array("", "");
