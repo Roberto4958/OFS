@@ -1,6 +1,6 @@
 <?php
 session_start();
-//error_reporting(0); // stops displaying warning from user end
+error_reporting(0); // stops displaying warning from user end
 
     require_once 'Scripts/loginInfo.php';
     require_once 'Scripts/helperScripts.php';

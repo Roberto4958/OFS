@@ -1,8 +1,7 @@
 <?php
 session_start();
-//echo $_SESSION['usr_id']."in here";
+error_reporting(0);  // stops displaying warning from user end
 
-//include_once './Scripts/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -223,16 +222,16 @@ session_start();
 
 				<a href="#" class="block4-overlay sizefull ab-t-l trans-0-4">
 					<span class="block4-overlay-heart s-text9 flex-m trans-0-4 p-l-40 p-t-25">
-                        <p>Roberto Aguilar</p>
+                        <h4>Roberto Aguilar</h4>
 					</span>
 
 					<div class="block4-overlay-txt trans-0-4 p-l-40 p-r-25 p-b-30">
 						<p class="s-text10 m-b-15 h-size1 of-hidden">
-							Nullam scelerisque, lacus sed consequat laoreet, dui enim iaculis leo, eu viverra ex nulla in tellus. Nullam nec ornare tellus, ac fringilla lacus. Ut sit amet enim orci. Nam eget metus elit.
+<!--							Nullam scelerisque, lacus sed consequat laoreet, dui enim iaculis leo, eu viverra ex nulla in tellus. Nullam nec ornare tellus, ac fringilla lacus. Ut sit amet enim orci. Nam eget metus elit.-->
 						</p>
 
 						<span class="s-text9">
-							LinkedIn at @.....
+<!--							LinkedIn at @.....-->
 						</span>
 					</div>
 				</a>
@@ -244,16 +243,16 @@ session_start();
 
 				<a href="#" class="block4-overlay sizefull ab-t-l trans-0-4">
 					<span class="block4-overlay-heart s-text9 flex-m trans-0-4 p-l-40 p-t-25">
-                        <p>Nhan Nguyen</p>
+                        <h4>Nhan Nguyen</h4>
 					</span>
 
 					<div class="block4-overlay-txt trans-0-4 p-l-40 p-r-25 p-b-30">
 						<p class="s-text10 m-b-15 h-size1 of-hidden">
-							Nullam scelerisque, lacus sed consequat laoreet, dui enim iaculis leo, eu viverra ex nulla in tellus. Nullam nec ornare tellus, ac fringilla lacus. Ut sit amet enim orci. Nam eget metus elit.
+<!--							Nullam scelerisque, lacus sed consequat laoreet, dui enim iaculis leo, eu viverra ex nulla in tellus. Nullam nec ornare tellus, ac fringilla lacus. Ut sit amet enim orci. Nam eget metus elit.-->
 						</p>
 
 						<span class="s-text9">
-							LinkedIn at @nancyward
+<!--							LinkedIn at @nancyward-->
 						</span>
 					</div>
 				</a>
@@ -265,16 +264,16 @@ session_start();
 
 				<a href="#" class="block4-overlay sizefull ab-t-l trans-0-4">
 					<span class="block4-overlay-heart s-text9 flex-m trans-0-4 p-l-40 p-t-25">
-                        <p>Grant Clegg</p>
+                        <h4>Grant Clegg</h4>
 					</span>
 
 					<div class="block4-overlay-txt trans-0-4 p-l-40 p-r-25 p-b-30">
 						<p class="s-text10 m-b-15 h-size1 of-hidden">
-							Nullam scelerisque, lacus sed consequat laoreet, dui enim iaculis leo, eu viverra ex nulla in tellus. Nullam nec ornare tellus, ac fringilla lacus. Ut sit amet enim orci. Nam eget metus elit.
+<!--							Nullam scelerisque, lacus sed consequat laoreet, dui enim iaculis leo, eu viverra ex nulla in tellus. Nullam nec ornare tellus, ac fringilla lacus. Ut sit amet enim orci. Nam eget metus elit.-->
 						</p>
 
 						<span class="s-text9">
-							LinkedIn at @...
+<!--							LinkedIn at @...-->
 						</span>
 					</div>
 				</a>
@@ -286,16 +285,16 @@ session_start();
 
 				<a href="#" class="block4-overlay sizefull ab-t-l trans-0-4">
 					<span class="block4-overlay-heart s-text9 flex-m trans-0-4 p-l-40 p-t-25">
-                        <p>Ankit Gandhi</p>
+                        <h4>Ankit Gandhi</h4>
 					</span>
 
 					<div class="block4-overlay-txt trans-0-4 p-l-40 p-r-25 p-b-30">
 						<p class="s-text10 m-b-15 h-size1 of-hidden">
-							Nullam scelerisque, lacus sed consequat laoreet, dui enim iaculis leo, eu viverra ex nulla in tellus. Nullam nec ornare tellus, ac fringilla lacus. Ut sit amet enim orci. Nam eget metus elit.
+<!--							Nullam scelerisque, lacus sed consequat laoreet, dui enim iaculis leo, eu viverra ex nulla in tellus. Nullam nec ornare tellus, ac fringilla lacus. Ut sit amet enim orci. Nam eget metus elit.-->
 						</p>
 
 						<span class="s-text9">
-							LinkedIn at @...
+<!--							LinkedIn at @...-->
 						</span>
 					</div>
 				</a>
@@ -365,7 +364,7 @@ session_start();
 			<div class="wrap-video-mo-01">
 				<div class="w-full wrap-pic-w op-0-0"><img src="images/icons/video-16-9.jpg" alt="IMG"></div>
 				<div class="video-mo-01">
-					<iframe src="https://www.youtube.com/embed/Nt8ZrWY2Cmk?rel=0&amp;showinfo=0" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/RER2sWqyA9s?rel=0&amp;showinfo=0" allowfullscreen></iframe>
 				</div>
 			</div>
 		</div>
